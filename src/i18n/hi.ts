@@ -67,6 +67,11 @@ export const hi: Catalogue = {
   'error.forbidden': 'यह किसी और टीचर की क्लास का है।',
   'error.missing': 'यह नहीं मिला। शायद हटा दिया गया है।',
   'error.roster.full': 'एक क्लास में ज़्यादा से ज़्यादा 80 बच्चे हो सकते हैं।',
+  'link.invalid': 'यह लिंक काम नहीं कर रहा। अपने टीचर से नया लिंक माँगें।',
+  'link.pickNameFirst': 'पहले अपना नाम चुनें।',
+  'link.closed': 'इस होमवर्क का समय ख़त्म हो गया। अब जवाब नहीं बदल सकते।',
+  'school.codeUnknown': 'यह स्कूल कोड नहीं मिला। किसी टीचर से पूछ लें।',
+  'demo.noRoster': 'पहले इस क्लास में बच्चे जोड़ें, या डेमो नाम लें।',
 
   'children_one': '{count} बच्चा',
   'children_other': '{count} बच्चे',

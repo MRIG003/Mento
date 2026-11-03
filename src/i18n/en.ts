@@ -68,6 +68,11 @@ export const en = {
   'error.forbidden': 'This belongs to another teacher’s class.',
   'error.missing': 'We could not find that. It may have been deleted.',
   'error.roster.full': 'A class can have up to 80 children.',
+  'link.invalid': 'This link doesn’t work. Ask your teacher for a new one.',
+  'link.pickNameFirst': 'Please pick your name first.',
+  'link.closed': 'The time for this homework is over. Your answers can’t be changed now.',
+  'school.codeUnknown': 'We don’t know that school code. Check it with a teacher.',
+  'demo.noRoster': 'Add children to this class first, or use the demo names.',
 
   'children_one': '{count} child',
   'children_other': '{count} children',
