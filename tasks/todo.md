@@ -139,27 +139,27 @@ Default verify for every task: `npm run check` green + Playwright check at 390 p
   - [x] All tests pass, build clean, size budget met
   - [x] Flow so far works end to end in en and hi
 
-- [ ] **T20: StudentLinkScope + PrincipalScope + factory + demo**
+- [x] **T20: StudentLinkScope + PrincipalScope + factory + demo**
   - Description: No answer keys in `LinkContext`; first names only after a valid token; principal runtime key allowlist; `createLocalRepositories`; demo seed/reset/submission wave (seeded RNG).
   - Acceptance: behaviour above works; loading/empty/error states and en+hi covered by tests
   - Verify: `npm run check` + 390 px en/hi browser check
   - Files: `data/scopes/{student-link.ts,principal.ts}`, `data/{repositories.ts,demo.ts,index.ts}`.
 
-- [ ] **T21: Preview services**
+- [x] **T21: Preview services**
   - Description: OTP, Share (real wa.me), HandwritingReader, AutoTranslate, Payments, Sync per SPEC-services.
   - Acceptance: behaviour above works; loading/empty/error states and en+hi covered by tests
   - Verify: `npm run check` + 390 px en/hi browser check
   - Files: `services/{otp.ts,share.ts,reader.ts,translate.ts,payments.ts}` + `index.ts`.
 
-- [ ] **T22: React data bindings**
+- [x] **T22: React data bindings**
   - Description: `RepositoriesProvider`, `useScope`, `useLive(query)` (re-runs on storage events), `ServicesProvider`; app-level provider wiring.
   - Acceptance: a teacher tab updates when a student tab submits (two-provider test on a shared fake driver).
   - Verify: `npm run check` + 390 px en/hi browser check
   - Files: `data/react/{provider.tsx,use-live.ts}`, `services/react.tsx`, `src/app/providers.tsx`.
 
-- [ ] **Checkpoint G (T20-T22)** full `npm run check`. *Slice 2 done.*
-  - [ ] All tests pass, build clean, size budget met
-  - [ ] Flow so far works end to end in en and hi
+- [x] **Checkpoint G (T20-T22)** full `npm run check`. *Slice 2 done.*
+  - [x] All tests pass, build clean, size budget met
+  - [x] Flow so far works end to end in en and hi
 
 
 ## Slice 3: Teacher onboarding + roster + Starter Checklist
