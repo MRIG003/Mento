@@ -14,6 +14,7 @@ export const en = {
   'common.close': 'Close',
   'common.retry': 'Try again',
   'common.mainNav': 'Main',
+  'common.notBuiltYet': 'This part of Mento is still being built.',
 
   'lang.label': 'Language',
   'lang.en': 'English',

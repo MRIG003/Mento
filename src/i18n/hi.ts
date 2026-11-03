@@ -13,6 +13,7 @@ export const hi: Catalogue = {
   'common.close': 'बंद करें',
   'common.retry': 'फिर से कोशिश करें',
   'common.mainNav': 'मुख्य',
+  'common.notBuiltYet': 'Mento का यह हिस्सा अभी बन रहा है।',
 
   'lang.label': 'भाषा',
   'lang.en': 'English',
