@@ -25,6 +25,13 @@ export const en = {
   'fraction.read': '{n} over {d}',
   'progress.percentRight': '{percent}% right',
 
+  'coach.next': 'Next',
+  'coach.done': 'Got it',
+  'coach.skip': 'Skip tour',
+  'coach.step': '{n} of {total}',
+
+  'field.required': 'required',
+
   'lang.label': 'Language',
   'lang.en': 'English',
   'lang.hi': 'हिन्दी',

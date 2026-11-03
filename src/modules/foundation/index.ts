@@ -31,3 +31,8 @@ export { Fraction, FractionText } from './components/Fraction';
 export { EmptyState } from './components/EmptyState';
 export { PaperSkeleton } from './components/PaperSkeleton';
 export { stableHash } from './lib/hash';
+export { Sheet } from './components/Sheet';
+export { CoachMarks } from './components/CoachMarks';
+export type { CoachStep, CoachSteps } from './components/CoachMarks';
+export { Field, inputClass } from './components/Field';
+export type { FieldControlProps } from './components/Field';

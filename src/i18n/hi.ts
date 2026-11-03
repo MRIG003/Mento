@@ -24,6 +24,13 @@ export const hi: Catalogue = {
   'fraction.read': '{n} बटा {d}',
   'progress.percentRight': '{percent}% सही',
 
+  'coach.next': 'आगे',
+  'coach.done': 'समझ गए',
+  'coach.skip': 'टूर छोड़ें',
+  'coach.step': '{n} / {total}',
+
+  'field.required': 'ज़रूरी',
+
   'lang.label': 'भाषा',
   'lang.en': 'English',
   'lang.hi': 'हिन्दी',
