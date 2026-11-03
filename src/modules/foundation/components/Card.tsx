@@ -7,7 +7,7 @@ export function Card({ title, titleId, as: Tag = 'section', className = '', chil
   return (
     <Tag aria-labelledby={title && titleId ? titleId : undefined} className={`rounded-card bg-card p-4 shadow-card ${className}`}>
       {title ? (
-        <h2 id={titleId} className="mb-3 text-xs font-extrabold uppercase tracking-[0.14em] text-ink-muted">{title}</h2>
+        <h2 id={titleId} className="caps mb-3 text-xs font-extrabold text-ink-muted">{title}</h2>
       ) : null}
       {children}
     </Tag>

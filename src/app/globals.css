@@ -71,6 +71,14 @@
     background-size: 20px 20px;
     line-height: 1.5;
   }
+  /* Small caps labels ("CONCEPTS"): letter-spacing only for Latin; tracking breaks Devanagari conjuncts and matras. */
+  .caps {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+  }
+  html:lang(hi) .caps {
+    letter-spacing: 0;
+  }
   :focus-visible {
     outline: 3px solid var(--color-primary);
     outline-offset: 2px;

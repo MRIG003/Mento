@@ -15,7 +15,7 @@ const LABEL = { demo: 'common.demoData', preview: 'common.preview', late: 'commo
 export function Badge({ kind, className = '' }: { kind: BadgeKind; className?: string }) {
   const { t } = useI18n();
   return (
-    <span className={`inline-flex shrink-0 items-center rounded-md border-2 bg-card/70 px-2 py-0.5 text-xs font-extrabold uppercase tracking-wide ${LOOK[kind]} ${className}`}>
+    <span className={`inline-flex shrink-0 items-center rounded-md border-2 bg-card/70 px-2 py-0.5 caps text-xs font-extrabold ${LOOK[kind]} ${className}`}>
       {t(LABEL[kind])}
     </span>
   );

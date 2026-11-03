@@ -25,7 +25,7 @@ export function Kit() {
           <p className="mt-3 text-sm text-ink-muted"><FractionText text={'Most chose 3/5 < 2/5 · ३/४'} /></p>
         </Card></div>
         <section aria-label={'Needs help'}>
-          <h2 className="mb-3 text-xs font-extrabold uppercase tracking-[0.14em] text-ink-muted">{'Needs help'}</h2>
+          <h2 className="caps mb-3 text-xs font-extrabold text-ink-muted">{'Needs help'}</h2>
           <ul className="flex flex-wrap gap-3">
             {['Anaya', 'Dev', 'Sana', 'Rohan', 'Tara', 'Vihaan'].map((n, i) => <NameTag key={n} as="li" id={`kit_${n}`} name={n} animate delayMs={i * 60} />)}
           </ul>
