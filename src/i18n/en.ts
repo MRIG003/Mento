@@ -22,6 +22,9 @@ export const en = {
   'status.onTrack': 'on track',
   'status.notEnough': 'not enough answers yet',
 
+  'fraction.read': '{n} over {d}',
+  'progress.percentRight': '{percent}% right',
+
   'lang.label': 'Language',
   'lang.en': 'English',
   'lang.hi': 'हिन्दी',

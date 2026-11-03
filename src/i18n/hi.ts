@@ -21,6 +21,9 @@ export const hi: Catalogue = {
   'status.onTrack': 'ठीक चल रहा है',
   'status.notEnough': 'अभी जवाब कम हैं',
 
+  'fraction.read': '{n} बटा {d}',
+  'progress.percentRight': '{percent}% सही',
+
   'lang.label': 'भाषा',
   'lang.en': 'English',
   'lang.hi': 'हिन्दी',
