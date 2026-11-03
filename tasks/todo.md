@@ -117,27 +117,27 @@ Default verify for every task: `npm run check` green + Playwright check at 390 p
   - [x] All tests pass, build clean, size budget met
   - [x] Flow so far works end to end in en and hi
 
-- [ ] **T17: BlobStore**
+- [x] **T17: BlobStore**
   - Description: IndexedDB wrapper (put/get/delete) + fake-indexeddb tests.
   - Acceptance: behaviour above works; loading/empty/error states and en+hi covered by tests
   - Verify: `npm run check` + 390 px en/hi browser check
   - Files: `data/storage/blob-store.ts`.
 
-- [ ] **T18: Seed + bank**
+- [x] **T18: Seed + bank**
   - Description: School, 4 teachers, 3 classes, rosters; the Class 6 Maths bilingual bank (fractions, decimals, geometry; ≥ 6 per concept, misconception-tagged distractors); the Class 5 Hindi grammar sample; 6B Fractions submissions generated relative to the clock.
   - Acceptance: a test runs the **real rules** over the seed → exactly 6 stuck on Comparing fractions; all records parse.
   - Verify: `npm run check` + 390 px en/hi browser check
   - Files: `data/seed/{school.ts,bank-maths-6.ts,hindi-5.ts,submissions-6b.ts,index.ts}`.
 
-- [ ] **T19: TeacherScope**
+- [x] **T19: TeacherScope**
   - Description: All methods in SPEC-data with ownership checks; `getResults` composes the domain rules; overrides and paper marks.
   - Acceptance: FORBIDDEN across teachers; override changes results.
   - Verify: `npm run check` + 390 px en/hi browser check
   - Files: `data/scopes/{teacher.ts,results.ts}`.
 
-- [ ] **Checkpoint F (T17-T19).**
-  - [ ] All tests pass, build clean, size budget met
-  - [ ] Flow so far works end to end in en and hi
+- [x] **Checkpoint F (T17-T19).**
+  - [x] All tests pass, build clean, size budget met
+  - [x] Flow so far works end to end in en and hi
 
 - [ ] **T20: StudentLinkScope + PrincipalScope + factory + demo**
   - Description: No answer keys in `LinkContext`; first names only after a valid token; principal runtime key allowlist; `createLocalRepositories`; demo seed/reset/submission wave (seeded RNG).
@@ -405,4 +405,10 @@ Default verify for every task: `npm run check` green + Playwright check at 390 p
 ## NOTICED BUT NOT TOUCHING
 
 _Issues seen outside the current task. Logged here, not fixed silently._
+
+- **Look-target numbers vs gap rules (T18).** The mock-up's "Comparing fractions 41%" cannot coexist with "only 6 stuck" under the
+  ≥2-attempts/<50% rule (minimum class rate with 6 of 32 stuck is ~41% only if every other child sits at exactly 50%). The seed is
+  realistic instead: rules compute 6 stuck at a 59% class rate (Adding 88%, Equivalent 64%). Owner may want to know.
+- **Demo tokens are deterministic (T18).** Seeded demo homework/join tokens come from a fixed seed (fine for public demo data);
+  every real teacher-created class/homework uses Web Crypto. Re-check before any real deployment with real children.
 
