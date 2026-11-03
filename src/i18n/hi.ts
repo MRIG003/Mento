@@ -31,6 +31,10 @@ export const hi: Catalogue = {
 
   'field.required': 'ज़रूरी',
 
+  'check.reason.someKeyPoints': 'कुछ मुख्य बातें मिलीं। एक बार देख लें।',
+  'check.reason.noKeyPoints': 'मुख्य बातें नहीं मिलीं। एक बार देख लें।',
+  'check.reason.photo': 'फ़ोटो वाला जवाब। एक बार देख लें।',
+
   'lang.label': 'भाषा',
   'lang.en': 'English',
   'lang.hi': 'हिन्दी',

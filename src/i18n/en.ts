@@ -32,6 +32,10 @@ export const en = {
 
   'field.required': 'required',
 
+  'check.reason.someKeyPoints': 'Some key points found. Please check.',
+  'check.reason.noKeyPoints': 'Key points not found. Please check.',
+  'check.reason.photo': 'Photo answer. Please check.',
+
   'lang.label': 'Language',
   'lang.en': 'English',
   'lang.hi': 'हिन्दी',
