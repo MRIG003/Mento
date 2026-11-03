@@ -60,6 +60,10 @@ export const hi: Catalogue = {
   'error.generic.body': 'आपने जो लिखा था, वह सुरक्षित है। फिर से कोशिश करें।',
   'error.notFound.title': 'यह पेज नहीं मिला',
   'error.notFound.body': 'वापस जाएँ, या WhatsApp से लिंक फिर से खोलें।',
+  'error.storage.full': 'इस फ़ोन में Mento के लिए जगह नहीं बची। आख़िरी बदलाव सेव नहीं हुआ।',
+  'error.storage.corrupt': 'इस फ़ोन में सेव डेटा पढ़ा नहीं जा सका। उसे अलग रख दिया है; आप डेमो रीसेट कर सकते हैं।',
+  'error.storage.unavailable': 'यह ब्राउज़र Mento को सेव नहीं करने दे रहा। जवाब सिर्फ़ यह पेज बंद होने तक रहेंगे।',
+  'error.validation': 'कुछ जानकारी सही नहीं है। देखकर फिर से कोशिश करें।',
 
   'children_one': '{count} बच्चा',
   'children_other': '{count} बच्चे',

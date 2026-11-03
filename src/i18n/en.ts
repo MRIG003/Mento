@@ -61,6 +61,10 @@ export const en = {
   'error.generic.body': 'Nothing you typed is lost. Please try again.',
   'error.notFound.title': 'This page isn’t here',
   'error.notFound.body': 'Go back, or open the link from WhatsApp again.',
+  'error.storage.full': 'This phone is out of space for Mento. Your last change was not saved.',
+  'error.storage.corrupt': 'Saved data on this phone could not be read. It has been kept aside; you can reset the demo.',
+  'error.storage.unavailable': 'This browser is not letting Mento save. Answers stay only until you close this page.',
+  'error.validation': 'Some details are not right. Please check and try again.',
 
   'children_one': '{count} child',
   'children_other': '{count} children',
