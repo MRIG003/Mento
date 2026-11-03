@@ -19,3 +19,20 @@ priority dark > glare > steadiness > framing > blur. Auto-capture after 3 consec
 
 ## Consequences
 Framing via edges is approximate on busy backgrounds; the manual shutter and "submit anyway" remain available. Assessment runs at ≤ 5 fps.
+
+## Calibration (T15, 2026-11-03), synthetic frames only
+Measured on 320×240 synthetic frames (ruled page on a desk), analysed at 160×120:
+
+| Frame | mean | glare share | diff vs prev | edge box | borders touched | Laplacian var | → |
+|---|---|---|---|---|---|---|---|
+| sharp page | 162 | 0 | – | 0.74 | 0 | 8,828 | ok |
+| dark (×0.25) | 41 | 0 | – | 0.56 | 0 | 546 | too dark |
+| far (30% margin) | 111 | 0 | – | 0.17 | 0 | 2,181 | move closer |
+| cropped (text off all edges) | 184 | 0 | – | 0.97 | 4 | 13,352 | show whole page |
+| glare (255 blob) | 169 | 0.104 | – | 0.74 | 0 | 7,458 | glare |
+| box blur r=5 | 162 | 0 | – | 0.76 | 0 | 248 | hold still |
+| shifted 12 px | 162 | 0 | 16.3 | 0.74 | 0 | 8,828 | hold still |
+
+Change from the initial guess: `blurVariance` 60 → **600**. At 60 a blurred page passed. The other thresholds already separate
+the cases with margin. **Not yet verified on real phone photos**: real notebook photos have lower contrast than synthetic ink,
+so the blur and edge thresholds may need lowering. This is a Phase 5 item, and the manual shutter plus "submit anyway" stay as the safety net.
