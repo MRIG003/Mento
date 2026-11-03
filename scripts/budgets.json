@@ -1,0 +1,9 @@
+{
+  "_comment": "First-load JS budgets in KB (gzip) per route, SPEC §8. Routes not listed use 'default'. Change only with a written reason in docs/perf.md.",
+  "default": 200,
+  "/": 150,
+  "/h": 150,
+  "/join": 150,
+  "/t": 200,
+  "/p": 220
+}
