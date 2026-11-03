@@ -1,6 +1,6 @@
 # Capability Map: Mento v1
 
-Status: **Proposed, awaiting approval (Phase 2 gate).** No module spec is written until this is approved.
+Status: **Approved (2026-11-03).**
 Skill: spec-driven-development, Phase 0 scope check.
 
 Mento bundles several capabilities that can each be tested on their own, with their own consumers and data.

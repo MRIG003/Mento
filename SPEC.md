@@ -1,6 +1,6 @@
 # Spec: Mento v1 (shared)
 
-Status: **Draft for CHECKPOINT 2.** Module index: [CAPABILITY-MAP.md](CAPABILITY-MAP.md) (approved).
+Status: **Approved at CHECKPOINT 2 (2026-11-03)**, open questions resolved with their defaults. Module index: [CAPABILITY-MAP.md](CAPABILITY-MAP.md) (approved).
 Module specs: `SPEC-<module-id>.md`. Threat model: [docs/threat-model.md](docs/threat-model.md).
 ADRs: [docs/decisions/](docs/decisions/README.md). Product direction: [docs/creative-brief.md](docs/creative-brief.md) (approved).
 
