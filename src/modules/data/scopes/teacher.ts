@@ -1,5 +1,5 @@
 import {
-  err, finalVerdicts, generateToken, isLate, newId, ok, selectPractice, toCsv,
+  err, finalVerdicts, type Concept, generateToken, isLate, newId, ok, selectPractice, toCsv,
   type Bilingual, type Class, type ClassId, type Clock, type ConceptId, type CsvValue, type Homework, type HomeworkId, type LangCode,
   type PracticeSet, type PracticeSetId, type Question, type QuestionId, type RandomSource, type Result, type Student, type StudentId,
   type SubjectId, type SubmissionId, type TeacherId,
@@ -27,6 +27,7 @@ export type TeacherScope = {
   approvePending(studentId: StudentId): Promise<Result<void>>;
   listStudents(classId: ClassId): Promise<Result<Student[]>>;
   listBank(filter: BankFilter): Promise<Result<Question[]>>;
+  listConcepts(subjectId: SubjectId): Promise<Result<Concept[]>>;
   addQuestion(question: Question): Promise<Result<Question>>;
   saveHomework(input: HomeworkDraftInput): Promise<Result<Homework>>;
   publishHomework(id: HomeworkId): Promise<Result<Homework>>;
@@ -148,6 +149,12 @@ export function createTeacherScope({ db, teacherId, clock, rng, blobs }: Deps): 
         if (filter.grade !== undefined && concept.grade !== filter.grade) return false;
         return !filter.conceptIds || filter.conceptIds.includes(q.conceptId);
       }));
+    },
+
+    async listConcepts(subjectId) {
+      const d = load();
+      if (!d.ok) return d;
+      return ok(d.value.concepts.filter((c) => c.subjectId === subjectId));
     },
 
     async addQuestion(question) {

@@ -39,3 +39,4 @@ export type { CoachStep, CoachSteps } from './components/CoachMarks';
 export { Field, inputClass } from './components/Field';
 export type { FieldControlProps } from './components/Field';
 export { RadioChips } from './components/RadioChips';
+export { translateIn } from './i18n/translate-in';
