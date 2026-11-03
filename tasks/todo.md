@@ -95,27 +95,27 @@ Default verify for every task: `npm run check` green + Playwright check at 390 p
   - [x] All tests pass, build clean, size budget met
   - [x] Flow so far works end to end in en and hi
 
-- [ ] **T14: Practice, wrap, aggregates, CSV**
+- [x] **T14: Practice, wrap, aggregates, CSV**
   - Description: `selectPractice`, `buildEveningWrap`, `schoolAggregates` (type test: no ids/names), `isDashboardUnlocked`, `escapeCsvCell`/`toCsv`, `formatIndianNumber`.
   - Acceptance: behaviour above works; loading/empty/error states and en+hi covered by tests
   - Verify: `npm run check` + 390 px en/hi browser check
   - Files: `domain/lib/{practice.ts,wrap.ts,aggregates.ts,csv.ts,format.ts}`.
 
-- [ ] **T15: Photo-quality heuristics (2b)**
+- [x] **T15: Photo-quality heuristics (2b)**
   - Description: Pure `assess(frame, prev)` + luminance/glare/Laplacian/diff/Sobel-bbox, issue priority, auto-capture counter; synthetic ImageData generators (dark, glare, blurred, shaky, sharp-framed, cropped).
   - Acceptance: each synthetic case yields the expected issue/ok; thresholds in one file; ADR-003 updated with calibrated values.
   - Verify: `npm run check` + 390 px en/hi browser check
   - Files: `capture/lib/{quality.ts,thresholds.ts,auto-capture.ts}`, `capture/lib/test-images.ts`.
 
-- [ ] **T16: Storage driver + versioning**
+- [x] **T16: Storage driver + versioning**
   - Description: `StorageDriver` (localStorage + in-memory fake), envelope, v1→v2 migration, zod parse-on-read, quarantine, serialised writes, `storage`-event subscription.
   - Acceptance: migration fixture, corrupt-value quarantine, quota error → `STORAGE`.
   - Verify: `npm run check` + 390 px en/hi browser check
   - Files: `data/storage/{driver.ts,local-driver.ts,memory-driver.ts,envelope.ts,migrations.ts}`.
 
-- [ ] **Checkpoint E (T14-T16).**
-  - [ ] All tests pass, build clean, size budget met
-  - [ ] Flow so far works end to end in en and hi
+- [x] **Checkpoint E (T14-T16).**
+  - [x] All tests pass, build clean, size budget met
+  - [x] Flow so far works end to end in en and hi
 
 - [ ] **T17: BlobStore**
   - Description: IndexedDB wrapper (put/get/delete) + fake-indexeddb tests.
