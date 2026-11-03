@@ -29,24 +29,24 @@ Default verify for every task: `npm run check` green + Playwright check at 390 p
   - [x] All tests pass, build clean, size budget met
   - [x] Flow so far works end to end in en and hi
 
-- [ ] **T5: Design tokens + fonts**
+- [x] **T5: Design tokens + fonts**
   - Acceptance: all SPEC-foundation tokens in `@theme`; dot-grid paper body; Nunito/Caveat/Noto Sans Devanagari self-hosted (Latin + Devanagari woff2 only, `display: swap`); contrast test passes (ink, muted, white-on-primary ≥ 4.5:1); reduced-motion rule.
   - Verify: unit test + screenshot.
   - Files: `src/app/globals.css`, `src/fonts/*` (copied from @fontsource), `src/modules/foundation/fonts.ts`, `src/modules/foundation/tokens.ts`.
 
-- [ ] **T6: i18n runtime**
+- [x] **T6: i18n runtime**
   - Acceptance: `t()` with params and plurals; `hi` typed against `en` keys (a missing key is a compile error); a runtime parity + placeholder test; provider sets `html[lang]`, persists the pref, resolves fragment → pref → navigator → en.
   - Verify: unit + component tests.
   - Files: `src/i18n/en.ts`, `src/i18n/hi.ts`, `src/modules/foundation/i18n/{t.ts,provider.tsx,resolve-lang.ts}`.
 
-- [ ] **T7: Shell + LanguageSwitch**
+- [x] **T7: Shell + LanguageSwitch**
   - Acceptance: TopBar with `EN | हिं` (≥ 44 px, aria-pressed), Help and Demo badge slots; TabBar per role (Teacher Desk/Create/Results/Class, Principal 4, Student 3); switching keeps a typed value, focus and scroll (component test); no overflow at 390 px in en+hi (e2e).
   - Verify: `npm run check` + 390 px en/hi browser check
   - Files: `foundation/components/{LanguageSwitch,TopBar,TabBar}.tsx`, `foundation/icons.tsx`, `src/app/t/layout.tsx` (+ p, h layouts).
 
-- [ ] **Checkpoint B (T5-T7).**
-  - [ ] All tests pass, build clean, size budget met
-  - [ ] Flow so far works end to end in en and hi
+- [x] **Checkpoint B (T5-T7).**
+  - [x] All tests pass, build clean, size budget met
+  - [x] Flow so far works end to end in en and hi
 
 - [ ] **T8: Primitives A**
   - Description: Button (pill 56 px), StickyNote + WashiTape, Card, Badge (DemoData/Preview/Late), StatusWord.

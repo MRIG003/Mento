@@ -7,6 +7,8 @@ Lighthouse and DevTools traces (slow 4G + 4× CPU) are recorded in Phase 5.
 
 | Date | Change | Route | First-load JS (gz) | Budget | Notes |
 |---|---|---|---|---|---|
+| 2026-11-03 | T7 + `"sideEffects": ["*.css"]` so the module barrels tree-shake | `/` · `/t/*` | 134.7 · 139.8 KB | 150 · 200 KB | Before the fix, `/` carried shell code it never uses (139.2 KB). |
+| 2026-11-03 | T6: + i18n runtime (both catalogues) | `/` | 134.5 KB | 150 KB | +2.3 KB. |
 | 2026-11-03 | T4 baseline: Next 16.4.2 + React 19.3.1, near-empty client page | `/` | 132.2 KB | 150 KB | Framework floor. Leaves ~18 KB for app code on the student route. |
 
 ## Watch items
