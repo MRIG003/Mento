@@ -125,6 +125,20 @@ describe('practice', () => {
   });
 });
 
+describe('checklist', () => {
+  it('reflects what the demo teacher has really done, step by step', async () => {
+    const { scope } = setup();
+    expect(await scope.checklist()).toEqual({ ok: true, value: { createClass: true, shareJoin: false, publishHomework: true, seeInsight: false, sendPractice: false } });
+    await scope.recordEvent('results-opened', { homeworkId: HW });
+    await scope.recordEvent('join-link-shared', { classId: 'cls_6b' as ClassId });
+    const r = await scope.checklist();
+    expect(r.ok && [r.value.seeInsight, r.value.shareJoin]).toEqual([true, true]);
+  });
+  it('is empty for a brand-new teacher', async () => {
+    expect(await setup('t_john').scope.checklist()).toEqual({ ok: true, value: { createClass: false, shareJoin: false, publishHomework: false, seeInsight: false, sendPractice: false } });
+  });
+});
+
 describe('export and delete', () => {
   it('exports only this class, with formula-safe cells', async () => {
     const { scope } = setup();

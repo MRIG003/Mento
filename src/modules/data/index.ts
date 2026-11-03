@@ -2,7 +2,7 @@ export { createLocalRepositories, DEMO_SCHOOL_CODE, DEMO_TEACHER_ID } from './re
 export type { OnboardingRepo, Repositories, Session, SessionRepo, StepStatus } from './repositories';
 export { DEMO_NAMES } from './demo';
 export type { DemoControls } from './demo';
-export type { TeacherScope, ClassSummary, CreateClassInput, HomeworkDraftInput, BankFilter } from './scopes/teacher';
+export type { TeacherScope, ClassSummary, CreateClassInput, HomeworkDraftInput, BankFilter, Checklist } from './scopes/teacher';
 export { MAX_ROSTER } from './scopes/teacher';
 export type { HomeworkResults, ConceptResult, ReviewItem, StudentRow } from './scopes/results';
 export { classLabel } from './scopes/results';
@@ -17,3 +17,5 @@ export type { Collections, Template, OnboardingState, TeacherStep, PrincipalStep
 export { TEACHER_STEPS, PRINCIPAL_STEPS, DB_KEY } from './storage/collections';
 export { RepositoriesProvider, useLive, useRepositories } from './react/provider';
 export type { Live } from './react/provider';
+export { useTeacher } from './react/use-teacher';
+export type { TeacherSession } from './react/use-teacher';

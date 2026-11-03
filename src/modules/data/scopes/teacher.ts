@@ -14,6 +14,8 @@ export type CreateClassInput = { grade: number; section: string; subjectId: Subj
 export type HomeworkDraftInput = { id?: HomeworkId; classId: ClassId; chapter: Bilingual; questionIds: QuestionId[]; dueAt: string; defaultLang: LangCode };
 export type BankFilter = { subjectId: SubjectId; grade?: number; conceptIds?: ConceptId[] };
 
+export type Checklist = { createClass: boolean; shareJoin: boolean; publishHomework: boolean; seeInsight: boolean; sendPractice: boolean };
+
 export const MAX_ROSTER = 80;
 const PRACTICE_DAYS = 2;
 
@@ -41,6 +43,8 @@ export type TeacherScope = {
   recordEvent(kind: 'results-opened' | 'join-link-shared' | 'homework-shared' | 'practice-shared', ref: { homeworkId?: HomeworkId; classId?: ClassId }): Promise<void>;
   exportClassCsv(classId: ClassId): Promise<Result<string>>;
   deleteStudent(id: StudentId): Promise<Result<void>>;
+  /** Mento Starter Checklist, derived from what the teacher actually did (SPEC-desk). */
+  checklist(): Promise<Result<Checklist>>;
 };
 
 type Deps = { db: Database; teacherId: TeacherId; clock: Clock; rng: RandomSource; blobs?: BlobStore };
@@ -324,6 +328,21 @@ export function createTeacherScope({ db, teacherId, clock, rng, blobs }: Deps): 
         }
       }
       return ok(toCsv(rows));
+    },
+
+    async checklist() {
+      const d = load();
+      if (!d.ok) return d;
+      const mine = new Set(d.value.classes.filter((c) => c.teacherId === teacherId).map((c) => c.id));
+      const homework = d.value.homework.filter((h) => mine.has(h.classId) && h.status === 'published');
+      const did = (kind: string) => d.value.events.some((e) => e.teacherId === teacherId && e.kind === kind);
+      return ok({
+        createClass: mine.size > 0,
+        shareJoin: did('join-link-shared'),
+        publishHomework: homework.some((h) => h.kind === 'homework'),
+        seeInsight: did('results-opened'),
+        sendPractice: homework.some((h) => h.kind === 'practice'),
+      });
     },
 
     async deleteStudent(id) {
