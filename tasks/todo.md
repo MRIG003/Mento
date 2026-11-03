@@ -164,27 +164,27 @@ Default verify for every task: `npm run check` green + Playwright check at 390 p
 
 ## Slice 3: Teacher onboarding + roster + Starter Checklist
 
-- [ ] **T23: Role chooser `/`**
+- [x] **T23: Role chooser `/`**
   - Description: (3 cards, language visible, "Try with a demo class", link-paste help).
   - Acceptance: behaviour above works; loading/empty/error states and en+hi covered by tests
   - Verify: `npm run check` + 390 px en/hi browser check
   - Files: `onboarding/screens/RoleChooser.tsx`, `src/app/page.tsx`.
 
-- [ ] **T24: Teacher onboarding steps 1-5**
+- [x] **T24: Teacher onboarding steps 1-5**
   - Description: Progress state machine (skip/resume), OTP Preview, name/school, first class, roster (join link / paste ≤ 80 names / demo class), consent explainer.
   - Acceptance: behaviour above works; loading/empty/error states and en+hi covered by tests
   - Verify: `npm run check` + 390 px en/hi browser check
   - Files: `onboarding/lib/progress.ts`, `onboarding/screens/{TeacherStart,StepOtp,StepClass,StepRoster}.tsx`, `src/app/start/teacher/page.tsx`. *(Split into T24a steps 1-3 and T24b roster+consent if it exceeds ~5 files.)*
 
-- [ ] **T25: Desk shell + Starter Checklist**
+- [x] **T25: Desk shell + Starter Checklist**
   - Description: `/t` with empty state, checklist with 5 steps, stickers (inline SVG), celebrations; hides at 5/5.
   - Acceptance: behaviour above works; loading/empty/error states and en+hi covered by tests
   - Verify: `npm run check` + 390 px en/hi browser check
   - Files: `desk/screens/Desk.tsx`, `desk/components/{StarterChecklist,Sticker}.tsx`, `src/app/t/page.tsx`.
 
-- [ ] **Checkpoint H (T23-T25)** e2e: `/` → teacher → class → desk shows checklist with 1-2 done, en+hi.
-  - [ ] All tests pass, build clean, size budget met
-  - [ ] Flow so far works end to end in en and hi
+- [x] **Checkpoint H (T23-T25)** e2e: `/` → teacher → class → desk shows checklist with 1-2 done, en+hi.
+  - [x] All tests pass, build clean, size budget met
+  - [x] Flow so far works end to end in en and hi
 
 
 ## Slice 4: Create homework + share
