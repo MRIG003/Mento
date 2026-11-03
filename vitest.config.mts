@@ -21,6 +21,6 @@ export default defineConfig({
         },
       },
     ],
-    coverage: { provider: 'v8', include: ['src/modules/**/*.{ts,tsx}'], exclude: ['**/*.test.*'] },
+    coverage: { provider: 'v8', include: ['src/modules/**/*.{ts,tsx}'], exclude: ['**/*.test.*', '**/*.fixtures.ts'] },
   },
 });
