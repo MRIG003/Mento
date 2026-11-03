@@ -48,27 +48,27 @@ Default verify for every task: `npm run check` green + Playwright check at 390 p
   - [x] All tests pass, build clean, size budget met
   - [x] Flow so far works end to end in en and hi
 
-- [ ] **T8: Primitives A**
+- [x] **T8: Primitives A**
   - Description: Button (pill 56 px), StickyNote + WashiTape, Card, Badge (DemoData/Preview/Late), StatusWord.
   - Acceptance: states + keyboard tests; the flagship look renders in a dev-only `/dev/kit` page (excluded from prod build output via a notFound() guard).
   - Verify: `npm run check` + 390 px en/hi browser check
   - Files: listed in plan.md
 
-- [ ] **T9: Primitives B**
+- [x] **T9: Primitives B**
   - Description: NameTag (deterministic tint/rotation from id), HighlighterMark, ProgressBar (bar + % + word), Fraction (accessible label en/hi), EmptyState, PaperSkeleton.
   - Acceptance: behaviour above works; loading/empty/error states and en+hi covered by tests
   - Verify: `npm run check` + 390 px en/hi browser check
   - Files: listed in plan.md
 
-- [ ] **T10: Primitives C + route states**
+- [x] **T10: Primitives C + route states**
   - Description: CoachMark (max 4, focus trap, Esc, returns focus), Sheet (dialog), Field (label/hint/error via aria-describedby); `src/app/{error,not-found,loading}.tsx` bilingual.
   - Acceptance: behaviour above works; loading/empty/error states and en+hi covered by tests
   - Verify: `npm run check` + 390 px en/hi browser check
   - Files: listed in plan.md
 
-- [ ] **Checkpoint C (T8-T10)** kit page screenshots en+hi at 390 px; axe-style checks pass. *Slice 1 done.*
-  - [ ] All tests pass, build clean, size budget met
-  - [ ] Flow so far works end to end in en and hi
+- [x] **Checkpoint C (T8-T10)** kit page screenshots en+hi at 390 px; axe-style checks pass. *Slice 1 done.*
+  - [x] All tests pass, build clean, size budget met
+  - [x] Flow so far works end to end in en and hi
 
 
 ## Slice 2: Domain, data, services (risk-first: Devanagari matching, gap rules, photo heuristics)
