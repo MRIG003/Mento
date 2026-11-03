@@ -15,3 +15,5 @@ export { createBlobStore } from './storage/blob-store';
 export type { BlobStore } from './storage/blob-store';
 export type { Collections, Template, OnboardingState, TeacherStep, PrincipalStep, ActivityEvent } from './storage/collections';
 export { TEACHER_STEPS, PRINCIPAL_STEPS, DB_KEY } from './storage/collections';
+export { RepositoriesProvider, useLive, useRepositories } from './react/provider';
+export type { Live } from './react/provider';

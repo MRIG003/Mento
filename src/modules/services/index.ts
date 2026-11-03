@@ -115,3 +115,5 @@ export function createPreviewServices(deps: Deps): Services {
 
   return { otp, share, reader, translate, payments, sync: { preview: true, status: () => ({ mode: 'local-only' }) } };
 }
+
+export { ServicesProvider, useServices } from './react';

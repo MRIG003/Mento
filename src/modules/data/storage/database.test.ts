@@ -79,6 +79,17 @@ describe('createDatabase: writing', () => {
     expect(result).toMatchObject({ ok: false, error: { code: 'STORAGE', messageKey: 'error.storage.full' } });
   });
 
+  it('tells its own listeners about its own writes', () => {
+    const [driver] = createMemoryDrivers(1);
+    const db = createDatabase({ driver: driver!, clock });
+    let notified = 0;
+    const off = db.subscribe(() => { notified += 1; });
+    db.update((d) => d);
+    off();
+    db.update((d) => d);
+    expect(notified).toBe(1);
+  });
+
   it('tells another tab when this tab writes (teacher tab sees a student tab submit)', () => {
     const [studentTab, teacherTab] = createMemoryDrivers(2);
     const teacherDb = createDatabase({ driver: teacherTab!, clock });

@@ -20,13 +20,14 @@ export type Database = {
   update(change: (current: Collections) => Collections): Result<Collections>;
   /** Replace everything (seed, reset). */
   replace(next: Collections): Result<Collections>;
-  /** Fires after another tab (or driver) changes the database. */
+  /** Fires after any change: this tab's writes and other tabs' writes (storage event). */
   subscribe(listener: () => void): () => void;
 };
 
 export function createDatabase(deps: { driver: StorageDriver; clock: Clock }): Database {
   const { driver, clock } = deps;
   let cache: { raw: string | null; value: Result<Collections | null> } | null = null;
+  const local = new Set<() => void>();
 
   const quarantine = (raw: string, reason: string): Result<never> => {
     driver.write(`${DB_KEY}:corrupt:${clock.now().toISOString()}`, raw);
@@ -67,6 +68,7 @@ export function createDatabase(deps: { driver: StorageDriver; clock: Clock }): D
     const saved = driver.write(DB_KEY, raw);
     if (!saved.ok) return saved;
     cache = { raw, value: ok(parsed.data) };
+    local.forEach((notify) => notify());
     return ok(parsed.data);
   };
 
@@ -78,6 +80,10 @@ export function createDatabase(deps: { driver: StorageDriver; clock: Clock }): D
       return write(change(current.value ?? emptyCollections(clock.now().toISOString())));
     },
     replace: write,
-    subscribe: (listener) => driver.subscribe((key) => { if (key === DB_KEY || key === null) listener(); }),
+    subscribe: (listener) => {
+      local.add(listener);
+      const off = driver.subscribe((key) => { if (key === DB_KEY || key === null) listener(); });
+      return () => { local.delete(listener); off(); };
+    },
   };
 }
