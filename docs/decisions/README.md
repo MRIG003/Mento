@@ -9,7 +9,7 @@
 | [005](005-onboarding-model.md) | Resumable per-role onboarding state machine plus own coach marks | Accepted |
 | [006](006-pwa-offline.md) | Minimal hand-written service worker and manifest | Accepted |
 | [007](007-typescript-6.md) | TypeScript 6.0.x, not 7.x | Accepted |
-| [008](008-csp-sri.md) | Static rendering with strict CSP via experimental SRI | Proposed, unverified |
+| [008](008-csp-sri.md) | Static rendering; CSP `script-src 'self' 'unsafe-inline'` (SRI tried, blocks hydration) | Accepted (fallback, verified) |
 | [009](009-link-tokens-in-fragment.md) | Tokens in the URL fragment, ids in query strings | Accepted |
 | [010](010-validation-zod.md) | zod 4 (zod/mini on client routes) | Accepted |
 | [011](011-module-isolation.md) | Feature modules never import each other | Accepted |

@@ -1,7 +1,7 @@
 # ADR-008: Static rendering with a strict CSP using Next's experimental SRI
 
 ## Status
-Proposed (Phase 2), **unverified**: to be confirmed in slice 1 in a real browser. Source: Next 16.4.2 bundled docs
+**Superseded by the documented fallback (T2, 2026-11-03).** See "Verification result" below. Source: Next 16.4.2 bundled docs
 `02-guides/content-security-policy.md` (sections "Without Nonces" and "Subresource Integrity (Experimental)").
 
 ## Context
@@ -19,3 +19,15 @@ scripts. Plus the other headers in the threat model §4.
 
 ## Consequences
 SRI is experimental: pin the Next version and re-test the CSP on every Next upgrade (e2e asserts no CSP violations in the console).
+
+## Verification result (T2, 2026-11-03)
+Built with `experimental.sri` and `script-src 'self'`, served with `next start`, opened in Chromium 1243 at 390 px:
+external chunks received `integrity` attributes, but three inline scripts (the RSC flight payload, 43-4368 bytes) were
+blocked ("Executing inline script violates ... script-src 'self'"), and the page did not hydrate (a click handler never ran).
+
+**Decision now:** `script-src 'self' 'unsafe-inline'` (docs' "Without Nonces"), without `experimental.sri`. All other directives
+stay strict: `default-src 'self'`, `connect-src 'self'`, `object-src 'none'`, `base-uri 'self'`, `frame-ancestors 'none'`, and no
+third-party origins. Residual XSS risk is mitigated by React text escaping, a lint ban on `dangerouslySetInnerHTML`/`innerHTML`/`eval`,
+and no HTML rendering of user content (threat model T2).
+
+**Revisit when:** a backend exists (nonces via `proxy.ts` become affordable), or Next supports hashing inline payload scripts for static pages.

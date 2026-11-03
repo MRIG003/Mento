@@ -50,7 +50,7 @@ Scope: a static Next.js app on Vercel; all data in the browser (localStorage + I
 
 ## 4. HTTP security headers (next.config `headers()`, all routes)
 ```
-Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:;
+Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:;
   font-src 'self'; connect-src 'self'; media-src 'self' blob:; worker-src 'self'; manifest-src 'self'; object-src 'none';
   base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
 X-Content-Type-Options: nosniff
@@ -60,9 +60,8 @@ X-Frame-Options: DENY
 Strict-Transport-Security: max-age=63072000; includeSubDomains (Vercel serves HTTPS)
 Cross-Origin-Opener-Policy: same-origin
 ```
-`script-src 'self'` without `'unsafe-inline'` relies on Next's experimental SRI (ADR-008). If slice 1 shows Next's inline
-bootstrap scripts are blocked, the documented fallback is `script-src 'self' 'unsafe-inline'` (the Next docs' "without nonces"
-config), recorded with the reason. `style-src 'unsafe-inline'` is needed for React inline style attributes (rotations), and the
+`script-src` includes `'unsafe-inline'`: T2 showed that Next's static pages hydrate from inline RSC payload scripts that SRI
+does not cover (ADR-008, with evidence). The mitigation is no HTML rendering of user content (T2 row above). `style-src 'unsafe-inline'` is needed for React inline style attributes (rotations), and the
 risk is low with no user-controlled CSS. Dev adds `'unsafe-eval'` only in development (as the Next docs advise).
 
 ## 5. Abuse cases (each becomes a first test in its slice)
