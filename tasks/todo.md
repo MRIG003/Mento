@@ -73,27 +73,27 @@ Default verify for every task: `npm run check` green + Playwright check at 390 p
 
 ## Slice 2: Domain, data, services (risk-first: Devanagari matching, gap rules, photo heuristics)
 
-- [ ] **T11: Domain types + schemas**
+- [x] **T11: Domain types + schemas**
   - Description: zod schemas for all 14 entities + `Result`/`AppError`/branded ids/`Clock`/`RandomSource`; `generateToken` (16 bytes, base64url, 22 chars).
   - Acceptance: 10k tokens are unique with the right length/alphabet; invalid entities rejected.
   - Verify: `npm run check` + 390 px en/hi browser check
   - Files: `domain/{schemas.ts,types.ts,result.ts,token.ts,index.ts}`.
 
-- [ ] **T12: Answer checking**
+- [x] **T12: Answer checking**
   - Description: `normaliseAnswer` (NFC, zero-width, ०-९, spaces, trailing danda, loose ँ→ं & nukta), `checkAnswer` (mcq/fill/ numeric/short/photo), `tagLateness`.
   - Acceptance: the required tests in SPEC §6 (each type, variants, Devanagari, late at the exact due time).
   - Verify: `npm run check` + 390 px en/hi browser check
   - Files: `domain/lib/{normalise.ts,check.ts,lateness.ts}`.
 
-- [ ] **T13: Gap rules**
+- [x] **T13: Gap rules**
   - Description: `studentConceptStatus`, `classConceptStatus`, `reportBand`, attempt counting with overrides, `detectMisconceptions`, `recheckDelta`.
   - Acceptance: boundary tests 1/2 attempts, 49/50%, 59/60%, 2/3 attempts; the ≥ 2 rule for distractors.
   - Verify: `npm run check` + 390 px en/hi browser check
   - Files: `domain/lib/{gap-rules.ts,evidence.ts,misconceptions.ts,recheck.ts}`.
 
-- [ ] **Checkpoint D (T11-T13)** domain coverage ≥ 95%.
-  - [ ] All tests pass, build clean, size budget met
-  - [ ] Flow so far works end to end in en and hi
+- [x] **Checkpoint D (T11-T13)** domain coverage ≥ 95%.
+  - [x] All tests pass, build clean, size budget met
+  - [x] Flow so far works end to end in en and hi
 
 - [ ] **T14: Practice, wrap, aggregates, CSV**
   - Description: `selectPractice`, `buildEveningWrap`, `schoolAggregates` (type test: no ids/names), `isDashboardUnlocked`, `escapeCsvCell`/`toCsv`, `formatIndianNumber`.
