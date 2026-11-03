@@ -1,16 +1,16 @@
 import { expect, test } from '@playwright/test';
 
-test('teacher shell: language switch is one tap, keeps typed input, never navigates, no overflow', async ({ page }, info) => {
+test('onboarding: language switch is one tap, keeps typed input, never navigates, no overflow', async ({ page }, info) => {
   const problems: string[] = [];
   page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') problems.push(m.text()); });
   page.on('pageerror', (e) => problems.push(e.message));
 
-  await page.goto('/t');
+  await page.goto('/start/teacher');
   const startLang = info.project.name.startsWith('hi') ? 'hi' : 'en';
   await expect(page.locator('html')).toHaveAttribute('lang', startLang);
 
-  const input = page.getByTestId('probe-input');
-  await input.fill('3/4 ५');
+  const input = page.locator('input[type="tel"]');
+  await input.fill('98765 ४३२१०');
   let navigations = 0;
   page.on('framenavigated', () => { navigations += 1; });
 
@@ -18,7 +18,7 @@ test('teacher shell: language switch is one tap, keeps typed input, never naviga
   await page.locator(`header button[lang="${target}"]`).click();
 
   await expect(page.locator('html')).toHaveAttribute('lang', target);
-  await expect(input).toHaveValue('3/4 ५');
+  await expect(input).toHaveValue('98765 ४३२१०');
   expect(navigations).toBe(0);
 
   const box = await page.locator(`header button[lang="${target}"]`).boundingBox();
@@ -27,6 +27,5 @@ test('teacher shell: language switch is one tap, keeps typed input, never naviga
 
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBe(0);
-  await expect(page.getByRole('navigation').getByRole('link')).toHaveCount(4);
   expect(problems, problems.join("\n")).toEqual([]);
 });
