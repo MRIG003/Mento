@@ -52,6 +52,7 @@ answer is not a gap (gap rules in SPEC). No invented stats, quotes or testimonia
 - Every UI string in en + hi translation files; a parity test fails on missing keys.
 - Thin vertical slices; project builds between slices; commits under ~300 changed lines, atomic,
   never mixing refactor and feature. Out-of-scope issues -> "NOTICED BUT NOT TOUCHING" in tasks/todo.md.
-- Development branch for this session: claude/friendly-bell-d1p91z.
+- Git: all work on branch claude/friendly-bell-d1p91z (owner decision, overrides feat/ branches and PR-per-slice). PR into main only when asked.
+- Deploy: Vercel at Phase 6, after CHECKPOINT 4 approval. Name "Mento" kept; keep it in one constant (trademark check pending).
 - Originality: inspired by principles of "Kaksha" only; never copy its OMR theme, layout, names
   (Pro, Campus), XP/streaks, copy, colours or North Star phrase.
