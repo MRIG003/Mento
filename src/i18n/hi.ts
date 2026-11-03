@@ -14,6 +14,12 @@ export const hi: Catalogue = {
   'common.retry': 'फिर से कोशिश करें',
   'common.mainNav': 'मुख्य',
   'common.notBuiltYet': 'Mento का यह हिस्सा अभी बन रहा है।',
+  'common.working': 'हो रहा है…',
+
+  'status.stuck': 'अटके हैं',
+  'status.gettingThere': 'सुधर रहा है',
+  'status.onTrack': 'ठीक चल रहा है',
+  'status.notEnough': 'अभी जवाब कम हैं',
 
   'lang.label': 'भाषा',
   'lang.en': 'English',

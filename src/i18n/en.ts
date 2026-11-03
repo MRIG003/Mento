@@ -15,6 +15,12 @@ export const en = {
   'common.retry': 'Try again',
   'common.mainNav': 'Main',
   'common.notBuiltYet': 'This part of Mento is still being built.',
+  'common.working': 'Working…',
+
+  'status.stuck': 'stuck',
+  'status.gettingThere': 'getting there',
+  'status.onTrack': 'on track',
+  'status.notEnough': 'not enough answers yet',
 
   'lang.label': 'Language',
   'lang.en': 'English',
