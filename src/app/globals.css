@@ -1,1 +1,70 @@
 @import 'tailwindcss';
+
+/* Stationery Desk tokens (SPEC-foundation). Values mirror src/modules/foundation/lib/tokens.ts (tested). */
+@theme {
+  --color-paper: #F3EBDD;
+  --color-dot: #D6C9B2;
+  --color-note: #FFE58A;
+  --color-washi: #F7B2C4;
+  --color-highlight: #FFEB3B;
+  --color-tag-pink: #F8C8D6;
+  --color-tag-blue: #BFE0F7;
+  --color-tag-mint: #BDEBD2;
+  --color-tag-lilac: #D9CCF5;
+  --color-tag-peach: #FAD3B0;
+  --color-tag-yellow: #FFE58A;
+  --color-primary: #2F3FBF;
+  --color-primary-pressed: #24319A;
+  --color-ink: #2B2B2B;
+  --color-ink-muted: #5A5A52;
+  --color-card: #FFFFFF;
+  --color-line: #E4D9C6;
+  --color-ok: #2E7D4F;
+  --color-warn: #B26A00;
+  --color-bad: #C62828;
+
+  --font-ui: var(--font-nunito), var(--font-deva), ui-sans-serif, system-ui, sans-serif;
+  --font-hand: var(--font-caveat), var(--font-nunito), cursive;
+  --font-deva: var(--font-noto-deva), var(--font-nunito), ui-sans-serif, sans-serif;
+
+  --radius-card: 1rem;
+  --shadow-note: 0 1px 1px rgb(43 43 43 / 0.08), 0 6px 14px -6px rgb(43 43 43 / 0.28);
+  --shadow-card: 0 1px 2px rgb(43 43 43 / 0.06), 0 4px 10px -6px rgb(43 43 43 / 0.18);
+  --spacing-tap: 2.75rem;     /* 44px minimum target */
+  --spacing-pill: 3.5rem;     /* 56px primary button */
+}
+
+@layer base {
+  html {
+    color: var(--color-ink);
+    background-color: var(--color-paper);
+    font-family: var(--font-ui);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  /* Hindi: Devanagari face first and generous line height so matras never clip (SPEC-foundation). */
+  html:lang(hi) {
+    font-family: var(--font-deva);
+    line-height: 1.7;
+  }
+  body {
+    min-height: 100dvh;
+    background-color: var(--color-paper);
+    background-image: radial-gradient(var(--color-dot) 1px, transparent 1px);
+    background-size: 20px 20px;
+    line-height: 1.5;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
