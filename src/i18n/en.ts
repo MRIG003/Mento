@@ -65,6 +65,9 @@ export const en = {
   'error.storage.corrupt': 'Saved data on this phone could not be read. It has been kept aside; you can reset the demo.',
   'error.storage.unavailable': 'This browser is not letting Mento save. Answers stay only until you close this page.',
   'error.validation': 'Some details are not right. Please check and try again.',
+  'error.forbidden': 'This belongs to another teacher’s class.',
+  'error.missing': 'We could not find that. It may have been deleted.',
+  'error.roster.full': 'A class can have up to 80 children.',
 
   'children_one': '{count} child',
   'children_other': '{count} children',

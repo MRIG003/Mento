@@ -64,6 +64,9 @@ export const hi: Catalogue = {
   'error.storage.corrupt': 'इस फ़ोन में सेव डेटा पढ़ा नहीं जा सका। उसे अलग रख दिया है; आप डेमो रीसेट कर सकते हैं।',
   'error.storage.unavailable': 'यह ब्राउज़र Mento को सेव नहीं करने दे रहा। जवाब सिर्फ़ यह पेज बंद होने तक रहेंगे।',
   'error.validation': 'कुछ जानकारी सही नहीं है। देखकर फिर से कोशिश करें।',
+  'error.forbidden': 'यह किसी और टीचर की क्लास का है।',
+  'error.missing': 'यह नहीं मिला। शायद हटा दिया गया है।',
+  'error.roster.full': 'एक क्लास में ज़्यादा से ज़्यादा 80 बच्चे हो सकते हैं।',
 
   'children_one': '{count} बच्चा',
   'children_other': '{count} बच्चे',
