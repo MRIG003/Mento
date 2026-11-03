@@ -3,7 +3,7 @@
 Homework that tells a teacher who is stuck, on which concept, and what to do next.
 Mobile-first web app for Classes 3-8 in affordable private schools in India. English and Hindi.
 
-Status: Phase 1 (creative brief awaiting approval: docs/creative-brief.md). See CLAUDE.md for the process and rules.
+Status: Phase 2 (capability map awaiting approval: CAPABILITY-MAP.md).
 Everything shown in the app will be demo data; simulated features will be labelled Preview.
 
 ## Phase 0 decisions and defaults

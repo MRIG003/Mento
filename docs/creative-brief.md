@@ -1,6 +1,6 @@
 # Mento: Creative Brief
 
-Status: **Draft for CHECKPOINT 1.** Skill: idea-refine (diverge, then converge).
+Status: **Approved at CHECKPOINT 1 (2026-11-03)** with the recommended answers to all open questions. Skill: idea-refine (diverge, then converge).
 Every name and number below is illustrative demo data. Nothing here is a measured fact.
 
 ---
@@ -292,3 +292,9 @@ no value is ever shown unless it's computed.
 2. **Navigation.** Four teacher tabs with *Results* (Review | Concepts), or the original five?
 3. **Misconception-tagged distractors** in the Class 6 bank, shown only when ≥2 children chose the same one. Keep?
 4. **North Star wording** "children unstuck per class per week". OK, or do you want another phrase?
+
+### Resolved at CHECKPOINT 1
+1. Single-device v1, cross-phone sync shown as Preview: **yes**.
+2. Teacher tabs: **four** (Desk, Create, Results [Review | Concepts], Class).
+3. Misconception-tagged distractors, shown when 2 or more children chose the same one: **keep**.
+4. North Star definition "children unstuck per class per week": **OK** (definition only, never shown uncomputed).
