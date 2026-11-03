@@ -1,0 +1,35 @@
+import type * as z from 'zod/mini';
+import type * as S from './schemas';
+
+export type SchoolId = z.infer<typeof S.SchoolIdSchema>;
+export type TeacherId = z.infer<typeof S.TeacherIdSchema>;
+export type ClassId = z.infer<typeof S.ClassIdSchema>;
+export type StudentId = z.infer<typeof S.StudentIdSchema>;
+export type SubjectId = z.infer<typeof S.SubjectIdSchema>;
+export type ConceptId = z.infer<typeof S.ConceptIdSchema>;
+export type QuestionId = z.infer<typeof S.QuestionIdSchema>;
+export type HomeworkId = z.infer<typeof S.HomeworkIdSchema>;
+export type SubmissionId = z.infer<typeof S.SubmissionIdSchema>;
+export type PracticeSetId = z.infer<typeof S.PracticeSetIdSchema>;
+export type ConsentId = z.infer<typeof S.ConsentIdSchema>;
+export type ReminderId = z.infer<typeof S.ReminderIdSchema>;
+export type LinkToken = z.infer<typeof S.LinkTokenSchema>;
+export type LangCode = z.infer<typeof S.LangSchema>;
+export type Bilingual = z.infer<typeof S.BilingualSchema>;
+
+export type School = z.infer<typeof S.SchoolSchema>;
+export type Teacher = z.infer<typeof S.TeacherSchema>;
+export type Subject = z.infer<typeof S.SubjectSchema>;
+export type Class = z.infer<typeof S.ClassSchema>;
+export type Student = z.infer<typeof S.StudentSchema>;
+export type Concept = z.infer<typeof S.ConceptSchema>;
+export type Question = z.infer<typeof S.QuestionSchema>;
+export type QuestionType = Question['type'];
+export type Answer = z.infer<typeof S.AnswerSchema>;
+export type Verdict = z.infer<typeof S.VerdictSchema>;
+export type Evaluation = z.infer<typeof S.EvaluationSchema>;
+export type Homework = z.infer<typeof S.HomeworkSchema>;
+export type Submission = z.infer<typeof S.SubmissionSchema>;
+export type PracticeSet = z.infer<typeof S.PracticeSetSchema>;
+export type Consent = z.infer<typeof S.ConsentSchema>;
+export type Reminder = z.infer<typeof S.ReminderSchema>;
