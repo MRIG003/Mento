@@ -1,0 +1,47 @@
+/**
+ * English catalogue: the source of truth for keys. hi.ts must have every key (compile-time + catalogue.test.ts).
+ * Plurals: `key_one` / `key_other`, used as t('key', { count }).
+ */
+export const en = {
+  'common.appName': 'Mento',
+  'common.whatsapp': 'WhatsApp',
+  'common.demoData': 'Demo data',
+  'common.preview': 'Preview',
+  'common.late': 'Late',
+  'common.loading': 'Loading…',
+  'common.help': 'Help',
+  'common.back': 'Back',
+  'common.close': 'Close',
+  'common.retry': 'Try again',
+  'common.mainNav': 'Main',
+
+  'lang.label': 'Language',
+  'lang.en': 'English',
+  'lang.hi': 'हिन्दी',
+  'lang.switchEn': 'EN',
+  'lang.switchHi': 'हिं',
+  'lang.switchTo': 'Switch to {language}',
+
+  'tab.teacher.desk': 'Desk',
+  'tab.teacher.create': 'Create',
+  'tab.teacher.results': 'Results',
+  'tab.teacher.class': 'Class',
+  'tab.principal.overview': 'Overview',
+  'tab.principal.gaps': 'Gaps',
+  'tab.principal.classes': 'Classes',
+  'tab.principal.plan': 'Plan',
+  'tab.student.today': 'Today',
+  'tab.student.practice': 'Practice',
+  'tab.student.progress': 'My progress',
+
+  'error.generic.title': 'Something went wrong',
+  'error.generic.body': 'Nothing you typed is lost. Please try again.',
+  'error.notFound.title': 'This page isn’t here',
+  'error.notFound.body': 'Go back, or open the link from WhatsApp again.',
+
+  'children_one': '{count} child',
+  'children_other': '{count} children',
+} as const;
+
+export type I18nKey = keyof typeof en;
+export type Catalogue = Record<I18nKey, string>;
