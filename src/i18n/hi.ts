@@ -80,6 +80,23 @@ export const hi: Catalogue = {
   'translate.previewUnavailable': 'प्रीव्यू: ऑटो-ट्रांसलेट अभी यह टेक्स्ट नहीं जानता। कृपया खुद लिखें।',
   'share.copyFailed': 'कॉपी नहीं हुआ। लिंक को दबाकर रखें और कॉपी करें।',
 
+  'role.title': 'आप Mento कैसे इस्तेमाल करेंगे?',
+  'role.subtitle': 'होमवर्क जो बताए कि कौन अटका है, और आगे क्या करना है।',
+  'role.teacher': 'मैं टीचर हूँ',
+  'role.teacherHint': 'होमवर्क बनाएँ, देखें कौन अटका है, अभ्यास दें।',
+  'role.principal': 'मैं प्रिंसिपल हूँ',
+  'role.principalHint': 'पूरे स्कूल का हाल देखें। सिर्फ़ कुल आँकड़े।',
+  'role.parent': 'मुझे बच्चे के स्कूल से लिंक मिला है',
+  'role.parentHint': 'न ऐप चाहिए, न अकाउंट।',
+  'role.parentHelp': 'WhatsApp से लिंक फिर से खोलें। या यहाँ पेस्ट करें:',
+  'role.pasteLabel': 'होमवर्क लिंक',
+  'role.pasteOpen': 'होमवर्क खोलें',
+  'role.pasteInvalid': 'यह Mento होमवर्क का लिंक नहीं लगता।',
+  'role.demo': 'डेमो क्लास के साथ आज़माएँ',
+  'role.demoHint': 'सैंपल जवाबों वाली क्लास, देखने के लिए तैयार।',
+  'role.continueTeacher': 'अपनी डेस्क पर चलें',
+  'role.continuePrincipal': 'स्कूल की झलक पर चलें',
+
   'children_one': '{count} बच्चा',
   'children_other': '{count} बच्चे',
 };

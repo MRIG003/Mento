@@ -1,10 +1,14 @@
 // Based on Next 16.4.2 docs (guides/testing/vitest.md); tsconfig paths via Vite 8's native resolve.tsconfigPaths.
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
+import { fileURLToPath } from 'node:url';
 
 export default defineConfig({
   plugins: [react()],
-  resolve: { tsconfigPaths: true },
+  resolve: {
+    tsconfigPaths: true,
+    alias: { 'next/font/local': fileURLToPath(new URL('./test/next-font-local.stub.ts', import.meta.url)) },
+  },
   test: {
     projects: [
       {

@@ -45,6 +45,7 @@
     "*.config.ts",
     "*.config.mts",
     "vitest.setup.ts",
+    "test/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [

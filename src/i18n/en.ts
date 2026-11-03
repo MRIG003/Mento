@@ -81,6 +81,23 @@ export const en = {
   'translate.previewUnavailable': 'Preview: auto-translate doesn’t know this text yet. Please type it yourself.',
   'share.copyFailed': 'Couldn’t copy. Press and hold the link to copy it.',
 
+  'role.title': 'How will you use Mento?',
+  'role.subtitle': 'Homework that shows who is stuck, and what to do next.',
+  'role.teacher': 'I’m a teacher',
+  'role.teacherHint': 'Create homework, see who is stuck, give practice.',
+  'role.principal': 'I’m a principal',
+  'role.principalHint': 'See how the whole school is doing. Totals only.',
+  'role.parent': 'I got a link from my child’s school',
+  'role.parentHint': 'No app and no account needed.',
+  'role.parentHelp': 'Open the link from WhatsApp again. Or paste it here:',
+  'role.pasteLabel': 'Homework link',
+  'role.pasteOpen': 'Open homework',
+  'role.pasteInvalid': 'That doesn’t look like a Mento homework link.',
+  'role.demo': 'Try with a demo class',
+  'role.demoHint': 'A class with sample answers, ready to explore.',
+  'role.continueTeacher': 'Continue to your desk',
+  'role.continuePrincipal': 'Continue to the school overview',
+
   'children_one': '{count} child',
   'children_other': '{count} children',
 } as const;
