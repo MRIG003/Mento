@@ -62,8 +62,9 @@ User stories (each traced to a module spec):
 | zod | 4.6.7 | Boundary validation; `zod/mini` on client routes to save bytes (ADR-010) |
 | typescript | 6.0.3 | Strict, `noUncheckedIndexedAccess`. Not 7.x: typescript-eslint peer is `<6.1` (ADR-007) |
 | tailwindcss, @tailwindcss/postcss | 4.3.3 | Decided stack; CSS-first `@theme` tokens |
-| eslint, eslint-config-next | 10.13.0, 16.4.2 | `next lint` was removed in v16; ESLint CLI. Includes jsx-a11y |
-| vitest, @vitejs/plugin-react, jsdom | 5.0.5, 6.1.2, 30.1.3 | Unit + component tests (Next docs: guides/testing/vitest) |
+| eslint, eslint-config-next | 9.39.5, 16.4.2 | `next lint` was removed in v16; ESLint CLI. Includes jsx-a11y. ESLint 9, not 10: Next's plugins (import, react, jsx-a11y) declare `eslint <=9` (found in T1) |
+| vitest, vite, @vitejs/plugin-react, jsdom | 5.0.5, 8.3.4, 6.1.2, 30.1.3 | Unit + component tests (Next docs: guides/testing/vitest). `vite` is a required peer of Vitest 5 (added in T1) |
+| @vitest/coverage-v8 | 5.0.5 | Coverage for the `domain` ≥ 95% target (added in T1) |
 | @testing-library/react, /jest-dom, /user-event | 16.3.3, 7.0.1, 14.6.8 | Component tests that check state, not internals |
 | fake-indexeddb | 6.2.6 | Real-behaviour IndexedDB fake for photo-store tests (a fake, not a mock) |
 | @playwright/test | 1.63.0 | Matches the preinstalled Chromium; smoke tests at 390 px |

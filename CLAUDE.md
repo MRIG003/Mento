@@ -11,6 +11,9 @@ Next.js App Router + TypeScript (strict, noUncheckedIndexedAccess) + Tailwind + 
 `npm ci` · `npm run dev` · `npm run lint` · `npm run typecheck` · `npm test` · `npm run build` · `npm run e2e` ·
 `npm run size` · `npm run check` (all of lint, typecheck, test, build, size).
 
+## Installing
+Use `npm ci`. To add a package (after asking), use `npx npm@11.21.1 install -E <pkg>@<ver>`; npm 10 crashes on vitest peers (ADR-012).
+
 ## Where things are
 CAPABILITY-MAP.md (module ids) · SPEC.md + SPEC-<id>.md · docs/threat-model.md · docs/decisions/ (ADRs) ·
 docs/creative-brief.md · tasks/plan.md, tasks/todo.md. Next.js docs for the pinned version are in
