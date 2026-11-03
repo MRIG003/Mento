@@ -5,29 +5,29 @@ Default verify for every task: `npm run check` green + Playwright check at 390 p
 
 ## Slice 1: Foundation (theme, shell, i18n, language switch)
 
-- [ ] **T1: Tooling scaffold**
+- [x] **T1: Tooling scaffold**
   - Acceptance: `npm ci` works from the lockfile; versions pinned exactly as in SPEC §2; `npm run lint` and `npm run typecheck` pass on an empty src.
   - Verify: run both.
   - Files: `package.json`, `.npmrc` (save-exact, no-fund), `tsconfig.json` (strict, noUncheckedIndexedAccess, exactOptionalPropertyTypes, `@/*`), `eslint.config.mjs` (next + jsx-a11y + no-restricted-imports for module boundaries + ban dangerouslySetInnerHTML + jsx-no-literals), `postcss.config.mjs`.
 
-- [ ] **T2: App skeleton + security headers**
+- [x] **T2: App skeleton + security headers**
   - Acceptance: `npm run build` produces static routes; the response carries every header from threat-model §4; **ADR-008 verified**: the page hydrates with no CSP violations under `script-src 'self'` + SRI, or the fallback is applied and the ADR is updated with evidence.
   - Verify: `next start` + Playwright console capture + `curl -I`.
   - Files: `next.config.ts`, `src/app/layout.tsx`, `src/app/page.tsx` (placeholder), `src/app/globals.css`.
 
-- [ ] **T3: Test harness**
+- [x] **T3: Test harness**
   - Acceptance: `npm test` runs one sample unit test (node) and one component test (jsdom); `npm run e2e` runs a 390 px smoke test against the build using the preinstalled Chromium.
   - Verify: both commands green.
   - Files: `vitest.config.mts`, `vitest.setup.ts`, `playwright.config.ts`, `e2e/smoke.spec.ts`.
 
-- [ ] **T4: Bundle budget + CI**
+- [x] **T4: Bundle budget + CI**
   - Acceptance: `npm run size` reads the build output, gzips first-load JS per route and fails above the SPEC §8 budgets; `.github/workflows/ci.yml` runs `npm ci` + `npm run check` (+ e2e) on push.
   - Verify: run size locally; deliberately lower one budget → fails.
   - Files: `scripts/check-bundle.mjs`, `scripts/budgets.json`, `.github/workflows/ci.yml`.
 
-- [ ] **Checkpoint A (T1-T4)** check green; headers and CSP decision recorded; commands in CLAUDE.md + SPEC §3 updated to "verified".
-  - [ ] All tests pass, build clean, size budget met
-  - [ ] Flow so far works end to end in en and hi
+- [x] **Checkpoint A (T1-T4)** check green; headers and CSP decision recorded; commands in CLAUDE.md + SPEC §3 updated to "verified".
+  - [x] All tests pass, build clean, size budget met
+  - [x] Flow so far works end to end in en and hi
 
 - [ ] **T5: Design tokens + fonts**
   - Acceptance: all SPEC-foundation tokens in `@theme`; dot-grid paper body; Nunito/Caveat/Noto Sans Devanagari self-hosted (Latin + Devanagari woff2 only, `display: swap`); contrast test passes (ink, muted, white-on-primary ≥ 4.5:1); reduced-motion rule.

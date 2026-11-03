@@ -76,8 +76,8 @@ script (no size-limit dependency).
 
 ## 3. Commands
 
-Planned in slice 1 and recorded in `package.json`. **Unverified until slice 1 runs them.** Once verified, CLAUDE.md
-and this section are updated with any changes.
+Recorded in `package.json` and **verified at Checkpoint A (2026-11-03)**. `npm run e2e` runs against a production build
+(`npm run build` first); Playwright starts `next start -p 3100` itself.
 
 ```
 npm ci                      # install from lockfile

@@ -7,9 +7,10 @@ Core loop: Create -> Check -> See who is stuck -> Act. English and Hindi are equ
 Next.js App Router + TypeScript (strict, noUncheckedIndexedAccess) + Tailwind + Vitest
 (+ Playwright smoke tests at 390px, EN + HI). Deploy target: Vercel. Node 22.
 
-## Commands (planned in SPEC.md §3; verify in slice 1, then update here)
+## Commands (verified at Checkpoint A, 2026-11-03)
 `npm ci` · `npm run dev` · `npm run lint` · `npm run typecheck` · `npm test` · `npm run build` · `npm run e2e` ·
-`npm run size` · `npm run check` (all of lint, typecheck, test, build, size).
+`npm run size` · `npm run check` (all of lint, typecheck, test, build, size). `npm run e2e` needs a prior `npm run build`.
+Local server helper for browser checks: `npx next start -p 3100` (Playwright uses port 3100).
 
 ## Installing
 Use `npm ci`. To add a package (after asking), use `npx npm@11.21.1 install -E <pkg>@<ver>`; npm 10 crashes on vitest peers (ADR-012).
