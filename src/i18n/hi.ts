@@ -35,6 +35,8 @@ export const hi: Catalogue = {
   'check.reason.noKeyPoints': 'मुख्य बातें नहीं मिलीं। एक बार देख लें।',
   'check.reason.photo': 'फ़ोटो वाला जवाब। एक बार देख लें।',
 
+  'practice.notEnoughQuestions': 'इस टॉपिक पर अभी नए सवाल कम हैं। अपना एक सवाल जोड़ें।',
+
   'lang.label': 'भाषा',
   'lang.en': 'English',
   'lang.hi': 'हिन्दी',

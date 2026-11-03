@@ -36,6 +36,8 @@ export const en = {
   'check.reason.noKeyPoints': 'Key points not found. Please check.',
   'check.reason.photo': 'Photo answer. Please check.',
 
+  'practice.notEnoughQuestions': 'Not enough new questions on this concept yet. Add one of your own.',
+
   'lang.label': 'Language',
   'lang.en': 'English',
   'lang.hi': 'हिन्दी',

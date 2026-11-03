@@ -14,3 +14,11 @@ export { MIN_SAME_DISTRACTOR, detectMisconceptions, mostMissedQuestion } from '.
 export type { MisconceptionEvidence } from './lib/misconceptions';
 export { recheckDelta, unstuckCount } from './lib/recheck';
 export type { RecheckRow } from './lib/recheck';
+export { PRACTICE_MAX, PRACTICE_MIN, selectPractice } from './lib/practice';
+export { buildEveningWrap } from './lib/wrap';
+export type { EveningWrap, WrapInput } from './lib/wrap';
+export { UNLOCK_ACTIVE_TEACHERS, isActiveTeacher, isDashboardUnlocked, schoolAggregates } from './lib/aggregates';
+export type { AggregateInput, GapCell, SchoolAggregates, TeacherActivity } from './lib/aggregates';
+export { escapeCsvCell, toCsv } from './lib/csv';
+export type { CsvValue } from './lib/csv';
+export { formatIndianNumber, ratePercent } from './lib/format';
