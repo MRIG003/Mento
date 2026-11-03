@@ -7,9 +7,14 @@ Core loop: Create -> Check -> See who is stuck -> Act. English and Hindi are equ
 Next.js App Router + TypeScript (strict, noUncheckedIndexedAccess) + Tailwind + Vitest
 (+ Playwright smoke tests at 390px, EN + HI). Deploy target: Vercel. Node 22.
 
-## Commands
-Not yet scaffolded. Real commands get recorded here and in SPEC.md once package.json exists
-(expected: `npm run lint`, `npm run typecheck`, `npm test`, `npm run build`, `npm run e2e`).
+## Commands (planned in SPEC.md §3; verify in slice 1, then update here)
+`npm ci` · `npm run dev` · `npm run lint` · `npm run typecheck` · `npm test` · `npm run build` · `npm run e2e` ·
+`npm run size` · `npm run check` (all of lint, typecheck, test, build, size).
+
+## Where things are
+CAPABILITY-MAP.md (module ids) · SPEC.md + SPEC-<id>.md · docs/threat-model.md · docs/decisions/ (ADRs) ·
+docs/creative-brief.md · tasks/plan.md, tasks/todo.md. Next.js docs for the pinned version are in
+`node_modules/next/dist/docs` (nextjs.org is blocked from the container).
 
 ## Phases and gates
 0 Setup + one question round -> 1 Brainstorm (docs/creative-brief.md) [GATE] ->
