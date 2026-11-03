@@ -10,7 +10,8 @@ import { translate, type Lang, type Params } from './t';
 const catalogues = { en, hi } as const;
 
 /** Keys usable with t(): plain keys plus plural bases (`foo` for `foo_one` / `foo_other`). */
-export type TKey = I18nKey | (I18nKey extends `${infer Base}_other` ? Base : never);
+type PluralBase<K> = K extends `${infer Base}_other` ? Base : never; // distributes over the union
+export type TKey = I18nKey | PluralBase<I18nKey>;
 
 type LangState = { lang: Lang; source: LangSource };
 type I18nValue = LangState & {
