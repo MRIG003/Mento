@@ -74,6 +74,13 @@ export const en = {
   'school.codeUnknown': 'We don’t know that school code. Check it with a teacher.',
   'demo.noRoster': 'Add children to this class first, or use the demo names.',
 
+  'otp.phoneInvalid': 'Please type a 10-digit mobile number.',
+  'otp.wrong': 'That code is not right. Please try again.',
+  'otp.tooMany': 'Too many tries. Ask for a new code.',
+  'otp.expired': 'This code has expired. Ask for a new one.',
+  'translate.previewUnavailable': 'Preview: auto-translate doesn’t know this text yet. Please type it yourself.',
+  'share.copyFailed': 'Couldn’t copy. Press and hold the link to copy it.',
+
   'children_one': '{count} child',
   'children_other': '{count} children',
 } as const;
