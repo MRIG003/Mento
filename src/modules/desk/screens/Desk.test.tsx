@@ -24,7 +24,7 @@ describe('Desk', () => {
     expect(await screen.findByText('Fractions · 32 of 40 in')).toBeInTheDocument();
     expect(screen.getByText('Demo data')).toBeInTheDocument();
     expect(screen.getByText('2 of 5 done')).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: 'See results' })).toHaveAttribute('href', '/t/results?hw=hw_6b_fractions');
+    expect(screen.getAllByRole('link', { name: 'See results' })[0]).toHaveAttribute('href', '/t/results?hw=hw_6b_fractions');
   });
 
   it('shows the computed Evening Wrap, then switches once practice has gone out', async () => {

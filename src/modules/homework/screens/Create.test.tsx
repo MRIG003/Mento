@@ -58,7 +58,7 @@ describe('Create homework', () => {
     expect(wa.startsWith('https://wa.me/?text=')).toBe(true);
     expect(decodeURIComponent(wa)).toContain('Class 6B Maths homework: Fractions.');
     const list = await repos.teacher('t_demo' as never).listHomework();
-    expect(list.ok && list.value.filter((h) => h.status === 'published')).toHaveLength(2); // seeded 6B Fractions + this one
+    expect(list.ok && list.value.filter((h) => h.status === 'published')).toHaveLength(3); // seeded 6B Fractions + 7A Science + this one
   });
 
   it('shows the first-homework mission note', async () => {

@@ -28,7 +28,8 @@ Create → Check → See who is stuck → Act.
 6. **Create** → add your own question, including a **Notebook photo** question → publish → open as a child → photograph a page → teacher **Review** shows it.
 7. Role chooser → **I'm a principal** → code `DEMO26` → totals only, locked until 3 teachers are active.
 8. **Class** tab → consent, CSV download, delete, text size. `/privacy` → what we keep.
-9. **Reset demo** (Desk, or the **Demo guide** button / `?` key) starts again and keeps you signed in.
+9. **Results** → the homework picker has **Heat and acids** (Class 7A Science): "7 students stuck on Acids and bases", computed the same way.
+10. **Reset demo** (Desk, or the **Demo guide** button / `?` key) starts again and keeps you signed in.
 
 Screenshots (390 px, English and Hindi) are in [`docs/screens/`](docs/screens/).
 

@@ -30,8 +30,15 @@ const NAMES_5A = [
   'रिया', 'साहिल', 'तन्वी', 'उदय', 'वाणी', 'यश', 'ज़ारा', 'अमन', 'भूमि', 'चिराग', 'दक्ष', 'एकता', 'फ़रहान', 'गुंजन', 'हीना',
 ];
 
+const NAMES_7A = [
+  'Aryan', 'Bhoomi', 'Charu', 'Deepak', 'Eshaan', 'Falguni', 'Girish', 'Hiral', 'Indra', 'Jiya', 'Kush', 'Lavanya', 'Manav', 'Nandini',
+  'Omkar', 'Palak', 'Qasim', 'Ritika', 'Samar', 'Trisha', 'Utkarsh', 'Vidhi', 'Wasim', 'Xara', 'Yuvraj', 'Zeenat', 'Anvi', 'Bhavya',
+  'Chaitanya', 'Dhriti', 'Ehsaan', 'Fiza',
+];
+
 export const CLASSES = [
   { id: 'cls_6b', teacherId: 't_demo', grade: 6, section: 'B', subjectId: 'maths', defaultLang: 'en' as const, names: NAMES_6B },
   { id: 'cls_6a', teacherId: 't_ravi', grade: 6, section: 'A', subjectId: 'maths', defaultLang: 'hi' as const, names: NAMES_6A },
+  { id: 'cls_7a', teacherId: 't_demo', grade: 7, section: 'A', subjectId: 'science', defaultLang: 'en' as const, names: NAMES_7A },
   { id: 'cls_5a', teacherId: 't_farah', grade: 5, section: 'A', subjectId: 'hindi', defaultLang: 'hi' as const, names: NAMES_5A },
 ] as const;

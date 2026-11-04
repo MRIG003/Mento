@@ -9,7 +9,7 @@ import { HINDI_5_BANK, HINDI_5_CONCEPTS } from './hindi-5';
 import { MATHS_6_BANK, MATHS_6_CONCEPTS } from './bank-maths-6';
 import { SCIENCE_BANK, SCIENCE_CONCEPTS } from './bank-science';
 import { CLASSES, SCHOOL, SUBJECTS, TEACHERS } from './school';
-import { HW_5A_QUESTIONS, HW_6A_QUESTIONS, HW_6B_QUESTIONS, answers6B, evaluate, parseBank, profiles6B, randomAnswers } from './submissions';
+import { HW_5A_QUESTIONS, HW_6A_QUESTIONS, HW_6B_QUESTIONS, HW_7A_QUESTIONS, answers6B, answers7A, evaluate, parseBank, profiles6B, randomAnswers } from './submissions';
 
 export const SEED_VERSION = 1;
 const DAY = 24 * 60 * 60 * 1000;
@@ -104,6 +104,15 @@ export function buildDemoSeed(clock: Clock): Collections {
     db.submissions.push({ id: `sub_6a_${i}`, homeworkId: 'hw_6a_decimals', studentId: student.id, source: 'link', answers, status: 'submitted', submittedAt: iso(new Date(hw6a.publishedAt.getTime() + (1 + i * 0.5) * 3_600_000)), late: false, evaluations: evaluate(bank, answers) });
   });
   db.events.push({ kind: 'results-opened', at: iso(new Date(hw6a.due.getTime() + 3 * 3_600_000)), teacherId: 't_ravi', homeworkId: 'hw_6a_decimals' });
+
+  // ── 7A Science, Heat and acids (Meera): 30 of 32 submitted, three days ago ──
+  const hw7a = addHomework('hw_7a_heat', 'cls_7a', 'science', { en: 'Heat and acids', hi: 'ऊष्मा और अम्ल' }, HW_7A_QUESTIONS, 3, 2, 'en');
+  roster('cls_7a').slice(0, 30).forEach((student, i) => {
+    const answers = answers7A(i, bank);
+    const submittedAt = new Date(hw7a.publishedAt.getTime() + (1 + i * 0.7) * 3_600_000);
+    db.submissions.push({ id: `sub_7a_${i}`, homeworkId: 'hw_7a_heat', studentId: student.id, source: 'link', answers, status: 'submitted', submittedAt: iso(submittedAt), late: false, evaluations: evaluate(bank, answers) });
+    db.consents.push({ id: `con_7a_${i}`, studentId: student.id, grantedAt: iso(new Date(submittedAt.getTime() - 60_000)), grantedBy: 'parent-on-link', purpose: 'teaching' });
+  });
 
   // ── 5A Hindi, Grammar (Farah): 24 of 30, results not opened yet ──
   const hw5a = addHomework('hw_5a_grammar', 'cls_5a', 'hindi', { en: 'Grammar', hi: 'व्याकरण' }, HW_5A_QUESTIONS, 4, 3, 'hi');

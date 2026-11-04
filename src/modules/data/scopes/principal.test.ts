@@ -33,9 +33,9 @@ describe('PrincipalScope', () => {
   it('computes school numbers from the seed', async () => {
     const r = await setup().principal.overview('this-term');
     if (!r.ok) throw new Error();
-    expect(r.value.homeworkSet).toBe(3);
-    expect(r.value.submissionRate).toBe(81); // (32 + 30 + 24) of (40 + 36 + 30)
-    expect(r.value.gapCells.map((c) => [c.classLabel, c.subjectId, c.status])).toEqual([['6B', 'maths', 'ok'], ['6A', 'maths', 'ok'], ['5A', 'hindi', 'class-gap']]);
+    expect(r.value.homeworkSet).toBe(4);
+    expect(r.value.submissionRate).toBe(84); // (32 + 30 + 30 + 24) of (40 + 36 + 32 + 30)
+    expect(r.value.gapCells.map((c) => [c.classLabel, c.subjectId, c.status])).toEqual([['6B', 'maths', 'ok'], ['6A', 'maths', 'ok'], ['7A', 'science', 'ok'], ['5A', 'hindi', 'class-gap']]);
     expect(r.value.headline).toEqual({ classLabel: '5A', subjectId: 'hindi' });
     expect(r.value.conceptNames.c_frac_compare?.en).toBe('Comparing fractions');
   });

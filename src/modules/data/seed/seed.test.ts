@@ -13,9 +13,9 @@ describe('demo seed', () => {
     expect(parsed.success, JSON.stringify(parsed.error?.issues.slice(0, 3))).toBe(true);
   });
 
-  it('has one school, three classes and 40 + 36 + 30 children, first names only', () => {
+  it('has one school, four classes and 40 + 36 + 32 + 30 children, first names only', () => {
     expect(db.schools).toHaveLength(1);
-    expect(db.classes.map((c) => c.id)).toEqual(['cls_6b', 'cls_6a', 'cls_5a']);
+    expect(db.classes.map((c) => c.id)).toEqual(['cls_6b', 'cls_6a', 'cls_7a', 'cls_5a']);
     expect(db.students.filter((s) => s.classId === 'cls_6b')).toHaveLength(40);
     expect(db.students.every((s) => !s.firstName.includes(' '))).toBe(true);
   });
@@ -88,6 +88,34 @@ describe('demo seed', () => {
     const sci = db.questions.flatMap((q) => (q.conceptId.startsWith('c_sc') && q.type === 'mcq' ? [q] : []));
     for (const q of sci) expect(q.options.some((o) => o.id === q.correctOptionId), q.id).toBe(true);
     expect(new Set(sci.map((q) => q.correctOptionId)).size).toBeGreaterThan(1);
+  });
+
+  describe('7A Science, Heat and acids: Acids and bases is the class gap, computed by the real rules', () => {
+    const subs = db.submissions.filter((x) => x.homeworkId === 'hw_7a_heat' && x.status === 'submitted');
+    const cls = classEvidence(subs, questions);
+    const status = (id: string) => classConceptStatus(cls.get(id as never) ?? { attempted: 0, correct: 0 }).kind;
+    const stuck = (id: string) =>
+      [...studentEvidence(subs, questions)].filter(([, m]) => studentConceptStatus(m.get(id as never) ?? { attempted: 0, correct: 0 }).kind === 'stuck').length;
+
+    it('belongs to the demo teacher, 30 of 32 submitted', () => {
+      expect(db.classes.find((c) => c.id === 'cls_7a')).toMatchObject({ teacherId: 't_demo', grade: 7, subjectId: 'science' });
+      expect(subs).toHaveLength(30);
+    });
+
+    it('Acids and bases is a class gap; Heat and temperature is fine', () => {
+      expect(status('c_sc7_acid')).toBe('class-gap');
+      expect(status('c_sc7_heat')).toBe('ok');
+    });
+
+    it('seven children are stuck on acids and only a couple on heat', () => {
+      expect(stuck('c_sc7_acid')).toBe(7);
+      expect(stuck('c_sc7_heat')).toBeLessThan(4);
+    });
+
+    it('the 6B Fractions story is still the latest homework, so the Desk headline does not change', () => {
+      const at = (id: string) => new Date(db.homework.find((h) => h.id === id)!.publishedAt!).getTime();
+      expect(at('hw_6b_fractions')).toBeGreaterThan(at('hw_7a_heat'));
+    });
   });
 
   it('builds the same data for the same clock (stable demo)', () => {

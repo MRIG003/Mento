@@ -7,6 +7,7 @@ import { WRONG_TYPED, type RawQuestion } from './q';
 
 export const HW_6B_QUESTIONS = ['q_fa1', 'q_fa2', 'q_fa4', 'q_fe1', 'q_fe2', 'q_fc1', 'q_fc2', 'q_fc4'] as const;
 export const HW_6A_QUESTIONS = ['q_dp1', 'q_dp2', 'q_dc1', 'q_dc2', 'q_da1', 'q_da2'] as const;
+export const HW_7A_QUESTIONS = ['q_s7h1', 'q_s7h2', 'q_s7h3', 'q_s7h6', 'q_s7a1', 'q_s7a2', 'q_s7a3', 'q_s7a5'] as const;
 export const HW_5A_QUESTIONS = ['q_hs1', 'q_hs2', 'q_hp1', 'q_hp2', 'q_hv1', 'q_hv2'] as const;
 
 const SHORT_FULL = [
@@ -93,4 +94,25 @@ export function randomAnswers(ids: readonly string[], questions: ReadonlyMap<str
 
 export function parseBank(raw: readonly RawQuestion[]): Map<string, Question> {
   return new Map(raw.map((r) => { const q = QuestionSchema.parse(r); return [q.id, q] as const; }));
+}
+
+/**
+ * 7A Science, Heat and acids: 30 children. Heat is mostly fine; Acids and bases is the class gap. Who is stuck is decided by the
+ * gap rules from these answers (nothing here says "stuck"). Index = roster position; how many acid questions each child gets right:
+ * 4 children 0, 3 children 1, 10 children 2, 7 children 3, 6 children 4. Two children also struggle with Heat.
+ */
+export function answers7A(index: number, questions: ReadonlyMap<string, Question>): Record<string, Answer> {
+  const q = (id: string) => questions.get(id) as Question;
+  const acidRight = index < 4 ? 0 : index < 7 ? 1 : index < 17 ? 2 : index < 24 ? 3 : 4;
+  const heatRight = index === 5 || index === 11 ? 1 : index % 5 === 0 ? 3 : 4;
+  const heatIds = ['q_s7h1', 'q_s7h2', 'q_s7h3', 'q_s7h6'];
+  const acidIds = ['q_s7a1', 'q_s7a2', 'q_s7a3', 'q_s7a5'];
+  const out: Record<string, Answer> = {};
+  // Which questions a child misses rotates with position so the mistakes are spread, not identical.
+  const rotate = (ids: string[], by: number) => [...ids.slice(by % ids.length), ...ids.slice(0, by % ids.length)];
+  const missedHeat = new Set(rotate(heatIds, index).slice(0, 4 - heatRight));
+  const missedAcid = new Set(rotate(acidIds, index + 1).slice(0, 4 - acidRight));
+  for (const id of heatIds) out[id] = answerFor(q(id), !missedHeat.has(id), { preferMisconception: index % 2 === 0 });
+  for (const id of acidIds) out[id] = answerFor(q(id), !missedAcid.has(id), { preferMisconception: acidRight <= 1 || index % 3 === 0 });
+  return out;
 }

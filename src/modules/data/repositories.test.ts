@@ -37,7 +37,7 @@ describe('session', () => {
     expect(await repos.session.useDemoTeacher()).toEqual({ ok: true, value: DEMO_TEACHER_ID });
     expect(await repos.demo.isSeeded()).toBe(true);
     const classes = await repos.teacher(DEMO_TEACHER_ID).listClasses();
-    expect(classes.ok && classes.value.map((c) => c.label)).toEqual(['6B']);
+    expect(classes.ok && classes.value.map((c) => c.label)).toEqual(['6B', '7A']);
   });
 
   it('lets a principal in with the demo school code, and refuses unknown codes', async () => {

@@ -17,7 +17,7 @@ const HW = 'hw_6b_fractions' as HomeworkId;
 describe('TeacherScope role boundary (enforced in the data layer)', () => {
   it('lists only the teacher’s own classes', async () => {
     const r = await setup().scope.listClasses();
-    expect(r.ok && r.value.map((c) => c.label)).toEqual(['6B']);
+    expect(r.ok && r.value.map((c) => c.label)).toEqual(['6B', '7A']);
   });
   it('refuses another teacher’s homework and class with FORBIDDEN', async () => {
     const { scope } = setup();
