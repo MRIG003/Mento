@@ -178,7 +178,7 @@ slide({id:'cover',tab:'conceive',t:5,chap:'PM101 final presentation',title:'Ment
  screens:['role','results'],
  body:function(){return '<p class="hl" style="align-self:flex-start;font-weight:800">Today we take it through every stage of the product life cycle.</p>'+
  '<div class="grid g2"><div class="tile"><span class="role">Course</span><b>Product Management 101</b></div><div class="tile"><span class="role">School</span><b>Masters’ Union</b></div></div>'+
- '<div class="grid g3"><div class="tile"><b>Part 1</b><span class="muted small">Framework and go-to-market</span></div><div class="tile"><b>Part 2</b><span class="muted small">Free vs paid for schools</span></div><div class="tile"><b>Live</b><span class="muted small">Room demo, then the app</span></div></div>'},
+ '<div class="grid g3"><div class="tile"><b>Part 1</b><span class="muted small">Framework and go-to-market</span></div><div class="tile"><b>Part 2</b><span class="muted small">Free vs paid for schools</span></div><div class="tile"><b>The app</b><span class="muted small">Walk-through, slide by slide</span></div></div>'},
  notes:'“This is Mento. We’ll take it through every stage of the product lifecycle.”'});
 
 slide({id:'hook',tab:'conceive',t:30,chap:'Chapter 1 · Conceive',title:'One homework sheet. Forty different children.',sub:'No time to find out who.',screens:['results','student-name'],
@@ -253,40 +253,6 @@ slide({id:'mvp',tab:'plan',t:25,chap:'Chapter 2 · Plan',title:'What we built fi
  '<div class="tile"><span class="role">User story · High</span><p>As a teacher, I want to see which students got fractions wrong, so that I can give them extra practice before Friday’s test.</p></div>'+
  '<div class="tile"><span class="role">Acceptance criteria</span><ul style="margin:6px 0 0;padding-left:20px"><li>Concept view appears within 1 minute of the deadline</li><li>Teacher selects the struggling group in one tap</li><li>Parent opens the link with no app and no account</li></ul></div>'},
  notes:'“MoSCoW. Must: create homework, parent link, auto-check, who’s-stuck view, practice. Hindi and handwriting next; principal view and reports after; no live classes or ERP. One user story, three testable acceptance criteria. ”'});
-
-/* ---- live room (hands-up mode) ---- */
-var LQ=[
- {id:'read',concept:'Reading levels',q:'What share of Class 3 children in rural government schools can read a Class 2 text?',opts:['23.4%','48%','71%'],ans:0,src:'ASER 2024',easy:{q:'Is it more than half of them, or less?',opts:['More','Less'],ans:1}},
- {id:'time',concept:'Teacher time',q:'What share of a teacher’s school hours goes to actual teaching?',opts:['19.1%','42%','65%'],ans:0,src:'NIEPA study, as reported 2018',easy:{q:'Closer to one-fifth or one-half?',opts:['One-fifth','One-half'],ans:0}},
- {id:'spread',concept:'Classroom spread',q:'Inside one class, how many grade levels of ability can you find?',opts:['1–2','3–4','5–6'],ans:2,src:'Mindspark study, low-income students, Delhi',easy:{q:'Can one class hold children several years apart in level?',opts:['Yes','No'],ans:0}}
-];
-var LS={room:30,qi:0,counts:LQ.map(function(q){return q.opts.map(function(){return 0})}),phase:'quiz',easy:LQ.map(function(q){return q.easy.opts.map(function(){return 0})})};
-function liveBody(){
- var q=LQ[LS.qi],c=LS.counts[LS.qi],answered=c.reduce(function(a,b){return a+b},0),right=c[q.ans],stuck=answered-right;
- var e=LS.easy[LS.qi],easyRight=e[q.easy.ans],fixed=Math.min(easyRight,stuck);
- var html='<div class="row"><span class="role">Room size</span><div class="step"><button type="button" data-a="room-" aria-label="Fewer people">−</button><output>'+LS.room+'</output><button type="button" data-a="room+" aria-label="More people">+</button></div>'+
-  '<div class="row" style="margin-left:auto" role="tablist" aria-label="Question">'+LQ.map(function(x,i){return '<button class="pill" type="button" data-a="q'+i+'" aria-current="'+(i===LS.qi)+'">'+(i+1)+'. '+x.concept+'</button>'}).join('')+'</div></div>';
- if(LS.phase==='quiz'){
-  html+='<div class="tile"><span class="role">Question '+(LS.qi+1)+' · hands up</span><p><b>'+esc(q.q)+'</b></p><div class="hands">'+q.opts.map(function(o,i){return '<div class="opt'+(i===q.ans?' right':'')+'"><span>'+esc(o)+(i===q.ans?' <span class="chip built">answer</span>':'')+'</span><span class="step"><button type="button" data-a="c'+i+'-" aria-label="Fewer hands for '+esc(o)+'">−</button><output>'+c[i]+'</output><button type="button" data-a="c'+i+'+" aria-label="More hands for '+esc(o)+'">+</button></span></div>'}).join('')+'</div><p class="tiny muted">Source: '+q.src+'. Count the hands for each option.</p></div>';
- }else{
-  html+='<div class="tile"><span class="role">Easier step · for those who needed help</span><p><b>'+esc(q.easy.q)+'</b></p><div class="hands">'+q.easy.opts.map(function(o,i){return '<div class="opt'+(i===q.easy.ans?' right':'')+'"><span>'+esc(o)+(i===q.easy.ans?' <span class="chip built">answer</span>':'')+'</span><span class="step"><button type="button" data-a="e'+i+'-" aria-label="Fewer hands for '+esc(o)+'">−</button><output>'+e[i]+'</output><button type="button" data-a="e'+i+'+" aria-label="More hands for '+esc(o)+'">+</button></span></div>'}).join('')+'</div></div>';
- }
- var kids='';for(var i=0;i<LS.room;i++){var cls='empty';if(answered){ if(i<right)cls='got'; else if(i<answered)cls=(LS.phase==='practice'&&(i-right)<fixed)?'fixed':'help'; } kids+='<span class="kid '+cls+'" aria-hidden="true"></span>'}
- html+='<div class="crowd" aria-label="The room: blue got it, orange needs help">'+kids+'</div><div class="legend"><span><i style="background:var(--blue)"></i>got it</span><span><i style="background:var(--peach);outline:2px solid #E2701F"></i>needs help</span><span><i style="background:var(--blue);outline:3px solid var(--primary)"></i>fixed it</span></div>';
- html+='<div class="tile"><b>'+(answered?stuck+' of '+answered+' are stuck on '+q.concept.toLowerCase():'Count the hands to see who is stuck')+'</b>'+(LS.phase==='practice'?'<div class="stat" style="margin-top:4px"><span class="ok">'+fixed+'</span> fixed it</div>':'')+'</div>';
- html+='<div class="row">'+(LS.phase==='quiz'?'<button class="btn primary" type="button" data-a="practice"'+(stuck? '':' disabled')+'>Send practice to the '+stuck+' stuck</button>':'<button class="btn" type="button" data-a="quiz">Back to the question</button>')+'<button class="btn" type="button" data-a="reset">New round</button></div>';
- html+='<p class="note-line">Hands-up mode: the presenter counts hands. A phone-scan live room needs a small backend and is not switched on yet.</p>';
- return html}
-function liveAfter(){var root=$('slide');root.querySelectorAll('[data-a]').forEach(function(b){b.addEventListener('click',function(){var a=b.getAttribute('data-a'),m;
-  if(a==='room+')LS.room=Math.min(60,LS.room+1);else if(a==='room-')LS.room=Math.max(1,LS.room-1);
-  else if(m=/^q(\d)$/.exec(a)){LS.qi=+m[1];LS.phase='quiz'}
-  else if(m=/^c(\d)([+-])$/.exec(a)){var tot=LS.counts[LS.qi].reduce(function(x,y){return x+y},0),v=LS.counts[LS.qi][+m[1]];LS.counts[LS.qi][+m[1]]=m[2]==='+'?(tot<LS.room?v+1:v):Math.max(0,v-1)}
-  else if(m=/^e(\d)([+-])$/.exec(a)){var v2=LS.easy[LS.qi][+m[1]];LS.easy[LS.qi][+m[1]]=m[2]==='+'?v2+1:Math.max(0,v2-1)}
-  else if(a==='practice')LS.phase='practice';else if(a==='quiz')LS.phase='quiz';
-  else if(a==='reset'){LS.counts=LQ.map(function(q){return q.opts.map(function(){return 0})});LS.easy=LQ.map(function(q){return q.easy.opts.map(function(){return 0})});LS.phase='quiz';LS.qi=0}
-  var bodyEl=root.querySelector('.body');bodyEl.innerHTML=liveBody();liveAfter();})})}
-slide({id:'live',tab:'develop',t:75,chap:'Chapter 3 · Develop',title:'Turn the page: the homework checks itself.',sub:'The room is the class. Hands up.',screens:['results','practice'],body:liveBody,after:liveAfter,
- notes:'Ask the room question 1 and count hands for each option. Blue squares got it; orange need help. Say: “Remember the blackboard numbers.” Press Send practice, ask the easier step, count the hands: the “fixed it” count rises. Then go to the next slide and open Mento. If Wi-Fi fails, this slide needs no network.'});
 
 slide({id:'build',tab:'develop',t:60,chap:'Chapter 3 · Develop',title:'In Mento: create, share, see who’s stuck',sub:'Open the app on the right and do it live.',screens:['create','share','student-q','results','practice','review'],
  body:function(){return '<div class="grid g2"><div class="tile"><b>1 · Create in 30 seconds</b><p class="small muted">Five suggested questions, each tagged to a concept. Tick, add your own, set the time.</p></div><div class="tile"><b>2 · One link, no install</b><p class="small muted">WhatsApp message ready; a parent opens it, the child picks their name.</p></div><div class="tile"><b>3 · Who’s stuck, by concept</b><p class="small muted">Highlighted concept, evidence and the likely mix-up. Teacher can override.</p></div><div class="tile"><b>4 · One-tap practice</b><p class="small muted">Draft, check, approve. It appears on the same link.</p></div></div>'+
