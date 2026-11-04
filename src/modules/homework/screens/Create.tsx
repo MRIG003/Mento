@@ -7,6 +7,7 @@ import { ok, type Bilingual, type Concept, type Homework, type LangCode, type Qu
 import { Button, Card, EmptyState, PaperSkeleton, RadioChips, StickyNote, TopBar, useI18n, ButtonLink } from '@/modules/foundation';
 import { useServices } from '@/modules/services';
 import { BankPicker } from '../components/BankPicker';
+import { QuestionEditor } from '../components/QuestionEditor';
 import { DuePicker } from '../components/DuePicker';
 import { ShareSheet } from '../components/ShareSheet';
 import { homeworkMessage, homeworkUrl } from '../lib/message';
@@ -85,6 +86,7 @@ export function Create() {
   const [langChoice, setLangChoice] = useState<LangCode | null>(null);
   const hwLang: LangCode = langChoice ?? current?.class.defaultLang ?? lang;
 
+  const [editorOpen, setEditorOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const [published, setPublished] = useState<Homework | null>(null);
 
@@ -126,6 +128,7 @@ export function Create() {
               {bank.state !== 'ready' ? <PaperSkeleton lines={3} /> : chapterQuestions.length === 0 ? <p className="text-ink-muted">{t('create.noBank')}</p> : (
                 <BankPicker concepts={chapterConcepts} questions={chapterQuestions} selected={selected} suggested={suggested} onToggle={toggle} />
               )}
+              <Button variant="secondary" className="mt-4" onClick={() => setEditorOpen(true)} disabled={chapterConcepts.length === 0}>{t('create.writeOwn')}</Button>
             </Card>
             <Card><DuePicker value={due} base={baseDue} onChange={setDueChoice} /></Card>
             <Card>
@@ -138,6 +141,14 @@ export function Create() {
           </>
         )}
       </main>
+      {editorOpen ? (
+        <QuestionEditor open onClose={() => setEditorOpen(false)} concepts={chapterConcepts} services={services}
+          onSave={async (q) => {
+            if (!scope) return;
+            const saved = await scope.addQuestion(q);
+            if (saved.ok) setSelections((s) => ({ ...s, [selectionKey]: [...(s[selectionKey] ?? suggested), q.id] }));
+          }} />
+      ) : null}
       {published && services && current ? (
         <ShareSheet open onClose={() => setPublished(null)} services={services} url={url} resultsHref={`/t/results?hw=${published.id}`}
           message={homeworkMessage({ lang: published.defaultLang, classLabel: current.label, subject: current.subjectName, chapter: published.chapter, dueAt: published.dueAt, url })}
