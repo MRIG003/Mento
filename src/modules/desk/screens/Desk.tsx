@@ -5,7 +5,7 @@ import { useCallback } from 'react';
 import { useLive, useTeacher, type Repositories, type TeacherScope } from '@/modules/data';
 import { ok, type Bilingual, type Result } from '@/modules/domain';
 import type { Checklist } from '@/modules/data';
-import { Badge, ButtonLink, EmptyState, Icons, PaperSkeleton, StickyNote, TopBar, useI18n, type NoteColor } from '@/modules/foundation';
+import { Badge, Button, ButtonLink, EmptyState, Icons, PaperSkeleton, StickyNote, TopBar, useI18n, type NoteColor } from '@/modules/foundation';
 import { StarterChecklist } from '../components/StarterChecklist';
 
 const NOTE_COLORS: NoteColor[] = ['blue', 'yellow', 'pink', 'mint', 'lilac', 'peach'];
@@ -68,6 +68,12 @@ export function Desk() {
             )}
             <StarterChecklist checklist={data.checklist} />
             {data.notes.length > 0 ? <ButtonLink href="/t/create" icon={<Icons.PencilIcon />}>{t('desk.create')}</ButtonLink> : null}
+            {data.demo && teacher.state === 'ready' ? (
+              <div className="flex flex-col items-center gap-1 text-center">
+                <Button variant="quiet" onClick={() => { void teacher.repos.demo.reset(); }}>{t('desk.resetDemo')}</Button>
+                <p className="text-sm text-ink-muted">{t('desk.resetHint')}</p>
+              </div>
+            ) : null}
           </>
         ) : null}
       </main>

@@ -156,6 +156,8 @@ export const en = {
   'desk.signedOut.start': 'Set up as a teacher',
   'desk.note.homework': '{chapter} · {submitted} of {total} in',
   'desk.note.open': 'See results',
+  'desk.resetDemo': 'Reset demo',
+  'desk.resetHint': 'Starts the demo class again, so you can show it from the beginning.',
   'checklist.title': 'Mento Starter Checklist',
   'checklist.progress': '{done} of 5 done',
   'checklist.createClass': 'Create a class',

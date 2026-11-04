@@ -155,6 +155,8 @@ export const hi: Catalogue = {
   'desk.signedOut.start': 'टीचर के रूप में सेट करें',
   'desk.note.homework': '{chapter} · {total} में से {submitted} जमा',
   'desk.note.open': 'नतीजे देखें',
+  'desk.resetDemo': 'डेमो रीसेट करें',
+  'desk.resetHint': 'डेमो क्लास फिर से शुरू होती है, ताकि आप शुरू से दिखा सकें।',
   'checklist.title': 'Mento शुरुआती चेकलिस्ट',
   'checklist.progress': '5 में से {done} पूरे',
   'checklist.createClass': 'एक क्लास बनाएँ',
