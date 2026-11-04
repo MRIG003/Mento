@@ -139,6 +139,23 @@ describe('checklist', () => {
   });
 });
 
+describe('consent records', () => {
+  it('lists consent for the seeded class, then records and withdraws one without deleting history', async () => {
+    const { scope } = setup();
+    const before = await scope.listConsents('cls_6b' as ClassId);
+    expect(before.ok && before.value).toHaveLength(32);
+    await scope.recordConsent('stu_6b_38' as StudentId);
+    const after = await scope.listConsents('cls_6b' as ClassId);
+    expect(after.ok && after.value.find((c) => c.studentId === 'stu_6b_38')).toMatchObject({ by: 'teacher-recorded', withdrawn: false });
+    await scope.withdrawConsent('stu_6b_38' as StudentId);
+    const gone = await scope.listConsents('cls_6b' as ClassId);
+    expect(gone.ok && gone.value.find((c) => c.studentId === 'stu_6b_38')?.withdrawn).toBe(true);
+  });
+  it('refuses another teacher’s class', async () => {
+    expect(await setup().scope.listConsents('cls_6a' as ClassId)).toMatchObject({ ok: false, error: { code: 'FORBIDDEN' } });
+  });
+});
+
 describe('export and delete', () => {
   it('exports only this class, with formula-safe cells', async () => {
     const { scope } = setup();

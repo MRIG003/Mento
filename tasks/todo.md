@@ -236,7 +236,7 @@ Default verify for every task: `npm run check` green + Playwright check at 390 p
   - [ ] All tests pass, build clean, size budget met
   - [ ] Flow so far works end to end in en and hi
 
-- [ ] **T32: `/join` self-join + pending names**
+- [x] **T32: `/join` self-join + pending names**
   - Description: (teacher approves in Class).
   - Acceptance: behaviour above works; loading/empty/error states and en+hi covered by tests
   - Verify: `npm run check` + 390 px en/hi browser check
@@ -344,12 +344,12 @@ Default verify for every task: `npm run check` green + Playwright check at 390 p
 
 ## Slice 10: Privacy, settings, demo mode
 
-- [ ] **T45: `/privacy` "what we keep" + consent status + CSV export**
+- [x] **T45: `/privacy` "what we keep" + consent status + CSV export**
   - Acceptance: behaviour above works; loading/empty/error states and en+hi covered by tests
   - Verify: `npm run check` + 390 px en/hi browser check
   - Files: `privacy/screens/{WhatWeKeep,ConsentStatus}.tsx`, `privacy/lib/export.ts`, `src/app/privacy/page.tsx`.
 
-- [ ] **T46: Delete flows + settings**
+- [x] **T46: Delete flows + settings**
   - Description: (text size, sound/haptics off by default, demo toggle).
   - Acceptance: behaviour above works; loading/empty/error states and en+hi covered by tests
   - Verify: `npm run check` + 390 px en/hi browser check

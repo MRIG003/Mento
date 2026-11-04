@@ -44,6 +44,10 @@ export type TeacherScope = {
   recordEvent(kind: 'results-opened' | 'join-link-shared' | 'homework-shared' | 'practice-shared', ref: { homeworkId?: HomeworkId; classId?: ClassId }): Promise<void>;
   exportClassCsv(classId: ClassId): Promise<Result<string>>;
   deleteStudent(id: StudentId): Promise<Result<void>>;
+  /** Who has given consent in this class, and how (privacy screen). Dates and method only. */
+  listConsents(classId: ClassId): Promise<Result<{ studentId: StudentId; grantedAt: string; by: 'parent-on-link' | 'teacher-recorded'; withdrawn: boolean }[]>>;
+  recordConsent(studentId: StudentId): Promise<Result<void>>;
+  withdrawConsent(studentId: StudentId): Promise<Result<void>>;
   /** Mento Starter Checklist, derived from what the teacher actually did (SPEC-desk). */
   checklist(): Promise<Result<Checklist>>;
 };
@@ -350,6 +354,39 @@ export function createTeacherScope({ db, teacherId, clock, rng, blobs }: Deps): 
         seeInsight: did('results-opened'),
         sendPractice: homework.some((h) => h.kind === 'practice'),
       });
+    },
+
+    async listConsents(classId) {
+      const d = load();
+      if (!d.ok) return d;
+      const c = ownClass(d.value, classId);
+      if (!c.ok) return c;
+      const kids = new Set(d.value.students.filter((s) => s.classId === classId).map((s) => s.id));
+      return ok(d.value.consents.filter((x) => kids.has(x.studentId)).map((x) => ({ studentId: x.studentId, grantedAt: x.grantedAt, by: x.grantedBy, withdrawn: Boolean(x.withdrawnAt) })));
+    },
+
+    async recordConsent(studentId) {
+      const d = load();
+      if (!d.ok) return d;
+      const s = d.value.students.find((x) => x.id === studentId);
+      if (!s) return missing();
+      const c = ownClass(d.value, s.classId);
+      if (!c.ok) return c;
+      if (d.value.consents.some((x) => x.studentId === studentId && !x.withdrawnAt)) return ok(undefined);
+      const consent = { id: newId('con', rng) as never, studentId, grantedAt: nowIso(), grantedBy: 'teacher-recorded' as const, purpose: 'teaching' as const };
+      const saved = save((x) => ({ ...x, consents: [...x.consents, consent] }));
+      return saved.ok ? ok(undefined) : saved;
+    },
+
+    async withdrawConsent(studentId) {
+      const d = load();
+      if (!d.ok) return d;
+      const s = d.value.students.find((x) => x.id === studentId);
+      if (!s) return missing();
+      const c = ownClass(d.value, s.classId);
+      if (!c.ok) return c;
+      const saved = save((x) => ({ ...x, consents: x.consents.map((k) => (k.studentId === studentId && !k.withdrawnAt ? { ...k, withdrawnAt: nowIso() } : k)) }));
+      return saved.ok ? ok(undefined) : saved;
     },
 
     async deleteStudent(id) {

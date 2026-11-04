@@ -32,6 +32,17 @@ describe('session', () => {
   });
 });
 
+describe('wipeAll (delete all my data on this phone)', () => {
+  it('removes classes, children and answers but leaves a usable empty database', async () => {
+    const repos = make();
+    await repos.session.useDemoTeacher();
+    expect((await repos.wipeAll()).ok).toBe(true);
+    const d = repos.database.read();
+    expect(d.ok && d.value && [d.value.students.length, d.value.submissions.length, d.value.classes.length]).toEqual([0, 0, 0]);
+    expect(await repos.demo.isSeeded()).toBe(false);
+  });
+});
+
 describe('demo submission wave', () => {
   it('fills a new teacher’s first homework with labelled demo answers so an insight appears', async () => {
     const repos = make();
@@ -60,5 +71,30 @@ describe('demo submission wave', () => {
     const hw = await teacher.saveHomework({ classId: cls.value.id, chapter: { en: 'F' }, questionIds: ['q_fc1'] as QuestionId[], dueAt: '2026-11-04T14:30:00.000Z', defaultLang: 'en' });
     if (!hw.ok) throw new Error();
     expect(await repos.demo.submissionWave(hw.value.id)).toMatchObject({ ok: false, error: { messageKey: 'demo.noRoster' } });
+  });
+});
+
+describe('roster self-join', () => {
+  it('shows first names for a valid join token only, and waits for the teacher for new names', async () => {
+    const repos = make();
+    await repos.session.useDemoTeacher();
+    const classes = await repos.teacher(DEMO_TEACHER_ID).listClasses();
+    if (!classes.ok) throw new Error();
+    const token = classes.value[0]!.class.joinToken;
+    const join = repos.join(token);
+    const seen = await join.resolve();
+    expect(seen.ok && seen.value.names).toHaveLength(40);
+    expect(seen.ok && Object.keys(seen.value.names[0]!)).toEqual(['id', 'firstName']);
+    expect(await repos.join('AAAAAAAAAAAAAAAAAAAAAA').resolve()).toMatchObject({ ok: false, error: { code: 'NOT_FOUND' } });
+    expect(await repos.join('<script>').resolve()).toMatchObject({ ok: false });
+
+    await join.addMyName('  Neha  ');
+    await join.addMyName('neha');
+    const after = await repos.teacher(DEMO_TEACHER_ID).listStudents(classes.value[0]!.class.id);
+    const neha = after.ok ? after.value.filter((s) => s.firstName === 'Neha') : [];
+    expect(neha).toHaveLength(1);
+    expect(neha[0]?.status).toBe('pending');
+    const stillHidden = await join.resolve();
+    expect(stillHidden.ok && stillHidden.value.names.some((n) => n.firstName === 'Neha')).toBe(false);
   });
 });

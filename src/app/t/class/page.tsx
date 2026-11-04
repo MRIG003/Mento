@@ -1,7 +1,7 @@
 'use client';
 
-import { PlaceholderScreen } from '@/modules/foundation';
+import { ClassScreen } from '@/modules/privacy';
 
 export default function Page() {
-  return <PlaceholderScreen titleKey="tab.teacher.class" />;
+  return <ClassScreen />;
 }

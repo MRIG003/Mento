@@ -1,5 +1,5 @@
 export { createLocalRepositories, DEMO_SCHOOL_CODE, DEMO_TEACHER_ID } from './repositories';
-export type { OnboardingRepo, Repositories, Session, SessionRepo, StepStatus } from './repositories';
+export type { JoinScope, OnboardingRepo, Repositories, Session, SessionRepo, StepStatus } from './repositories';
 export { DEMO_NAMES } from './demo';
 export type { DemoControls } from './demo';
 export type { TeacherScope, ClassSummary, CreateClassInput, HomeworkDraftInput, BankFilter, Checklist } from './scopes/teacher';

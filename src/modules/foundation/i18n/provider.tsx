@@ -3,7 +3,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useSyncExternalStore, type ReactNode } from 'react';
 import { en, type I18nKey } from '@/i18n/en';
 import { hi } from '@/i18n/hi';
-import { readPrefs, subscribePrefs, writePrefs } from '../lib/prefs-store';
+import { readPrefs, subscribePrefs, writePrefs, type TextSize } from '../lib/prefs-store';
 import { parseLang, resolveInitialLang, type LangSource } from './resolve-lang';
 import { translate, type Lang, type Params } from './t';
 
@@ -55,6 +55,12 @@ function subscribeLang(notify: () => void): () => void {
 
 const SERVER_STATE = null;
 
+/** Text size (100 / 115 / 130 %) kept per device and applied to the whole app. */
+export function useTextSize(): [TextSize, (size: TextSize) => void] {
+  const size: TextSize = useSyncExternalStore(subscribePrefs, () => readPrefs().textSize ?? 100, () => 100) as TextSize;
+  return [size, (next) => writePrefs({ textSize: next })];
+}
+
 export function I18nProvider({ children }: { children: ReactNode }) {
   const state = useSyncExternalStore(subscribeLang, readLangState, () => SERVER_STATE);
   const ready = state !== null;
@@ -64,6 +70,11 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (ready) document.documentElement.lang = lang;
   }, [lang, ready]);
+
+  const [textSize] = useTextSize();
+  useEffect(() => {
+    document.documentElement.style.fontSize = textSize === 100 ? '' : `${textSize}%`;
+  }, [textSize]);
 
   const setLang = useCallback((next: Lang) => {
     // A user's choice beats the link's preset from now on: drop `lang` from the fragment without navigating.

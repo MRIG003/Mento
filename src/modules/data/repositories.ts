@@ -1,5 +1,5 @@
 import {
-  cryptoRandom, err, generateToken, newId, ok, type Clock, type LinkToken, type RandomSource, type Result, type School, type SchoolId, type Teacher, type TeacherId,
+  cryptoRandom, err, generateToken, LinkTokenSchema, newId, ok, type Clock, type LinkToken, type RandomSource, type Result, type School, type SchoolId, type Teacher, type TeacherId,
 } from '@/modules/domain';
 import { createDemoControls, type DemoControls } from './demo';
 import { createPrincipalScope, type PrincipalScope } from './scopes/principal';
@@ -8,7 +8,7 @@ import { createTeacherScope, type TeacherScope } from './scopes/teacher';
 import type { BlobStore } from './storage/blob-store';
 import type { Collections, OnboardingState, PrincipalStep, TeacherStep } from './storage/collections';
 import type { Database } from './storage/database';
-import { createDatabase } from './storage/database';
+import { createDatabase, emptyCollections } from './storage/database';
 import type { StorageDriver } from './storage/driver';
 
 export type StepStatus = 'todo' | 'done' | 'skipped';
@@ -32,6 +32,11 @@ export type SessionRepo = {
   signOut(): Promise<Result<void>>;
 };
 
+export type JoinScope = {
+  resolve(): Promise<Result<{ classLabel: string; names: { id: string; firstName: string }[]; defaultLang: 'en' | 'hi' }>>;
+  addMyName(firstName: string): Promise<Result<void>>;
+};
+
 export type Repositories = {
   database: Database;
   blobs: BlobStore | null;
@@ -41,6 +46,10 @@ export type Repositories = {
   onboarding: OnboardingRepo;
   session: SessionRepo;
   demo: DemoControls;
+  /** Roster self-join by class join token: first names only, new names wait for the teacher (SPEC-student-link). */
+  join(token: string): JoinScope;
+  /** "Delete all my data on this phone": records, photos and the device session. Preferences (language, text size) stay. */
+  wipeAll(): Promise<Result<void>>;
 };
 
 export const DEMO_TEACHER_ID = 't_demo' as TeacherId;
@@ -119,8 +128,35 @@ export function createLocalRepositories(deps: { driver: StorageDriver; blobs: Bl
     teacher: (teacherId) => createTeacherScope({ db: database, teacherId, clock, rng, ...(deps.blobs ? { blobs: deps.blobs } : {}) }),
     studentLink: (token) => createStudentLinkScope({ db: database, token, clock, rng }),
     principal: (schoolId) => createPrincipalScope({ db: database, schoolId, clock }),
+    join: (token) => ({
+      async resolve() {
+        const r = read();
+        if (!r.ok) return r;
+        const c = LinkTokenSchema.safeParse(token).success ? r.value?.classes.find((x) => x.joinToken === token) : undefined;
+        if (!r.value || !c) return err('NOT_FOUND', 'link.invalid');
+        return ok({ classLabel: `${c.grade}${c.section}`, defaultLang: c.defaultLang, names: r.value.students.filter((s) => s.classId === c.id && s.status === 'active').map((s) => ({ id: s.id, firstName: s.firstName })) });
+      },
+      async addMyName(firstName) {
+        const r = read();
+        if (!r.ok) return r;
+        const c = LinkTokenSchema.safeParse(token).success ? r.value?.classes.find((x) => x.joinToken === token) : undefined;
+        if (!r.value || !c) return err('NOT_FOUND', 'link.invalid');
+        const name = firstName.normalize('NFC').replace(/\s+/g, ' ').trim().slice(0, 30);
+        if (!name) return err('VALIDATION', 'error.validation');
+        const roster = r.value.students.filter((s) => s.classId === c.id);
+        if (roster.some((s) => s.firstName.toLocaleLowerCase() === name.toLocaleLowerCase())) return ok(undefined);
+        if (roster.length >= 80) return err('VALIDATION', 'error.roster.full');
+        const student = { id: newId('stu', rng) as never, classId: c.id, firstName: name, status: 'pending' as const, createdAt: clock.now().toISOString() };
+        return save((d) => ({ ...d, students: [...d.students, student] }));
+      },
+    }),
     onboarding,
     session,
     demo: createDemoControls({ db: database, clock, rng }),
+    async wipeAll() {
+      const r = database.replace(emptyCollections(clock.now().toISOString()));
+      if (deps.blobs) await deps.blobs.clear();
+      return r.ok ? ok(undefined) : r;
+    },
   };
 }
