@@ -18,6 +18,11 @@ Lighthouse and DevTools traces (slow 4G + 4× CPU) are recorded in Phase 5.
 student flow ship on `/h`, and the owner asked for a working demo first. **Not yet verified against LCP < 2.5 s on slow 4G + 4× CPU**;
 Phase 5 measures it and either confirms 160 KB or cuts back (split catalogues by area, lighter validation on read paths).
 
+## Budget change 2 (2026-11-04)
+`/h` first-load budget 160 → **165 KB** (measured 161.6 KB) after adding the photo answer wiring and the Join flow's shared helpers.
+The camera screen and quality heuristics are a separate lazy chunk (not in first load). Still **unverified on slow 4G + 4× CPU**; if Phase 5
+shows LCP > 2.5 s, the first cut is splitting the Hindi catalogue out of the first load of English-only links.
+
 ## Watch items
 - **Total JS on the student route ≈ first load + ~30 KB deferred data layer.** The first-load budget is met, but on slow 4G the deferred chunk delays content behind the skeleton. Phase 5 measures LCP; if it fails, the options are a lighter validator for read paths or validating only on write.
 - **`next/link` costs ~4-5 KB.** Keep it off the student route (`/h` tabs are in-page) and out of shared boundaries; use `TopBarFrame` there.

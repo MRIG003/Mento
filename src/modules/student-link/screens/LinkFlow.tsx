@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useState, useSyncExternalStore } from 'react';
+import { useCallback, useState, useSyncExternalStore, type ComponentType } from 'react';
 import { useLive, useRepositories, type LinkContext, type OwnWork, type PublicHomework, type PublicQuestion, type Repositories, type StudentLinkScope } from '@/modules/data';
 import { ok, type Answer, type QuestionId, type StudentId } from '@/modules/domain';
 import { Button, Card, EmptyState, FractionText, NameTag, PaperSkeleton, StickyNote, TopBarFrame, inputClass, useI18n, type Lang } from '@/modules/foundation';
@@ -9,8 +9,12 @@ const subscribeHash = (n: () => void) => { window.addEventListener('hashchange',
 
 type Tab = 'today' | 'practice' | 'progress';
 
+/** The camera screen is passed in by the route (lazy-loaded) so this module stays independent of capture (ADR-011). */
+export type PhotoCaptureProps = { onUse: (photo: { blob: Blob; qualityScore: number }) => void | Promise<void>; onCancel?: () => void };
+export type PhotoCapture = ComponentType<PhotoCaptureProps>;
+
 /** The whole child/parent flow behind one link: no account, no install (SPEC-student-link). */
-export function LinkFlow() {
+export function LinkFlow({ photoCapture }: { photoCapture?: PhotoCapture }) {
   const { t, source, setLang } = useI18n();
   const repos = useRepositories();
   const hash = useSyncExternalStore(subscribeHash, () => window.location.hash, () => '');
@@ -65,8 +69,8 @@ export function LinkFlow() {
     <>
       <TopBarFrame title={t('link.hello', { name: me })} />
       <main className="mx-auto flex max-w-xl flex-col gap-4 px-4 pb-28 pt-4">
-        {tab === 'today' ? <Player key={ctx.homework.id} scope={scope} homework={ctx.homework} ctx={ctx} /> : null}
-        {tab === 'practice' ? <PracticeTab scope={scope} /> : null}
+        {tab === 'today' ? <Player key={ctx.homework.id} scope={scope} homework={ctx.homework} ctx={ctx} photoCapture={photoCapture} /> : null}
+        {tab === 'practice' ? <PracticeTab scope={scope} photoCapture={photoCapture} /> : null}
         {tab === 'progress' ? <ProgressTab scope={scope} /> : null}
         <Button variant="quiet" onClick={() => scope.release()}>{t('link.switchChild')}</Button>
       </main>
@@ -107,16 +111,18 @@ function PickName({ roster, scope }: { roster: { id: StudentId; firstName: strin
   );
 }
 
-function Player({ scope, homework, ctx }: { scope: StudentLinkScope; homework: PublicHomework; ctx: LinkContext }) {
+type PhotoProp = { photoCapture?: PhotoCapture | undefined };
+
+function Player({ scope, homework, ctx, photoCapture }: { scope: StudentLinkScope; homework: PublicHomework; ctx: LinkContext } & PhotoProp) {
   const work = useLive(useCallback(() => scope.ownWork(homework.id), [scope, homework.id]));
   const [initial] = useState(() => ({ current: null as OwnWork | null }));
   if (work.state === 'loading') return <PaperSkeleton />;
   if (work.state === 'error') return <EmptyState title={'…'} />;
   initial.current ??= work.data; // restored once from this phone; later changes come from the child's own taps
-  return <PlayerBody scope={scope} homework={homework} ctx={ctx} initial={initial.current} />;
+  return <PlayerBody scope={scope} homework={homework} ctx={ctx} initial={initial.current} photoCapture={photoCapture} />;
 }
 
-function PlayerBody({ scope, homework, ctx, initial }: { scope: StudentLinkScope; homework: PublicHomework; ctx: LinkContext; initial: OwnWork }) {
+function PlayerBody({ scope, homework, ctx, initial, photoCapture }: { scope: StudentLinkScope; homework: PublicHomework; ctx: LinkContext; initial: OwnWork } & PhotoProp) {
   const { t, lang } = useI18n();
   const [answers, setAnswers] = useState<Partial<Record<QuestionId, Answer>>>(initial.answers);
   const [index, setIndex] = useState(-1); // -1 intro, 0..n-1 questions, n review
@@ -192,7 +198,7 @@ function PlayerBody({ scope, homework, ctx, initial }: { scope: StudentLinkScope
                 value={a && (a.type === 'fill' || a.type === 'short') ? a.text : ''} onChange={(e) => set(q, { type: q.type, text: e.target.value })} />
             </label>
           ) : null}
-          {q.type === 'photo' ? <p className="rounded-xl bg-paper p-3 text-sm">{t('link.photoPreview')}</p> : null}
+          {q.type === 'photo' ? <PhotoAnswer answer={a} capture={photoCapture} onChange={(next) => set(q, next)} /> : null}
         </div>
       </Card>
       <p className="text-sm text-ink-muted" aria-live="polite">{saved ? t('link.saved') : ''}</p>
@@ -204,14 +210,14 @@ function PlayerBody({ scope, homework, ctx, initial }: { scope: StudentLinkScope
   );
 }
 
-function PracticeTab({ scope }: { scope: StudentLinkScope }) {
+function PracticeTab({ scope, photoCapture }: { scope: StudentLinkScope } & PhotoProp) {
   const { t } = useI18n();
   const list = useLive(useCallback(() => scope.ownPractice(), [scope]));
   const [open, setOpen] = useState<string | null>(null);
   if (list.state === 'loading') return <PaperSkeleton />;
   if (list.state === 'error' || list.data.length === 0) return <EmptyState title={t('link.practiceTitle')} body={t('link.practiceNone')} />;
   const active = list.data.find((p) => p.id === open);
-  if (active) return <Player key={active.id} scope={scope} homework={active} ctx={{ classLabel: '', subjectName: {}, defaultLang: 'en', homework: active }} />;
+  if (active) return <Player key={active.id} scope={scope} homework={active} ctx={{ classLabel: '', subjectName: {}, defaultLang: 'en', homework: active }} photoCapture={photoCapture} />;
   return (
     <ul className="flex flex-col gap-3">
       {list.data.map((p) => (
@@ -234,5 +240,38 @@ function ProgressTab({ scope }: { scope: StudentLinkScope }) {
     <Card title={t('link.progressTitle')} titleId="prog">
       <ul className="flex flex-col gap-3">{p.data.map((c) => <li key={c.conceptId} className="flex justify-between gap-3"><span className="font-bold">{c.name[lang] ?? c.name.en}</span><span className="font-bold text-ink-muted">{t(key[c.band])}</span></li>)}</ul>
     </Card>
+  );
+}
+
+/** A photo answer: the photo stays on this phone (IndexedDB); the answer only holds its key and quality score. */
+function PhotoAnswer({ answer, capture: Capture, onChange }: { answer: Answer | undefined; capture: PhotoCapture | undefined; onChange: (a: Answer) => void }) {
+  const { t } = useI18n();
+  const repos = useRepositories();
+  const [open, setOpen] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const has = answer?.type === 'photo';
+
+  if (!Capture) return <p className="rounded-xl bg-paper p-3 text-sm">{t('link.photoPreview')}</p>;
+  if (open) {
+    return (
+      <Capture
+        onCancel={() => setOpen(false)}
+        onUse={async ({ blob, qualityScore }) => {
+          const stored = await repos?.blobs?.put(blob);
+          if (!stored?.ok) { setError(t(stored?.error.messageKey ?? 'error.storage.unavailable')); return; }
+          if (answer?.type === 'photo') void repos?.blobs?.delete(answer.photoRef); // retake replaces the old photo
+          setError(null);
+          onChange({ type: 'photo', photoRef: stored.value, qualityScore });
+          setOpen(false);
+        }}
+      />
+    );
+  }
+  return (
+    <div className="flex flex-col gap-2">
+      {has ? <p className="font-extrabold" role="status">{t('cap.saved')}</p> : null}
+      {error ? <p role="alert" className="font-bold text-bad">{error}</p> : null}
+      <Button variant={has ? 'secondary' : 'primary'} onClick={() => setOpen(true)}>{has ? t('cap.retake') : t('cap.open')}</Button>
+    </div>
   );
 }

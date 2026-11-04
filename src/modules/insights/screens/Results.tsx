@@ -2,9 +2,10 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
+import { useRepositories } from '@/modules/data';
 import type { TeacherScope } from '@/modules/data';
 import { useLive, useTeacher, type HomeworkResults, type ReviewItem } from '@/modules/data';
-import { ok, type Homework, type Result } from '@/modules/domain';
+import { ok, type Answer, type Homework, type Question, type Result } from '@/modules/domain';
 import { Badge, Button, ButtonLink, Card, EmptyState, FractionText, HighlighterMark, Icons, NameTag, PaperSkeleton, ProgressBar, Sheet, StickyNote, TopBar, translateIn, useI18n, type Status } from '@/modules/foundation';
 import { useServices } from '@/modules/services';
 
@@ -182,6 +183,7 @@ function Review({ r }: { r: HomeworkResults }) {
             <p className="text-sm font-bold text-ink-muted">{item.firstName}</p>
             {q ? <p className="font-bold"><FractionText text={pick(q.prompt)} /></p> : null}
             {item.answer && (item.answer.type === 'short' || item.answer.type === 'fill') ? <p className="my-2 rounded-xl bg-paper p-3">{item.answer.text}</p> : null}
+            {item.answer?.type === 'photo' && q ? <PhotoReview answer={item.answer} question={q} name={item.firstName} /> : null}
             {item.reasonKey ? <p className="text-sm text-ink-muted">{t(item.reasonKey as never)}</p> : null}
             <div className="mt-3 flex gap-2">
               <Button className="flex-1" onClick={() => mark(item, 'correct')}>{t('results.markRight')}</Button>
@@ -191,5 +193,37 @@ function Review({ r }: { r: HomeworkResults }) {
         );
       })}
     </ul>
+  );
+}
+
+/** The child's notebook photo (kept on this phone) and the simulated reader's suggestion. The teacher decides. */
+function PhotoReview({ answer, question, name }: { answer: Extract<Answer, { type: 'photo' }>; question: Question; name: string }) {
+  const { t } = useI18n();
+  const repos = useRepositories();
+  const services = useServices();
+  const [url, setUrl] = useState<string | null>(null);
+  const [suggestion, setSuggestion] = useState<'correct' | 'incorrect' | 'unreadable' | null>(null);
+
+  useEffect(() => {
+    let revoke: string | null = null;
+    let cancelled = false;
+    void (async () => {
+      const blob = await repos?.blobs?.get(answer.photoRef);
+      if (!blob?.ok || cancelled) return;
+      revoke = URL.createObjectURL(blob.value);
+      setUrl(revoke);
+      const read = await services?.reader.read({ photo: blob.value, question, qualityScore: answer.qualityScore });
+      if (read?.ok && !cancelled) setSuggestion(read.value.suggestion);
+    })();
+    return () => { cancelled = true; if (revoke) URL.revokeObjectURL(revoke); };
+  }, [repos, services, answer.photoRef, answer.qualityScore, question]);
+
+  const key = { correct: 'cap.reader.correct', incorrect: 'cap.reader.incorrect', unreadable: 'cap.reader.unreadable' } as const;
+  return (
+    <div className="my-2 flex flex-col gap-2">
+      {/* eslint-disable-next-line @next/next/no-img-element -- local blob URL */}
+      {url ? <img src={url} alt={t('cap.photoOf', { name })} className="max-h-80 w-full rounded-xl border-2 border-line object-contain" /> : <PaperSkeleton lines={2} />}
+      {suggestion ? <p className="flex items-center gap-2 text-sm font-bold"><Badge kind="preview" />{`${t('cap.reader')}: ${t(key[suggestion])}`}</p> : null}
+    </div>
   );
 }

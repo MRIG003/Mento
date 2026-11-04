@@ -301,13 +301,13 @@ Default verify for every task: `npm run check` green + Playwright check at 390 p
 
 ## Slice 8: Guided photo capture (Preview reading)
 
-- [ ] **T40: Camera screen**
+- [x] **T40: Camera screen**
   - Description: tap-to-start, lifecycle cleanup, frame sampling ≤ 5 fps, one live message, auto-capture, torch, lens tip; lazy-loaded.
   - Acceptance: behaviour above works; loading/empty/error states and en+hi covered by tests
   - Verify: `npm run check` + 390 px en/hi browser check
   - Files: `capture/screens/Capture.tsx`, `capture/hooks/{useCamera,useFrameAssessment}.ts`.
 
-- [ ] **T41: After capture**
+- [x] **T41: After capture**
   - Description: score words + retake reason, re-encode (EXIF stripped, ≤ 1600 px), file-picker fallback with magic-byte check, BlobStore, photo question in the player, Review shows the reader (Preview) suggestion.
   - Acceptance: behaviour above works; loading/empty/error states and en+hi covered by tests
   - Verify: `npm run check` + 390 px en/hi browser check
