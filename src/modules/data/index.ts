@@ -19,3 +19,5 @@ export { RepositoriesProvider, useLive, useRepositories } from './react/provider
 export type { Live } from './react/provider';
 export { useTeacher } from './react/use-teacher';
 export type { TeacherSession } from './react/use-teacher';
+export { usePrincipal } from './react/use-principal';
+export type { PrincipalSession } from './react/use-principal';

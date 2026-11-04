@@ -320,19 +320,19 @@ Default verify for every task: `npm run check` green + Playwright check at 390 p
 
 ## Slice 9: Principal
 
-- [ ] **T42: Principal onboarding**
+- [x] **T42: Principal onboarding**
   - Description: (school code, explainer, lock explainer, invite composer).
   - Acceptance: behaviour above works; loading/empty/error states and en+hi covered by tests
   - Verify: `npm run check` + 390 px en/hi browser check
   - Files: `onboarding/screens/{PrincipalStart,PrincipalExplainer}.tsx`, `src/app/start/principal/page.tsx`.
 
-- [ ] **T43: Overview + lock**
+- [x] **T43: Overview + lock**
   - Description: headline, tiles, Indian formatting, lock state with count; lazy route.
   - Acceptance: behaviour above works; loading/empty/error states and en+hi covered by tests
   - Verify: `npm run check` + 390 px en/hi browser check
   - Files: `principal/screens/Overview.tsx`, `principal/components/{Tile,LockPanel}.tsx`, `src/app/p/page.tsx`.
 
-- [ ] **T44: Gaps heatmap (SVG, keyboard) + Classes + Plan (Preview trial/upgrade)**
+- [x] **T44: Gaps heatmap (SVG, keyboard) + Classes + Plan (Preview trial/upgrade)**
   - Acceptance: behaviour above works; loading/empty/error states and en+hi covered by tests
   - Verify: `npm run check` + 390 px en/hi browser check
   - Files: `principal/screens/{Gaps,Classes,Plan}.tsx`, `src/app/p/{gaps,classes,plan}/page.tsx`.
