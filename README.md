@@ -28,7 +28,7 @@ Create → Check → See who is stuck → Act.
 6. **Create** → add your own question, including a **Notebook photo** question → publish → open as a child → photograph a page → teacher **Review** shows it.
 7. Role chooser → **I'm a principal** → code `DEMO26` → totals only, locked until 3 teachers are active.
 8. **Class** tab → consent, CSV download, delete, text size. `/privacy` → what we keep.
-9. **Reset demo** on the Desk starts again.
+9. **Reset demo** (Desk, or the **Demo guide** button / `?` key) starts again and keeps you signed in.
 
 Screenshots (390 px, English and Hindi) are in [`docs/screens/`](docs/screens/).
 
@@ -138,8 +138,8 @@ Measured, not assumed; details and what was tried in [docs/perf.md](docs/perf.md
 - Not tested on real phones, in the WhatsApp in-app browser, or on a real low-end device. Camera thresholds were tuned on synthetic images;
   torch support is unverified.
 - No service worker yet, so reopening a link with no network does not work (answers are still saved on the phone while offline in the page).
-- Not built: demo script overlay, per-screen coach marks and the Help replay, motion polish, sound/haptics, parent report page for teachers,
-  reminder composer, Evening Wrap, multi-device sync, more than two languages.
+- Not built: per-screen coach marks and the Help replay, motion polish, sound/haptics, a parent-report page for teachers, the reminder
+  composer, multi-device sync, more than two languages. (The Evening Wrap note and a presenter's demo guide on the Desk are built.)
 - The live deployment was checked only through the build logs, not browsed from the build environment.
 - `npm audit` reports 16 moderate findings in dev-only linting packages (one minimatch advisory); not shipped.
 

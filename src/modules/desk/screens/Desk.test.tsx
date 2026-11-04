@@ -27,6 +27,14 @@ describe('Desk', () => {
     expect(screen.getByRole('link', { name: 'See results' })).toHaveAttribute('href', '/t/results?hw=hw_6b_fractions');
   });
 
+  it('shows the computed Evening Wrap, then switches once practice has gone out', async () => {
+    const repos = make();
+    await repos.session.useDemoTeacher();
+    renderDesk(repos);
+    expect(await screen.findByText('Tomorrow, start with Comparing fractions. 6 children need it.')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Give practice' })).toHaveAttribute('href', '/t/results?hw=hw_6b_fractions');
+  });
+
   it('a new teacher with a class but no homework sees the empty desk and the next action', async () => {
     const repos = make();
     const t = await repos.session.startTeacher({ name: 'Asha', schoolName: 'Sunrise' });

@@ -32,6 +32,28 @@ describe('session', () => {
   });
 });
 
+describe('Reset demo', () => {
+  it('reloads the demo but keeps the demo teacher signed in and forgets children’s name picks', async () => {
+    const repos = make();
+    await repos.session.useDemoTeacher();
+    const classes = await repos.teacher(DEMO_TEACHER_ID).listClasses();
+    if (!classes.ok) throw new Error();
+    await repos.teacher(DEMO_TEACHER_ID).addStudents(classes.value[0]!.class.id, ['Extra']); // a change the reset must undo
+    expect((await repos.demo.reset()).ok).toBe(true);
+    const session = await repos.session.get();
+    expect(session.ok && session.value).toMatchObject({ role: 'teacher', teacherId: DEMO_TEACHER_ID, claims: {} });
+    const after = await repos.teacher(DEMO_TEACHER_ID).listStudents(classes.value[0]!.class.id);
+    expect(after.ok && after.value.some((s) => s.firstName === 'Extra')).toBe(false);
+  });
+  it('signs out a real (non-demo) teacher whose account is not in the demo data', async () => {
+    const repos = make();
+    await repos.session.startTeacher({ name: 'Asha', schoolName: 'Sunrise' });
+    await repos.demo.reset();
+    const session = await repos.session.get();
+    expect(session.ok && session.value.role).toBeUndefined();
+  });
+});
+
 describe('wipeAll (delete all my data on this phone)', () => {
   it('removes classes, children and answers but leaves a usable empty database', async () => {
     const repos = make();

@@ -28,7 +28,23 @@ export function createDemoControls({ db, clock, rng }: { db: Database; clock: Cl
       return r.ok && Boolean(r.value?.meta.seedVersion);
     },
     seed,
-    reset: seed,
+    /** Start the demo again but stay signed in: keep the role (when it exists in the fresh demo), forget children's picks. */
+    async reset() {
+      const before = db.read();
+      const session = before.ok ? before.value?.session : undefined;
+      const seeded = await seed();
+      if (!seeded.ok || !session) return seeded;
+      const kept = db.update((d) => ({
+        ...d,
+        session: {
+          claims: {},
+          ...(session.role && ((session.teacherId && d.teachers.some((t) => t.id === session.teacherId)) || (session.principalSchoolId && d.schools.some((s) => s.id === session.principalSchoolId)))
+            ? { role: session.role, ...(session.teacherId ? { teacherId: session.teacherId } : {}), ...(session.principalSchoolId ? { principalSchoolId: session.principalSchoolId } : {}) }
+            : {}),
+        },
+      }));
+      return kept.ok ? ok(undefined) : kept;
+    },
 
     async submissionWave(homeworkId) {
       const { answerFor } = await import('./seed/submissions');
