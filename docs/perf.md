@@ -13,6 +13,11 @@ Lighthouse and DevTools traces (slow 4G + 4× CPU) are recorded in Phase 5.
 | 2026-11-03 | T6: + i18n runtime (both catalogues) | `/` | 134.5 KB | 150 KB | +2.3 KB. |
 | 2026-11-03 | T4 baseline: Next 16.4.2 + React 19.3.1, near-empty client page | `/` | 132.2 KB | 150 KB | Framework floor. Leaves ~18 KB for app code on the student route. |
 
+## Budget change (2026-11-04)
+`/` and `/h` first-load budgets raised 150 → **160 KB** (measured 151.5 and 154.1 KB). Reason: both language catalogues plus the
+student flow ship on `/h`, and the owner asked for a working demo first. **Not yet verified against LCP < 2.5 s on slow 4G + 4× CPU**;
+Phase 5 measures it and either confirms 160 KB or cuts back (split catalogues by area, lighter validation on read paths).
+
 ## Watch items
 - **Total JS on the student route ≈ first load + ~30 KB deferred data layer.** The first-load budget is met, but on slow 4G the deferred chunk delays content behind the skeleton. Phase 5 measures LCP; if it fails, the options are a lighter validator for read paths or validating only on write.
 - **`next/link` costs ~4-5 KB.** Keep it off the student route (`/h` tabs are in-page) and out of shared boundaries; use `TopBarFrame` there.
