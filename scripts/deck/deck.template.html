@@ -94,6 +94,8 @@ input[type=range]{width:100%;accent-color:var(--primary);min-height:32px}
 .polaroid figcaption b{display:block;font-size:14px}
 .polaroid figcaption span{color:var(--muted)}
 @media (max-width:640px){.proof{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.cols2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.75fr);gap:22px;align-items:start}.kids{display:flex;gap:16px;align-items:center;flex-wrap:wrap}.kids .polaroid{width:150px}.kids .ph{aspect-ratio:1/1!important}.kids .ph img{height:100%!important}
+@media (max-width:640px){.cols2{grid-template-columns:minmax(0,1fr)}}
 /* notes + nav */
 .notes{background:var(--note);border-radius:14px;padding:14px 18px;box-shadow:var(--shadow);transform:rotate(-.4deg);display:none}
 .notes.on{display:block}.notes b{font-family:var(--f-hand);font-size:24px;font-weight:600}
@@ -156,6 +158,8 @@ var EMBED=/\/present/.test(location.pathname)||/(^|\.)mento-psi\.vercel\.app$/.t
 if(EMBED)document.body.classList.add('present-mode');
 var SHOTS=%%SHOTS%%;
 var PEOPLE=%%PEOPLE%%;
+var ART=%%ART%%;
+function art(k,alt,cls){return ART[k]?'<figure class="polaroid '+(cls||'')+'"><div class="ph" style="aspect-ratio:auto"><img alt="'+alt+'" src="'+ART[k]+'" style="height:auto"></div></figure>':''}
 function $(id){return document.getElementById(id)}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function inr(n){return n.toLocaleString('en-IN',{maximumFractionDigits:0})}
@@ -188,9 +192,9 @@ var TAB={opening:'Conceive',conceive:'Conceive',plan:'Plan',develop:'Develop',la
 
 slide({id:'cover',tab:'conceive',t:5,chap:'PM101 final presentation',title:'Mento',sub:'Homework that shows who’s stuck, on which concept, and what to do next.',
  screens:['role','results'],
- body:function(){return '<p class="hl" style="align-self:flex-start;font-weight:800">Today we take it through every stage of the product life cycle.</p>'+
+ body:function(){return '<div class="cols2"><div style="display:flex;flex-direction:column;gap:14px;min-width:0"><p class="hl" style="align-self:flex-start;font-weight:800">Today we take it through every stage of the product life cycle.</p>'+
  '<div class="grid g2"><div class="tile"><span class="role">Course</span><b>Product Management 101</b></div><div class="tile"><span class="role">School</span><b>Masters’ Union</b></div></div>'+
- '<div class="grid g3"><div class="tile"><b>Part 1</b><span class="muted small">Framework and go-to-market</span></div><div class="tile"><b>Part 2</b><span class="muted small">Free vs paid for schools</span></div><div class="tile"><b>The app</b><span class="muted small">Walk-through, slide by slide</span></div></div>'},
+ '<div class="grid g3"><div class="tile"><b>Part 1</b><span class="muted small">Framework and go-to-market</span></div><div class="tile"><b>Part 2</b><span class="muted small">Free vs paid for schools</span></div><div class="tile"><b>The app</b><span class="muted small">Walk-through, slide by slide</span></div></div>'+'</div>'+art('cartoon','Cartoon: Our Education System. For a fair selection everybody has to take the same exam: please climb that tree.')+'</div>'},
  notes:'“This is Mento. We’ll take it through every stage of the product lifecycle.”'});
 
 slide({id:'hook',tab:'conceive',t:30,chap:'Chapter 1 · Conceive',title:'One homework sheet. Forty different children.',sub:'No time to find out who.',screens:['results','student-name'],
@@ -198,7 +202,7 @@ slide({id:'hook',tab:'conceive',t:30,chap:'Chapter 1 · Conceive',title:'One hom
  '<div class="tile"><div class="stat">23.4%</div><p>of Class 3 children in rural government schools can read a Class 2 text</p><span class="tiny muted">ASER 2024</span></div>'+
  '<div class="tile"><div class="stat">5–6</div><p>grade levels of ability inside a single class</p><span class="tiny muted">Mindspark study, low-income students, Delhi</span></div>'+
  '<div class="tile"><div class="stat">19.1%</div><p>of a teacher’s school hours go to actual teaching</p><span class="tiny muted">NIEPA study, as reported 2018</span></div></div>'+
- '<p>A teacher sets one sheet for 40 children and has no time to find out <span class="hl">who is stuck, and on what</span>.</p>'},
+ '<div class="kids">'+art('kid1','A child')+art('kid2','Another child')+'<p style="flex:1 1 220px;min-width:0">A teacher sets one sheet for 40 children and has no time to find out <span class="hl">who is stuck, and on what</span>.</p></div>'},
  notes:'“Three published numbers. Only 23.4% of Class 3 children in rural government schools can read a Class 2 text. In rural private schools it’s 35.5%: better, but still most children can’t. One class can span five to six grade levels. And teachers spend about a fifth of school hours actually teaching. One homework sheet, forty different children, no time to find out who’s stuck.”'});
 
 slide({id:'personas',tab:'conceive',t:25,chap:'Chapter 1 · Conceive',title:'Four people, one problem.',screens:['role','desk','student-name','principal'],
