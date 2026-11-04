@@ -14,6 +14,8 @@ rep = {
 }
 m = {p.stem: 'data:image/jpeg;base64,' + b64(p) for p in sorted(shots.glob('*.jpg'))}
 rep['%%SHOTS%%'] = json.dumps(m)
+people = sorted(pathlib.Path(sys.argv[4]).glob('*.jpg')) if len(sys.argv) > 4 and sys.argv[4] != '-' else []
+rep['%%PEOPLE%%'] = json.dumps(['data:image/jpeg;base64,' + b64(p) for p in people])
 for k, v in rep.items(): tpl = tpl.replace(k, v)
 out.write_text(tpl)
 print(out, round(len(tpl)/1e6, 2), 'MB')
