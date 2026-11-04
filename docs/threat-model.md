@@ -52,11 +52,11 @@ Scope: a static Next.js app on Vercel; all data in the browser (localStorage + I
 ```
 Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:;
   font-src 'self'; connect-src 'self'; media-src 'self' blob:; worker-src 'self'; manifest-src 'self'; object-src 'none';
-  base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests
 X-Content-Type-Options: nosniff
 Referrer-Policy: no-referrer
 Permissions-Policy: camera=(self), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()
-X-Frame-Options: DENY
+X-Frame-Options: SAMEORIGIN
 Strict-Transport-Security: max-age=63072000; includeSubDomains (Vercel serves HTTPS)
 Cross-Origin-Opener-Policy: same-origin
 ```
@@ -78,3 +78,6 @@ Consent per student before link submission; purpose limitation (teaching only; n
 data minimisation (first names only, no phone numbers of children, parent phone not stored); export and delete; a retention
 statement; the school-paid model. A real deployment needs a privacy notice reviewed by counsel, a verifiable parental-consent
 process, and a processor agreement for any backend.
+
+## Change log
+- 2026-11-04: framing allowed for the app's own origin only (`frame-ancestors 'self'`, `X-Frame-Options: SAMEORIGIN`) so the `/present` page can show the live app in a phone frame. Other sites still cannot frame it. `/demo?to=` only redirects to an allowlist of internal paths.

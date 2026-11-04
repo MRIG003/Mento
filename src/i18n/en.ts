@@ -177,6 +177,7 @@ export const en = {
   'guide.s6': 'Reset demo to start again.',
   'guide.go': 'Go',
   'guide.reset': 'Reset demo',
+  'demo.loading': 'Opening the demo class…',
 
   'p.start.title': 'Principal',
   'p.start.code': 'School code',

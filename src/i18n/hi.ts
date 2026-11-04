@@ -176,6 +176,7 @@ export const hi: Catalogue = {
   'guide.s6': 'फिर से शुरू करने के लिए डेमो रीसेट करें।',
   'guide.go': 'चलें',
   'guide.reset': 'डेमो रीसेट करें',
+  'demo.loading': 'डेमो क्लास खुल रही है…',
 
   'p.start.title': 'प्रिंसिपल',
   'p.start.code': 'स्कूल कोड',

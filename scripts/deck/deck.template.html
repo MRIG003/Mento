@@ -1,0 +1,432 @@
+<title>Mento PM101 Deck</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout concept: a desk. Slide on a paper card with a sticky-note headline (left), the real app in a phone wireframe (right). */
+@font-face{font-family:'Nunito';font-weight:400;font-display:swap;src:url(data:font/woff2;base64,%%NUNITO400%%) format('woff2')}
+@font-face{font-family:'Nunito';font-weight:700 800;font-display:swap;src:url(data:font/woff2;base64,%%NUNITO700%%) format('woff2')}
+@font-face{font-family:'Caveat';font-weight:600;font-display:swap;src:url(data:font/woff2;base64,%%CAVEAT600%%) format('woff2')}
+@font-face{font-family:'Noto Sans Devanagari';font-weight:400;font-display:swap;src:url(data:font/woff2;base64,%%DEVA400%%) format('woff2')}
+@font-face{font-family:'Noto Sans Devanagari';font-weight:700;font-display:swap;src:url(data:font/woff2;base64,%%DEVA700%%) format('woff2')}
+:root{
+  --paper:#F3EBDD; --dot:#D6C9B2; --card:#FFFFFF; --ink:#2B2B2B; --muted:#5A5A52; --line:#E4D9C6;
+  --note:#FFE58A; --washi:#F7B2C4; --highlight:#FFEB3B; --primary:#2F3FBF; --primary-d:#24319A;
+  --pink:#F8C8D6; --blue:#BFE0F7; --mint:#BDEBD2; --lilac:#D9CCF5; --peach:#FAD3B0;
+  --ok:#2E7D4F; --warn:#B26A00; --bad:#C62828; --shadow:0 1px 1px rgb(43 43 43/.08),0 6px 14px -6px rgb(43 43 43/.28);
+  --f-ui:'Nunito','Noto Sans Devanagari',ui-sans-serif,system-ui,sans-serif; --f-hand:'Caveat','Nunito',cursive;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--paper) radial-gradient(var(--dot) 1px,transparent 1px) 0 0/20px 20px;color:var(--ink);font-family:var(--f-ui);font-size:16px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px;overflow-x:hidden}
+button{font:inherit;color:inherit}
+a{color:var(--primary)}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+.app{max-width:1500px;margin:0 auto;display:flex;flex-direction:column;gap:12px;min-height:100%}
+/* top bar */
+.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.brand{font-weight:800;font-size:20px;letter-spacing:.01em;display:flex;align-items:center;gap:8px;margin-right:4px}
+.brand i{width:12px;height:12px;border-radius:3px;background:var(--note);box-shadow:var(--shadow);transform:rotate(-8deg);display:inline-block}
+.tabs{display:flex;gap:6px;overflow-x:auto;flex:1 1 380px;padding:2px;scrollbar-width:thin}
+.tab{border:2px solid var(--line);background:var(--card);border-radius:999px;padding:6px 14px;min-height:40px;font-weight:700;white-space:nowrap;cursor:pointer}
+.tab[aria-current=true]{background:var(--primary);border-color:var(--primary);color:#fff}
+.tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.timer{font-variant-numeric:tabular-nums;font-weight:800;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:4px 12px;min-height:40px;display:flex;align-items:center;gap:8px}
+.timer.warn{background:var(--note)} .timer.over{background:var(--pink)}
+.btn{border:2px solid var(--ink);background:var(--card);border-radius:999px;padding:6px 14px;min-height:40px;font-weight:800;cursor:pointer}
+.btn.primary{background:var(--primary);border-color:var(--primary);color:#fff}
+.btn.sm{min-height:34px;padding:2px 12px;font-size:14px}
+.btn[aria-pressed=true]{background:var(--note)}
+/* stage */
+.stage{flex:1;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:start}
+.slide{background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:26px 30px 24px;min-height:560px;display:flex;flex-direction:column;gap:16px;position:relative}
+.chapter{font-weight:800;text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--muted)}
+.head{position:relative;align-self:flex-start;max-width:100%;background:var(--note);padding:18px 26px 14px;border-radius:3px;box-shadow:var(--shadow);transform:rotate(-1.2deg);margin-top:12px}
+.head::before{content:"";position:absolute;left:50%;top:-12px;width:112px;height:24px;transform:translateX(-50%) rotate(2deg);background:var(--washi);opacity:.88;background-image:repeating-linear-gradient(135deg,rgb(255 255 255/.3) 0 6px,transparent 6px 12px)}
+.head h1{margin:0;font-family:var(--f-hand);font-weight:600;font-size:clamp(30px,3.6vw,46px);line-height:1.08;text-wrap:balance}
+.head p{margin:4px 0 0;color:var(--muted);font-weight:700;font-size:15px}
+.body{display:flex;flex-direction:column;gap:14px;font-size:clamp(16px,1.25vw,19px);min-width:0}
+.body p{margin:0}
+.muted{color:var(--muted)} .small{font-size:14px} .tiny{font-size:12.5px}
+.grid{display:grid;gap:12px}.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.tile{background:var(--paper);border-radius:14px;padding:14px 16px;border:2px solid var(--line)}
+.tile b{display:block}
+.stat{font-family:var(--f-hand);font-weight:600;font-size:clamp(40px,4.4vw,60px);line-height:1}
+.hl{background:linear-gradient(transparent 12%,var(--highlight) 12% 90%,transparent 90%);padding:0 4px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.tag{display:inline-block;padding:3px 12px;border-radius:8px;font-weight:800;box-shadow:var(--shadow);font-size:14px;margin:2px 4px 2px 0}
+.t-pink{background:var(--pink)}.t-blue{background:var(--blue)}.t-mint{background:var(--mint)}.t-lilac{background:var(--lilac)}.t-peach{background:var(--peach)}.t-yel{background:var(--note)}
+.role{font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+.chip{display:inline-flex;align-items:center;border:2px solid var(--ink);border-radius:6px;padding:0 8px;font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;background:var(--card);white-space:nowrap}
+.chip.built{border-color:var(--ok);color:var(--ok)}.chip.prev{border-color:var(--primary);color:var(--primary)}.chip.road{border-color:var(--warn);color:var(--warn);border-style:dashed}.chip.test{border-color:var(--muted);color:var(--muted);border-style:dashed}
+table{border-collapse:collapse;width:100%;font-size:clamp(13.5px,1.05vw,16px)}
+th,td{text-align:left;padding:8px 10px;border-bottom:2px solid var(--line);vertical-align:top}
+th{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.scroll{overflow-x:auto}
+.note-line{background:var(--paper);border-radius:12px;padding:10px 14px;font-size:14.5px;color:var(--muted)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+input[type=range]{width:100%;accent-color:var(--primary);min-height:32px}
+.bar-track{height:12px;border-radius:99px;background:var(--line);overflow:hidden}.bar-fill{height:100%;background:var(--primary);border-radius:99px;transition:width .3s}
+.ok{color:var(--ok)}.warn{color:var(--warn)}
+.chk{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:10px;background:var(--paper);cursor:pointer;min-height:44px}
+.chk input{width:22px;height:22px;margin-top:2px;accent-color:var(--primary);flex:none}
+.foot{margin-top:auto;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;color:var(--muted);font-size:13px}
+/* phone */
+.phone-col{width:min(340px,100%);display:flex;flex-direction:column;align-items:center;gap:10px;position:sticky;top:8px}
+.phone{--pw:min(300px,calc((100vh - 250px)*.462));width:var(--pw);aspect-ratio:390/844;background:var(--ink);border-radius:36px;padding:9px;box-shadow:0 18px 30px -14px rgb(43 43 43/.55);position:relative}
+.phone::before{content:"";position:absolute;top:13px;left:50%;width:30%;height:6px;border-radius:9px;background:#1b1b1b;transform:translateX(-50%);z-index:3}
+.phone::after{content:"";position:absolute;bottom:13px;left:50%;width:34%;height:4px;border-radius:9px;background:rgb(43 43 43/.5);transform:translateX(-50%);z-index:3}
+.screen{position:relative;width:100%;height:100%;background:var(--paper);border-radius:28px;overflow:hidden}
+.screen img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.screen iframe{position:absolute;left:0;top:0;width:390px;height:844px;border:0;transform-origin:0 0;background:var(--paper)}
+.screen-tabs{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.pill{border:2px solid var(--line);background:var(--card);border-radius:999px;padding:2px 12px;min-height:34px;font-weight:700;font-size:13px;cursor:pointer}
+.pill[aria-current=true]{background:var(--note);border-color:var(--ink)}
+.cap{font-size:13.5px;text-align:center;color:var(--muted);max-width:300px;min-height:40px}
+.live{font-weight:800;font-size:14px;min-height:34px;display:inline-flex;align-items:center;text-decoration:underline;text-underline-offset:3px}
+/* notes + nav */
+.notes{background:var(--note);border-radius:14px;padding:14px 18px;box-shadow:var(--shadow);transform:rotate(-.4deg);display:none}
+.notes.on{display:block}.notes b{font-family:var(--f-hand);font-size:24px;font-weight:600}
+.nav{z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;position:sticky;bottom:0;padding:8px 0}
+.dots{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;flex:1}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--line);border:0;padding:0;cursor:pointer;min-width:12px}
+.dot[aria-current=true]{background:var(--primary);transform:scale(1.25)}
+.counter{font-weight:800;font-variant-numeric:tabular-nums;min-width:56px;text-align:center}
+/* live room */
+.hands{display:flex;flex-direction:column;gap:10px}
+.opt{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;background:var(--paper);border-radius:12px;padding:8px 12px;border:2px solid var(--line)}
+.opt.right{border-color:var(--ok)}
+.step{display:flex;align-items:center;gap:8px}.step button{width:44px;height:44px;border-radius:12px;border:2px solid var(--ink);background:var(--card);font-weight:800;font-size:20px;cursor:pointer}
+.step output{min-width:36px;text-align:center;font-weight:800;font-size:20px;font-variant-numeric:tabular-nums}
+.crowd{display:flex;flex-wrap:wrap;gap:6px;min-height:50px}
+.kid{width:30px;height:30px;border-radius:8px;box-shadow:var(--shadow);display:inline-block;transition:background .3s}
+.kid.got{background:var(--blue)}.kid.help{background:var(--peach);outline:2px solid #E2701F}.kid.fixed{background:var(--blue);outline:3px solid var(--primary)}.kid.empty{background:var(--line);box-shadow:none}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13.5px;font-weight:700}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:4px;margin-right:6px;vertical-align:-2px}
+@media (max-width:1060px){.stage{grid-template-columns:minmax(0,1fr)}.phone-col{position:static;width:100%}.phone{--pw:min(280px,78vw)}.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.slide{padding:20px 16px;min-height:0}}
+@media (max-width:640px){.dots{display:none}.nav{background:var(--paper);justify-content:space-between}.g2,.g3{grid-template-columns:minmax(0,1fr)}.brand span{display:none}.nav .btn{padding:6px 12px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+body.present-mode .bar .tools .btn.fs{display:none}
+</style>
+
+<div class="app">
+  <header class="bar">
+    <div class="brand"><i aria-hidden="true"></i><span>Mento</span></div>
+    <nav class="tabs" id="tabs" aria-label="Product life cycle"></nav>
+    <div class="tools">
+      <div class="timer" id="timer" role="timer" aria-label="Talk timer"><span id="tclock">0:00</span><span class="tiny muted">of 9:30</span></div>
+      <button class="btn sm" id="tstart" type="button">Start timer</button>
+      <button class="btn sm" id="treset" type="button">Reset</button>
+      <button class="btn sm" id="tnotes" type="button" aria-pressed="false">Notes</button>
+    </div>
+  </header>
+  <main class="stage">
+    <section class="slide" id="slide" aria-live="polite"></section>
+    <aside class="phone-col" aria-label="The Mento app">
+      <div class="phone"><div class="screen" id="screen"></div></div>
+      <div class="screen-tabs" id="stabs"></div>
+      <div class="cap" id="cap"></div>
+      <a class="live" id="livelink" href="https://mento-psi.vercel.app/" target="_blank" rel="noopener">Open the live app ↗</a>
+    </aside>
+  </main>
+  <div class="notes" id="notes" role="region" aria-label="Speaker notes"></div>
+  <footer class="nav">
+    <button class="btn" id="prev" type="button">‹ Back</button>
+    <div class="dots" id="dots"></div>
+    <span class="counter" id="count">1 / 1</span>
+    <button class="btn primary" id="next" type="button">Next ›</button>
+  </footer>
+</div>
+
+<script>
+(function(){
+'use strict';
+var APP='https://mento-psi.vercel.app';
+var EMBED=/\/present/.test(location.pathname)||/(^|\.)mento-psi\.vercel\.app$/.test(location.hostname);
+if(EMBED)document.body.classList.add('present-mode');
+var SHOTS=%%SHOTS%%;
+function $(id){return document.getElementById(id)}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function inr(n){return n.toLocaleString('en-IN',{maximumFractionDigits:0})}
+function chip(k,t){return '<span class="chip '+k+'">'+t+'</span>'}
+
+/* Phone screens: image key, label, path inside the app (used by /demo?to=) */
+var SCR={
+ role:{l:'First open',p:'/',c:'Pick a role. EN | हिं is on every screen.'},
+ desk:{l:'Desk',p:'/t',c:'The teacher’s desk: tonight’s wrap and the starter checklist.'},
+ create:{l:'Create',p:'/t/create',c:'Five suggested questions, tick or add your own. About 30 seconds.'},
+ share:{l:'Share',p:'/t/create',c:'One link and a ready WhatsApp message. The teacher taps Send.'},
+ results:{l:'Who’s stuck',p:'/t/results',c:'“6 students stuck on Comparing fractions”. Computed from sample answers.'},
+ practice:{l:'Practice',p:'/t/results',c:'One tap drafts practice. The teacher checks it before it goes out.'},
+ review:{l:'Review',p:'/t/results',c:'Anything the app is unsure about goes to the teacher.'},
+ 'student-name':{l:'Child link',p:'/h',c:'No app, no account. Children pick their own name.'},
+ 'student-q':{l:'Question',p:'/h',c:'One question per screen, saved on the phone as they type.'},
+ 'results-hi':{l:'Hindi',p:'/t/results',c:'Same screen in Hindi. Switch is one tap, nothing is lost.'},
+ 'student-name-hi':{l:'हिन्दी',p:'/h',c:'The child link in Hindi.'},
+ class:{l:'Class',p:'/t/class',c:'Consent per child, class data download, delete.'},
+ keep:{l:'What we keep',p:'/privacy',c:'Plain-language privacy page, English and Hindi.'},
+ principal:{l:'Principal',p:'/p',c:'Totals only. No child names, no teacher ranking.'},
+ locked:{l:'Locked',p:'/p/gaps',c:'Class-level gaps unlock at 3 active teachers or on the School plan.'},
+ plan:{l:'Plans',p:'/p/plan',c:'Free vs School plan. Trial and quote are Preview (no payment).'}
+};
+
+/* ---------- slides ---------- */
+var S=[];
+function slide(o){S.push(o)}
+var TAB={opening:'Conceive',conceive:'Conceive',plan:'Plan',develop:'Develop',launch:'Launch',refine:'Refine',retire:'Retire',part2:'Part 2'};
+
+slide({id:'cover',tab:'conceive',t:5,chap:'PM101 final presentation',title:'Mento',sub:'Homework that shows who’s stuck, on which concept, and what to do next.',
+ screens:['role','results'],
+ body:function(){return '<p class="hl" style="align-self:flex-start;font-weight:800">Today we take it through every stage of the product life cycle.</p>'+
+ '<div class="grid g2"><div class="tile"><span class="role">Course</span><b>Product Management 101</b></div><div class="tile"><span class="role">School</span><b>Masters’ Union</b></div></div>'+
+ '<div class="grid g3"><div class="tile"><b>Part 1</b><span class="muted small">Framework and go-to-market</span></div><div class="tile"><b>Part 2</b><span class="muted small">Free vs paid for schools</span></div><div class="tile"><b>Live</b><span class="muted small">Room demo, then the app</span></div></div>'+
+ '<p class="note-line">Everything in the app screens is sample data, labelled “Demo data”. Nothing here is a measured result unless a source is named.</p>'},
+ notes:'“This is Mento. We’ll take it through every stage of the product lifecycle.”'});
+
+slide({id:'hook',tab:'conceive',t:30,chap:'Chapter 1 · Conceive',title:'One homework sheet. Forty different children.',sub:'No time to find out who.',screens:['results','student-name'],
+ body:function(){return '<div class="grid g3">'+
+ '<div class="tile"><div class="stat">23.4%</div><p>of Class 3 children in rural government schools can read a Class 2 text</p><span class="tiny muted">ASER 2024</span></div>'+
+ '<div class="tile"><div class="stat">5–6</div><p>grade levels of ability inside a single class</p><span class="tiny muted">Mindspark study, low-income students, Delhi</span></div>'+
+ '<div class="tile"><div class="stat">19.1%</div><p>of a teacher’s school hours go to actual teaching</p><span class="tiny muted">NIEPA study, as reported 2018</span></div></div>'+
+ '<p>A teacher sets one sheet for 40 children and has no time to find out <span class="hl">who is stuck, and on what</span>.</p>'},
+ notes:'“Three published numbers. Only 23.4% of Class 3 children in rural government schools can read a Class 2 text. In rural private schools it’s 35.5%: better, but still most children can’t. One class can span five to six grade levels. And teachers spend about a fifth of school hours actually teaching. One homework sheet, forty different children, no time to find out who’s stuck.”'});
+
+slide({id:'personas',tab:'conceive',t:25,chap:'Chapter 1 · Conceive',title:'Four people, one problem.',screens:['role','desk','student-name','principal'],
+ body:function(){return '<div class="grid g2">'+
+ '<div class="tile"><span class="role" style="color:var(--primary)">Teacher · user</span><p>Classes 3–8, affordable private school, 40+ students, checks notebooks in the evening.</p></div>'+
+ '<div class="tile"><span class="role" style="color:var(--warn)">Owner or principal · buyer</span><p>Admissions, parent complaints, board results.</p></div>'+
+ '<div class="tile"><span class="role">Parent · influencer</span><p>Gets homework on WhatsApp; can’t tell if the child is behind.</p></div>'+
+ '<div class="tile"><span class="role">Student · end user</span><p>Uses a parent’s phone in the evening.</p></div></div>'+
+ '<p class="hl" style="align-self:flex-start;font-weight:800">The user isn’t the buyer. That shapes everything, Part 2 included.</p>'+
+ '<p class="note-line">Working personas from desk research. Not yet validated with interviews: see the next slide.</p>'},
+ notes:'“Four people. The teacher uses Mento, the owner or principal pays, the parent influences, and the student does the work on a parent’s phone. These are working personas, not yet validated. The key point: the user isn’t the buyer, which is why Part 2 is free for teachers and paid for by schools.”'});
+
+slide({id:'hyp',tab:'conceive',t:45,chap:'Chapter 1 · Conceive',title:'Hypotheses & validation plan',sub:'Not yet tested. An assumption and a plan, not a finding.',screens:['desk'],
+ body:function(){return '<div class="scroll"><table><thead><tr><th>What we assume</th><th>Who we’d interview</th><th>What we’d ask</th><th>Confirms / rejects</th></tr></thead><tbody>'+
+ '<tr><td><b>H1.</b> Teachers can’t see who is stuck, on which concept, until the test.</td><td>6–8 teachers, Classes 3–8, affordable private schools</td><td>“Walk me through the last homework you set. How did you find out who got it wrong?”</td><td>Confirm: manual checking, no concept view.</td></tr>'+
+ '<tr><td><b>H2.</b> Checking homework is a heavy evening burden, worst before tests.</td><td>Same teachers</td><td>“Tell me about the last evening you checked homework. How long? What did you skip?”</td><td>Confirm: regular, often skipped before tests.</td></tr>'+
+ '<tr><td><b>H3.</b> Owners will pay per student for visible progress.</td><td>4–5 owners or principals</td><td>“What software did the school last buy? Why? What made you renew or drop it?”</td><td>Confirm: a comparable spend tied to parents or admissions.</td></tr>'+
+ '<tr><td><b>H4.</b> Parents will open a no-install link from WhatsApp.</td><td>Parents of 1–2 pilot classes (a test)</td><td>Send a sample link; ask non-openers why.</td><td>Confirm: most open within 48 hours.</td></tr></tbody></table></div>'+
+ '<p class="note-line"><b>H3 matters most:</b> it decides the business model.</p>'},
+ notes:'“We want to be straight about evidence: there’s no interview data in this deck yet, so this slide is our validation plan, not findings. Four bets: teachers can’t see who’s stuck by concept; checking eats their evenings; owners will pay per student for visible progress; parents will open a no-install link. For each, who we’d talk to, the ‘last time’ question we’d ask, and the result that would make us drop it. H3 matters most: it decides the business model.”'});
+
+slide({id:'icp',tab:'conceive',t:30,chap:'Chapter 1 · Conceive',title:'Our ideal customer, and why it’s a painkiller',screens:['desk','create'],
+ body:function(){return '<p>A <b>Classes 3–8 teacher in an affordable private school</b> who can’t tell which students are falling behind. Today: homework on WhatsApp, notebooks checked by hand. The trigger is the pile of unchecked notebooks before a test <span class="chip test">Assumption H2</span>.</p>'+
+ '<div class="tile"><span class="role">Job to be done</span><p>“When I’ve set homework for 40 kids and have no time to check it, I want to know <b>who is stuck and on what</b>, so I can help them before the test.”</p></div>'+
+ '<div class="grid g3"><div class="tile"><b>Functional</b><span class="muted small">Who is stuck, on which concept.</span></div><div class="tile"><b>Personal</b><span class="muted small">Stop the guilt of kids slipping.</span></div><div class="tile"><b>Social</b><span class="muted small">Look competent to the principal and parents.</span></div></div>'+
+ '<p><span class="hl">Painkiller</span>, not a vitamin: if H1 and H2 hold.</p>'},
+ notes:'“Our ideal customer: a Classes 3 to 8 teacher in an affordable private school who can’t tell which students are falling behind. Today it’s WhatsApp and notebooks. The trigger is an assumption, H2: the pile of unchecked notebooks before a test. The job: know who’s stuck, on what, before the test. If H1 and H2 hold, this is a painkiller.”'});
+
+slide({id:'market',tab:'plan',t:30,chap:'Chapter 2 · Plan',title:'Up to ₹1,918 crore in private schools alone',sub:'Assumption-based ceiling. Drag the price.',screens:['principal'],
+ body:function(){return '<div class="tile"><label for="price" class="role">Assumed price per student per year: <b id="pricev">₹200</b></label><input id="price" type="range" min="100" max="500" step="50" value="200"></div>'+
+ '<div class="grid g3"><div class="tile"><span class="role">TAM</span><div class="stat" id="tam">₹1,918 cr</div><p class="small muted">9.59 crore private unaided students × price</p></div>'+
+ '<div class="tile"><span class="role">SAM (assumed)</span><div class="stat" id="sam">₹800 cr</div><p class="small muted">≈ 4 crore students, Classes 3–10</p></div>'+
+ '<div class="tile"><span class="role">SOM · Year 3 target</span><div class="stat" id="som">₹18 cr</div><p class="small muted">3,000 schools × 300 students</p></div></div>'+
+ '<p class="small">Private unaided schools hold <b>38.8%</b> of enrolment, a record high (UDISE+ 2024-25).</p>'+
+ '<p class="note-line">Bottom-up estimate. Price, SAM share and school count are our assumptions, not third-party data.</p>'},
+ after:function(){var r=$('price');if(!r)return;function u(){var p=+r.value;$('pricev').textContent='₹'+p;$('tam').textContent='₹'+inr(Math.round(9.59*p))+' cr';$('sam').textContent='₹'+inr(Math.round(4*p))+' cr';$('som').textContent='₹'+inr(Math.round(3000*300*p/1e7))+' cr'}r.addEventListener('input',u);u()},
+ notes:'“This is a ceiling, built bottom-up, and it’s assumption-based. About 9.6 crore students are in private unaided schools; times an assumed ₹200 each, that’s roughly ₹1,900 crore. Our Year-3 target, 3,000 schools of 300 students, is about ₹18 crore.” Drag the price slider once, then move on.'});
+
+slide({id:'comp',tab:'plan',t:30,chap:'Chapter 2 · Plan',title:'No one closes the loop for teacher and parent',sub:'Our real competitor is WhatsApp plus paper.',screens:['share'],
+ body:function(){var d={f:'●',h:'◐',n:'○'};function r(n,a,b,c,t){return '<tr><td><b>'+n+'</b><div class="small muted">'+t+'</div></td><td>'+d[a]+'</td><td>'+d[b]+'</td><td>'+d[c]+'</td></tr>'}
+ return '<div class="scroll"><table><thead><tr><th>Alternative</th><th>Assign and admin</th><th>Learning remediation</th><th>Student self-serve</th></tr></thead><tbody>'+
+ r('WhatsApp + paper','h','n','n','Free and on every parent’s phone. Homework goes out as photos; nothing says who is stuck.')+
+ r('Google Classroom + Gemini','f','h','h','Free with Workspace for Education. Gemini features limited to users 18+; school must set up Workspace.')+
+ r('Teachmint','f','n','n','Started as a teacher app; FY25 ₹74 cr operating revenue came from smart-classroom products (Entrackr).')+
+ r('State-government chatbot and adaptive programmes','n','h','f','Sold to state governments for government schools.')+
+ r('Mindspark','n','f','f','Strongest evidence for adaptive learning, but students use it alone; the teacher is not in the loop.')+
+ r('<span class="hl">Mento</span>','f','f','h','Teacher-led remediation that reaches families through a link.')+'</tbody></table></div>'+
+ '<p class="tiny muted">● strong  ◐ partial  ○ weak. Positions are our judgement, not measured data.</p>'},
+ notes:'“Our real competitor is WhatsApp plus paper: free, and already on every parent’s phone. Google Classroom now has Gemini, but its AI tools are for users 18 and over and need a school Workspace setup. Mindspark has strong evidence, but the teacher isn’t in the loop.” Tap Mento: “Our bet is teacher-led remediation that reaches families through a link.”'});
+
+slide({id:'pos',tab:'plan',t:25,chap:'Chapter 2 · Plan',title:'Positioning and the moat we’re aiming for',screens:['results'],
+ body:function(){return '<div class="tile"><p><span class="role">For</span> Classes 3–8 teachers in affordable private schools <span class="role">who</span> can’t see who’s falling behind until the test, <b>Mento turns every homework into a diagnosis and a practice plan</b>. <span class="role">Unlike</span> WhatsApp groups and Google Classroom, our product reaches families with a no-install link and closes the loop with practice.</p></div>'+
+ '<div class="grid g3"><div class="tile"><b>Data network effects</b><span class="muted small">Every answer could improve how we detect gaps.</span></div><div class="tile"><b>Switching costs</b><span class="muted small">Class learning history builds up with us.</span></div><div class="tile"><b>Intangible assets</b><span class="muted small">A concept-mapped, vernacular question bank.</span></div></div>'+
+ '<p class="note-line"><b>Aspirational moat: none of this exists yet.</b> Vision: every child practises at their own level.</p>'},
+ notes:'“In the course template: for Classes 3 to 8 teachers who can’t see who’s behind until the test, Mento turns every homework into a diagnosis and a practice plan. The moat we’re aiming for is data, class history and a vernacular question bank. These are goals, not assets we have yet.”'});
+
+slide({id:'mvp',tab:'plan',t:25,chap:'Chapter 2 · Plan',title:'What we built first, and why',sub:'MoSCoW and one user story.',screens:['create','student-q','results'],
+ body:function(){return '<div class="grid g3"><div class="tile"><span class="role ok">Must</span><p class="small">Create homework, parent link, auto-check, who’s-stuck view, practice.</p></div><div class="tile"><span class="role" style="color:var(--primary)">Should / Could</span><p class="small">Hindi throughout and handwriting check next; principal view and parent reports after.</p></div><div class="tile"><span class="role warn">Won’t, yet</span><p class="small">Live classes, ERP.</p></div></div>'+
+ '<div class="tile"><span class="role">User story · High</span><p>As a teacher, I want to see which students got fractions wrong, so that I can give them extra practice before Friday’s test.</p></div>'+
+ '<div class="hands"><label class="chk"><input type="checkbox"><span>Concept view appears within 1 minute of the deadline</span></label><label class="chk"><input type="checkbox"><span>Teacher selects the struggling group in one tap</span></label><label class="chk"><input type="checkbox"><span>Parent opens the link with no app and no account</span></label></div>'+
+ '<p class="tiny muted">Tick an acceptance criterion only when the demo actually shows it.</p>'},
+ notes:'“MoSCoW. Must: create homework, parent link, auto-check, who’s-stuck view, practice. Hindi and handwriting next; principal view and reports after; no live classes or ERP. One user story, three testable acceptance criteria. We tick them during the demo, only if the demo shows them.”'});
+
+/* ---- live room (hands-up mode) ---- */
+var LQ=[
+ {id:'read',concept:'Reading levels',q:'What share of Class 3 children in rural government schools can read a Class 2 text?',opts:['23.4%','48%','71%'],ans:0,src:'ASER 2024',easy:{q:'Is it more than half of them, or less?',opts:['More','Less'],ans:1}},
+ {id:'time',concept:'Teacher time',q:'What share of a teacher’s school hours goes to actual teaching?',opts:['19.1%','42%','65%'],ans:0,src:'NIEPA study, as reported 2018',easy:{q:'Closer to one-fifth or one-half?',opts:['One-fifth','One-half'],ans:0}},
+ {id:'spread',concept:'Classroom spread',q:'Inside one class, how many grade levels of ability can you find?',opts:['1–2','3–4','5–6'],ans:2,src:'Mindspark study, low-income students, Delhi',easy:{q:'Can one class hold children several years apart in level?',opts:['Yes','No'],ans:0}}
+];
+var LS={room:30,qi:0,counts:LQ.map(function(q){return q.opts.map(function(){return 0})}),phase:'quiz',easy:LQ.map(function(q){return q.easy.opts.map(function(){return 0})})};
+function liveBody(){
+ var q=LQ[LS.qi],c=LS.counts[LS.qi],answered=c.reduce(function(a,b){return a+b},0),right=c[q.ans],stuck=answered-right;
+ var e=LS.easy[LS.qi],easyRight=e[q.easy.ans],fixed=Math.min(easyRight,stuck);
+ var html='<div class="row"><span class="role">Room size</span><div class="step"><button type="button" data-a="room-" aria-label="Fewer people">−</button><output>'+LS.room+'</output><button type="button" data-a="room+" aria-label="More people">+</button></div>'+
+  '<div class="row" style="margin-left:auto" role="tablist" aria-label="Question">'+LQ.map(function(x,i){return '<button class="pill" type="button" data-a="q'+i+'" aria-current="'+(i===LS.qi)+'">'+(i+1)+'. '+x.concept+'</button>'}).join('')+'</div></div>';
+ if(LS.phase==='quiz'){
+  html+='<div class="tile"><span class="role">Question '+(LS.qi+1)+' · hands up</span><p><b>'+esc(q.q)+'</b></p><div class="hands">'+q.opts.map(function(o,i){return '<div class="opt'+(i===q.ans?' right':'')+'"><span>'+esc(o)+(i===q.ans?' <span class="chip built">answer</span>':'')+'</span><span class="step"><button type="button" data-a="c'+i+'-" aria-label="Fewer hands for '+esc(o)+'">−</button><output>'+c[i]+'</output><button type="button" data-a="c'+i+'+" aria-label="More hands for '+esc(o)+'">+</button></span></div>'}).join('')+'</div><p class="tiny muted">Source: '+q.src+'. Count the hands for each option.</p></div>';
+ }else{
+  html+='<div class="tile"><span class="role">Easier step · for those who needed help</span><p><b>'+esc(q.easy.q)+'</b></p><div class="hands">'+q.easy.opts.map(function(o,i){return '<div class="opt'+(i===q.easy.ans?' right':'')+'"><span>'+esc(o)+(i===q.easy.ans?' <span class="chip built">answer</span>':'')+'</span><span class="step"><button type="button" data-a="e'+i+'-" aria-label="Fewer hands for '+esc(o)+'">−</button><output>'+e[i]+'</output><button type="button" data-a="e'+i+'+" aria-label="More hands for '+esc(o)+'">+</button></span></div>'}).join('')+'</div></div>';
+ }
+ var kids='';for(var i=0;i<LS.room;i++){var cls='empty';if(answered){ if(i<right)cls='got'; else if(i<answered)cls=(LS.phase==='practice'&&(i-right)<fixed)?'fixed':'help'; } kids+='<span class="kid '+cls+'" aria-hidden="true"></span>'}
+ html+='<div class="crowd" aria-label="The room: blue got it, orange needs help">'+kids+'</div><div class="legend"><span><i style="background:var(--blue)"></i>got it</span><span><i style="background:var(--peach);outline:2px solid #E2701F"></i>needs help</span><span><i style="background:var(--blue);outline:3px solid var(--primary)"></i>fixed it</span></div>';
+ html+='<div class="tile"><b>'+(answered?stuck+' of '+answered+' are stuck on '+q.concept.toLowerCase():'Count the hands to see who is stuck')+'</b>'+(LS.phase==='practice'?'<div class="stat" style="margin-top:4px"><span class="ok">'+fixed+'</span> fixed it</div>':'')+'</div>';
+ html+='<div class="row">'+(LS.phase==='quiz'?'<button class="btn primary" type="button" data-a="practice"'+(stuck? '':' disabled')+'>Send practice to the '+stuck+' stuck</button>':'<button class="btn" type="button" data-a="quiz">Back to the question</button>')+'<button class="btn" type="button" data-a="reset">New round</button></div>';
+ html+='<p class="note-line">Hands-up mode: the presenter counts hands. A phone-scan live room needs a small backend and is not switched on yet.</p>';
+ return html}
+function liveAfter(){var root=$('slide');root.querySelectorAll('[data-a]').forEach(function(b){b.addEventListener('click',function(){var a=b.getAttribute('data-a'),m;
+  if(a==='room+')LS.room=Math.min(60,LS.room+1);else if(a==='room-')LS.room=Math.max(1,LS.room-1);
+  else if(m=/^q(\d)$/.exec(a)){LS.qi=+m[1];LS.phase='quiz'}
+  else if(m=/^c(\d)([+-])$/.exec(a)){var tot=LS.counts[LS.qi].reduce(function(x,y){return x+y},0),v=LS.counts[LS.qi][+m[1]];LS.counts[LS.qi][+m[1]]=m[2]==='+'?(tot<LS.room?v+1:v):Math.max(0,v-1)}
+  else if(m=/^e(\d)([+-])$/.exec(a)){var v2=LS.easy[LS.qi][+m[1]];LS.easy[LS.qi][+m[1]]=m[2]==='+'?v2+1:Math.max(0,v2-1)}
+  else if(a==='practice')LS.phase='practice';else if(a==='quiz')LS.phase='quiz';
+  else if(a==='reset'){LS.counts=LQ.map(function(q){return q.opts.map(function(){return 0})});LS.easy=LQ.map(function(q){return q.easy.opts.map(function(){return 0})});LS.phase='quiz';LS.qi=0}
+  var bodyEl=root.querySelector('.body');bodyEl.innerHTML=liveBody();liveAfter();})})}
+slide({id:'live',tab:'develop',t:75,chap:'Chapter 3 · Develop',title:'Turn the page: the homework checks itself.',sub:'The room is the class. Hands up.',screens:['results','practice'],body:liveBody,after:liveAfter,
+ notes:'Ask the room question 1 and count hands for each option. Blue squares got it; orange need help. Say: “Remember the blackboard numbers.” Press Send practice, ask the easier step, count the hands: the “fixed it” count rises. Then go to the next slide and open Mento. If Wi-Fi fails, this slide needs no network.'});
+
+slide({id:'build',tab:'develop',t:60,chap:'Chapter 3 · Develop',title:'In Mento: create, share, see who’s stuck',sub:'Open the app on the right and do it live.',screens:['create','share','student-q','results','practice','review'],
+ body:function(){return '<div class="grid g2"><div class="tile"><b>1 · Create in 30 seconds</b><p class="small muted">Five suggested questions, each tagged to a concept. Tick, add your own, set the time.</p></div><div class="tile"><b>2 · One link, no install</b><p class="small muted">WhatsApp message ready; a parent opens it, the child picks their name.</p></div><div class="tile"><b>3 · Who’s stuck, by concept</b><p class="small muted">Highlighted concept, evidence and the likely mix-up. Teacher can override.</p></div><div class="tile"><b>4 · One-tap practice</b><p class="small muted">Draft, check, approve. It appears on the same link.</p></div></div>'+
+ '<div class="scroll"><table><thead><tr><th>Capability</th><th>Status today</th></tr></thead><tbody>'+
+ '<tr><td>Create homework, share link, child answers, auto-check, who’s-stuck by concept, practice, teacher override of reviewed marks</td><td>'+chip('built','Built')+'</td></tr>'+
+ '<tr><td>Hindi and English, one-tap switch on every screen</td><td>'+chip('built','Built')+'</td></tr>'+
+ '<tr><td>Photo capture with live guidance; handwriting reading</td><td>'+chip('built','Capture built')+' '+chip('prev','Reading: Preview')+'</td></tr>'+
+ '<tr><td>Practice picked per child at their own level; “fixed it” count; students × concepts grid</td><td>'+chip('road','Roadmap')+'</td></tr></tbody></table></div>'+
+ '<div class="tile"><span class="role">The habit loop</span><p class="small"><b>Trigger</b> “32 of 40 handed in.” · <b>Action</b> create, share one link · <b>Reward</b> see who needs help · <b>Investment</b> class history</p></div>'},
+ notes:'Open Mento. Create homework in 30 seconds, show the share message, open the parent link, then results and practice. One line on the loop: “Trigger, the hand-in count; action, one link; reward, seeing who needs help; investment, class history.” Be clear about what is Preview and what is roadmap.'});
+
+slide({id:'gtm',tab:'launch',t:45,chap:'Chapter 4 · Launch',title:'Go-to-market in five answers',screens:['share','principal'],
+ body:function(){return '<div class="scroll"><table><tbody>'+
+ '<tr><td><b>Who is the ideal customer?</b></td><td>Teacher (user); owner or principal (buyer)</td></tr>'+
+ '<tr><td><b>What value is delivered?</b></td><td>Less checking time, and earlier help for students who are stuck</td></tr>'+
+ '<tr><td><b>How will it be sold?</b></td><td>Free for teachers, sales-assisted for schools: hybrid sales + PLG, like Freshworks</td></tr>'+
+ '<tr><td><b>Where will we reach them?</b></td><td>Parent links, teacher workshops, CBSE Sahodaya clusters, textbook publishers</td></tr>'+
+ '<tr><td><b>How much will it cost?</b></td><td>Free for teachers; proposed ₹200–400 per student per year for schools <span class="chip test">untested</span></td></tr></tbody></table></div>'+
+ '<div class="grid g3"><div class="tile t-yel" style="background:var(--note)"><span class="role">Teacher</span><p>Check tonight’s homework in 5 minutes.</p></div><div class="tile" style="background:var(--blue)"><span class="role">Owner</span><p>See which classes are falling behind before parents do.</p></div><div class="tile" style="background:var(--mint)"><span class="role">Parent</span><p>Know what your child needs to practise this week.</p></div></div>'},
+ notes:'“Five answers. The teacher uses, the owner buys. Value: less checking time, earlier help. Sales: free for teachers, sales-assisted for schools, a hybrid like Freshworks. Channels: parent links, teacher workshops, Sahodaya clusters, publishers. Price: free for teachers; we propose ₹200 to 400 per student for schools, untested.” Then read the three messages.'});
+
+slide({id:'phase',tab:'launch',t:35,chap:'Chapter 4 · Launch',title:'From 0 to 100, timed to the school year',sub:'Proposed.',screens:['principal','locked'],
+ body:function(){return '<div class="scroll"><table><thead><tr><th>Stage</th><th>When</th><th>What happens</th></tr></thead><tbody>'+
+ '<tr><td><b>Alpha, 0 → 1</b></td><td>Pre-launch Nov–Jan</td><td>Run the validation plan; 10–20 pilot schools in one city; pre and post learning check</td></tr>'+
+ '<tr><td><b>Beta, 1 → 10</b></td><td>Launch Feb–Apr</td><td>Teacher workshops; owners convert before the April session</td></tr>'+
+ '<tr><td><b>Gamma, 10 → 100</b></td><td>Post-launch, Year 2</td><td>Publisher and distributor channels; more languages; government pilots via partners</td></tr></tbody></table></div>'+
+ '<div class="row"><span class="tag t-pink">Hybrid</span><span class="tag t-blue">Localization-led</span><span class="tag t-mint">Privacy-by-design</span><span class="tag t-lilac">Channel-led</span><span class="tag t-peach">Community-led</span></div>'+
+ '<div class="tile"><b>Our growth bet</b><p class="small">Each link reaches a whole class of families; one teacher brings in the next; at <b>three active teachers</b>, the owner gets a trial. The principal screen shows exactly this rule.</p></div>'},
+ notes:'“Alpha: run the validation plan and pilot in 10 to 20 schools in one city, with a before-and-after learning check. Beta: workshops, and owners convert before the April session. Gamma, Year 2: publishers, more languages, partner-led government pilots. Our proposed fit signal: three or more teachers active weekly in one school; that’s when the owner gets a trial.”'});
+
+slide({id:'metrics',tab:'refine',t:35,chap:'Chapter 5 · Refine',title:'How we’ll know it’s working',screens:['desk','principal'],
+ body:function(){return '<div class="tile" style="background:var(--note);border-color:var(--note)"><span class="role">North Star</span><p style="font-size:1.25em;font-weight:800;margin:0">Students who fixed a concept after practice, each week</p></div>'+
+ '<div class="scroll"><table><thead><tr><th>Type</th><th>Metric (thresholds are proposed targets)</th></tr></thead><tbody>'+
+ '<tr><td><b>Objective</b></td><td>Mastery gain on re-check</td></tr><tr><td><b>UX</b></td><td>Homework per teacher per week; hand-in rate ≥ 60%</td></tr>'+
+ '<tr><td><b>Guard</b></td><td>Teacher time per homework doesn’t rise; auto-check agrees with teachers ≥ 90%; zero data incidents</td></tr>'+
+ '<tr><td><b>Leading</b></td><td>Weekly active teachers; schools with ≥ 3 active teachers</td></tr><tr><td><b>Lagging</b></td><td>Paid conversion; April renewals</td></tr></tbody></table></div>'+
+ '<p class="small">In the app today: homework sent, hand-in count, who is stuck, the 3-active-teacher rule. '+chip('road','Roadmap')+' the “fixed it” counter and an events view.</p>'+
+ '<p class="tiny muted">Planned A/B tests: parent link vs app install; text vs voice-note parent reports.</p>'},
+ notes:'“North Star: students who fixed a concept after practice each week, the number the room just moved. Under it: mastery gain on re-check; usage and hand-in rate; guardrails on teacher time, auto-check accuracy and zero data incidents; active teachers as the leading signal; conversion and renewals as lagging. The thresholds are targets we’ll reset after the pilot.”'});
+
+slide({id:'retire',tab:'retire',t:15,chap:'Chapter 6 · Retire',title:'Planning the end from the start',screens:['class','keep'],
+ body:function(){return '<div class="grid g3"><div class="tile"><b>Retire features</b><p class="small muted">Retire what nobody uses, based on usage data.</p></div><div class="tile"><b>Return, then delete</b><p class="small muted">At contract end, give the school its data back, then delete it. DPDP erasure duties apply from 14 May 2027; our process needs legal review.</p></div><div class="tile"><b>Warn early</b><p class="small muted">Tell teachers and parents with a date when support closes.</p></div></div>'+
+ '<p>In the app today: <span class="hl">class data download (CSV)</span>, <span class="hl">delete a child</span>, <span class="hl">delete all data on this phone</span>, and a plain “What we keep” page. '+chip('road','Roadmap')+' one-click school-wide export and delete.</p>'+
+ '<button class="btn primary" type="button" id="handin" style="align-self:flex-start">Hand in the notebook</button><p id="handout" class="tiny muted"></p>'},
+ after:function(){var b=$('handin');if(b)b.addEventListener('click',function(){$('handout').textContent='Handed in. Data returned to the school, then deleted. That is the promise.'})},
+ notes:'“Plan the end from the start: retire unused features on usage data, give schools their data back and then delete it, and warn users early.” Press Hand in the notebook. Open the Class tab and What we keep to show export and delete are real.'});
+
+slide({id:'free',tab:'part2',t:55,chap:'Part 2 · Freemium',title:'Free for teachers, paid for schools',sub:'Proposed. Safety is never a paid feature.',screens:['plan','locked'],
+ body:function(){function r(a,b,c){return '<tr><td><b>'+a+'</b></td><td>'+b+'</td><td>'+c+'</td></tr>'}
+ return '<div class="row" role="group" aria-label="Highlight"><button class="btn sm" type="button" data-h="free" aria-pressed="false">Highlight free</button><button class="btn sm" type="button" data-h="paid" aria-pressed="false">Highlight paid</button></div>'+
+ '<div class="scroll"><table id="ptable"><thead><tr><th>Capability</th><th>Teacher · free</th><th>School plan · paid</th></tr></thead><tbody>'+
+ r('Consent, privacy, security','Baseline: parental consent flow, minimal data, encryption, access controls, no ads, export and deletion','Same baseline, plus a school data-processing agreement and admin roles')+
+ r('Homework, auto-check (MCQ, numbers)','Every teacher, up to 3 classes','Every class in the school')+
+ r('Who’s stuck, by concept','Per homework','Per homework + term trends by concept and class')+
+ r('Practice for stuck students','Teacher reassigns practice','Auto-scheduled at each child’s level')+
+ r('AI check of handwritten work','About 100 a month (cost cap)','Higher volume, fair use')+
+ r('Parent updates','No-install share link','Scheduled reports, local language, school branding')+
+ r('School administration','–','Principal dashboard by class, roster upload, teacher management')+
+ r('Languages','English + Hindi','English + Hindi; more Indian languages on the roadmap')+'</tbody></table></div>'+
+ '<p class="note-line">Safeguards are designed toward India’s DPDP Act and Rules; compliance is not yet verified by legal review. The handwriting cap exists because each AI check costs money; help for a struggling child is never paywalled.</p>'},
+ after:function(){var t=$('ptable');document.querySelectorAll('[data-h]').forEach(function(b){b.addEventListener('click',function(){var on=b.getAttribute('aria-pressed')==='true';document.querySelectorAll('[data-h]').forEach(function(x){x.setAttribute('aria-pressed','false')});t.querySelectorAll('td:nth-child(2),td:nth-child(3),th:nth-child(2),th:nth-child(3)').forEach(function(c){c.style.background=''});
+  if(!on){b.setAttribute('aria-pressed','true');var n=b.getAttribute('data-h')==='free'?2:3;t.querySelectorAll('td:nth-child('+n+'),th:nth-child('+n+')').forEach(function(c){c.style.background='var(--note)'})}})})},
+ notes:'“Both plans, side by side. Free gives every teacher the full loop: homework, auto-check, who’s stuck, and practice. The school plan adds depth, automation and administration: term trends, practice scheduled at each child’s level, a principal dashboard and roster tools. Look at the top row: consent, privacy and security are the same baseline in both plans. We don’t sell safety, and we won’t claim compliance until counsel has reviewed it. The handwriting cap exists because each AI check costs us money; help for a struggling child is never paywalled.”'});
+
+slide({id:'pay',tab:'part2',t:45,chap:'Part 2 · Freemium',title:'When and why a school pays',screens:['plan','locked','principal'],
+ body:function(){return '<div class="grid g2"><div class="tile"><label for="fee" class="role">School fee per month: <b id="feev">₹1,000</b></label><input id="fee" type="range" min="500" max="3000" step="100" value="1000"></div>'+
+ '<div class="tile"><label for="ppl" class="role">School plan per student per year: <b id="pplv">₹300</b></label><input id="ppl" type="range" min="200" max="400" step="50" value="300"></div></div>'+
+ '<div class="tile" style="background:var(--note);border-color:var(--note)"><span class="role">Fee receipt · Mento (illustrative)</span><div class="stat" id="share">2.5%</div><p class="small">of a year’s school fees</p></div>'+
+ '<p><b>Trigger (proposed).</b> Three teachers active in a school, or one teacher hits the handwriting-check limit. The owner gets a <b>30-day trial</b> with the school’s real data loaded.</p>'+
+ '<p class="small"><b>Why schools, not parents or ads.</b> The DPDP Act bars targeted advertising at children, and a school contract gives one accountable buyer for consent and data handling. It still needs its own compliance work.</p>'+
+ '<p class="note-line">Benchmark (unverified): school ERP software costs about ₹100–500 per student per year, a team estimate to confirm with vendor quotes. <b>Willingness to pay is untested: H3.</b></p>'},
+ after:function(){var f=$('fee'),p=$('ppl');function u(){$('feev').textContent='₹'+inr(+f.value);$('pplv').textContent='₹'+p.value;$('share').textContent=(Math.round(+p.value/(+f.value*12)*1000)/10)+'%'}f.addEventListener('input',u);p.addEventListener('input',u);u()},
+ notes:'“When does a school pay? When three teachers are active, or one hits the handwriting limit, the owner gets a 30-day trial with their own data. At our assumed ₹300 per student and a ₹1,000 monthly fee, that’s 2.5% of a year’s fees.” Move the fee slider once. “Why schools, not ads: the law bars targeted ads at children, and a school gives one accountable buyer. Owner willingness to pay is untested; that’s H3.”'});
+
+slide({id:'close',tab:'part2',t:20,chap:'Close',title:'Report card',screens:['results','results-hi'],
+ body:function(){return '<div class="tile" style="border-style:dashed"><div class="stat" style="font-size:34px">Every homework becomes a diagnosis. Every struggling child gets practice at their level.</div></div>'+
+ '<div class="grid g3"><div class="tile"><b>Conceive</b><span class="muted small">Personas, hypotheses, ICP</span></div><div class="tile"><b>Plan · Develop</b><span class="muted small">Market, moat, MVP, live demo</span></div><div class="tile"><b>Launch · Refine · Retire</b><span class="muted small">GTM, North Star, data end-of-life</span></div></div>'+
+ '<p><b>Remarks:</b> <span class="hl">Ready to validate, then launch.</span></p><p style="font-size:1.4em;font-weight:800;margin-top:6px">Thank you. Questions?</p>'},
+ notes:'Say it slowly: “Every homework becomes a diagnosis. Every struggling child gets practice at their level. Thank you; we’d love your questions.” Stop. Backup slides follow, outside the timed talk.'});
+
+slide({id:'qa',tab:'part2',t:0,backup:true,chap:'Backup · not part of the timed talk',title:'Questions we expect',screens:['keep'],
+ body:function(){function q(a,b){return '<div class="tile"><b>'+a+'</b><p class="small">'+b+'</p></div>'}return '<div class="grid g2">'+
+ q('Why won’t Google just build this?','Gemini in Classroom is limited to users 18+ and needs a school Workspace setup. Our bet is the remediation loop, the parent link and selling to owners. Google could still move here; it’s a real risk.')+
+ q('Why another app for teachers?','Students and parents get a link, no install. Whether teachers save time from the first homework is what our pilot must show.')+
+ q('Can it really check handwritten Hindi?','We start with multiple choice and numbers; teachers can override reviewed marks; ≥ 90% agreement is a guard metric. Photo capture is built; reading it is Preview.')+
+ q('Why would a low-fee school pay?','At our assumed price and fee it’s about 2.5% of fees. Whether owners see that as worth it is untested (H3).')+
+ q('These stats are from government schools.','Fair. ASER 2024 also covers rural private schools: 35.5% of Class 3 children there read a Class 2 text. It doesn’t cover urban affordable private schools; H1 and H2 test that directly.')+
+ q('Is concept tracking “behavioural monitoring” of children?','The DPDP Act restricts tracking and behavioural monitoring of children, with some exemptions, including for educational institutions. We need legal review of how our analytics fit before launch.')+
+ q('How did you size the market?','Bottom-up from UDISE+ enrolment times our assumed price. It’s a ceiling, not a forecast.')+'</div>'},
+ notes:'Only if asked. Not part of the timed talk.'});
+
+slide({id:'src',tab:'part2',t:0,backup:true,chap:'Backup · not part of the timed talk',title:'Sources',screens:['role'],
+ body:function(){return '<ul class="small" style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px">'+
+ '<li>ASER 2024, Pratham / ASER Centre (Jan 2025): Class 3 reading at Class 2 level, rural government 23.4%, rural private 35.5%.</li>'+
+ '<li>Muralidharan, Singh and Ganimian, “Disrupting Education?” (Mindspark), American Economic Review (2019): within-grade spread.</li>'+
+ '<li>NIEPA study of teachers’ time, as reported in the press (2018): 19.1% teaching time. Secondary report; primary report not re-checked.</li>'+
+ '<li>UDISE+ 2024-25, Ministry of Education: 38.8% private unaided enrolment (via published analysis of UDISE+ tables). UDISE+ 2025-26 reports about 40%.</li>'+
+ '<li>Google Workspace Updates (30 Jun 2025) and Classroom language expansion (Apr 2026): Gemini in Classroom, users 18+.</li>'+
+ '<li>Entrackr (Oct 2025): Teachmint FY25 operating revenue ₹74 cr, from smart-classroom products.</li>'+
+ '<li>MeitY, DPDP Rules 2025 (notified 13 Nov 2025): verifiable parental consent; limits on tracking, monitoring and targeted ads to children; most duties from 14 May 2027.</li>'+
+ '<li>School ERP pricing, ₹100–500 per student per year: unverified team estimate; no vendor source recorded.</li>'+
+ '<li>Market size, prices, targets and packaging: team assumptions and proposals, not sourced data.</li></ul>'},
+ notes:'Only if asked.'});
+
+/* ---------- engine ---------- */
+var TABS=[['conceive','Conceive'],['plan','Plan'],['develop','Develop'],['launch','Launch'],['refine','Refine'],['retire','Retire'],['part2','Part 2']];
+var cur=0,scr=0,notesOn=false;
+function idx(){var m=/^#s(\d+)$/.exec(location.hash);var n=m?+m[1]-1:0;return Math.max(0,Math.min(S.length-1,n))}
+function tabOf(s){return s.tab}
+function buildTabs(){$('tabs').innerHTML=TABS.map(function(t){return '<button class="tab" type="button" data-t="'+t[0]+'">'+t[1]+'</button>'}).join('');
+ $('tabs').querySelectorAll('.tab').forEach(function(b){b.addEventListener('click',function(){for(var i=0;i<S.length;i++){if(!S[i].backup&&S[i].tab===b.getAttribute('data-t')){go(i);return}}})})}
+function buildDots(){$('dots').innerHTML=S.map(function(s,i){return '<button class="dot" type="button" data-i="'+i+'" aria-label="Slide '+(i+1)+': '+esc(s.title)+'"></button>'}).join('');
+ $('dots').querySelectorAll('.dot').forEach(function(b){b.addEventListener('click',function(){go(+b.getAttribute('data-i'))})})}
+function renderScreen(){var s=S[cur],keys=s.screens||['role'];if(scr>=keys.length)scr=0;var k=keys[scr],d=SCR[k]||SCR.role;
+ var host=$('screen');
+ if(EMBED){var frame=host.querySelector('iframe');var to=d.p;var src=(to==='/'?'/':'/demo?to='+encodeURIComponent(to));
+  if(!frame){host.innerHTML='<iframe title="Mento app" loading="lazy"></iframe>';frame=host.querySelector('iframe')}
+  if(frame.getAttribute('data-p')!==to){frame.setAttribute('data-p',to);frame.src=src}
+  fit()}
+ else host.innerHTML='<img alt="Mento screen: '+esc(d.l)+'" src="'+(SHOTS[k]||'')+'">';
+ $('stabs').innerHTML=keys.map(function(kk,i){return '<button class="pill" type="button" data-s="'+i+'" aria-current="'+(i===scr)+'">'+esc((SCR[kk]||{}).l||kk)+'</button>'}).join('');
+ $('stabs').querySelectorAll('.pill').forEach(function(b){b.addEventListener('click',function(){scr=+b.getAttribute('data-s');renderScreen()})});
+ $('cap').textContent=d.c;$('livelink').href=APP+(d.p==='/'?'/':'/demo?to='+encodeURIComponent(d.p));
+ $('livelink').textContent=EMBED?'Open this screen in its own tab ↗':'Open this screen in the live app ↗'}
+function fit(){var host=$('screen'),f=host.querySelector('iframe');if(!f)return;var k=host.clientWidth/390;f.style.transform='scale('+k+')';f.style.height=(host.clientHeight/k)+'px'}
+function render(){var s=S[cur];
+ $('slide').innerHTML='<div class="chapter">'+esc(s.chap)+'</div><div class="head"><h1>'+esc(s.title)+'</h1>'+(s.sub?'<p>'+esc(s.sub)+'</p>':'')+'</div><div class="body">'+s.body()+'</div><div class="foot"><span>'+(s.t?'Target '+Math.floor(s.t/60)+':'+String(s.t%60).padStart(2,'0'):'Backup')+'</span><span>Mento · PM101 · Masters’ Union</span></div>';
+ if(s.after)s.after();
+ $('count').textContent=(cur+1)+' / '+S.length;
+ $('tabs').querySelectorAll('.tab').forEach(function(b){b.setAttribute('aria-current',String(b.getAttribute('data-t')===tabOf(s)&&!s.backup))});
+ $('dots').querySelectorAll('.dot').forEach(function(b,i){b.setAttribute('aria-current',String(i===cur))});
+ $('notes').innerHTML='<b>Speaker notes</b><p>'+esc(s.notes||'')+'</p>';
+ $('prev').disabled=cur===0;$('next').disabled=cur===S.length-1;scr=0;renderScreen();window.scrollTo(0,0)}
+function go(i){i=Math.max(0,Math.min(S.length-1,i));if(i===cur&&$('slide').innerHTML)return;cur=i;try{history.replaceState(null,'','#s'+(i+1))}catch(e){location.hash='s'+(i+1)}render()}
+$('prev').addEventListener('click',function(){go(cur-1)});$('next').addEventListener('click',function(){go(cur+1)});
+document.addEventListener('keydown',function(e){var t=e.target;if(t&&/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)&&t.type!=='range'&&t.type!=='checkbox')return;
+ if(e.key==='ArrowRight'||e.key==='PageDown'){go(cur+1)}else if(e.key==='ArrowLeft'||e.key==='PageUp'){go(cur-1)}else if(e.key==='n'||e.key==='N'){$('tnotes').click()}});
+window.addEventListener('hashchange',function(){go(idx())});window.addEventListener('resize',fit);
+$('tnotes').addEventListener('click',function(){notesOn=!notesOn;$('notes').classList.toggle('on',notesOn);$('tnotes').setAttribute('aria-pressed',String(notesOn))});
+/* timer */
+var tmr=null,secs=0;function tick(){secs++;$('tclock').textContent=Math.floor(secs/60)+':'+String(secs%60).padStart(2,'0');$('timer').className='timer'+(secs>=600?' over':secs>=570?' warn':'')}
+$('tstart').addEventListener('click',function(){if(tmr){clearInterval(tmr);tmr=null;$('tstart').textContent='Start timer'}else{tmr=setInterval(tick,1000);$('tstart').textContent='Pause timer'}});
+$('treset').addEventListener('click',function(){clearInterval(tmr);tmr=null;secs=0;$('tclock').textContent='0:00';$('timer').className='timer';$('tstart').textContent='Start timer'});
+buildTabs();buildDots();cur=idx();render();
+})();
+</script>
