@@ -35,6 +35,8 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
+  // Tailwind's one small stylesheet is inlined so it no longer blocks first paint (docs: next-config-js/inlineCss).
+  experimental: { inlineCss: true },
   async headers() {
     return [{ source: '/:path*', headers: securityHeaders }];
   },

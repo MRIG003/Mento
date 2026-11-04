@@ -6,7 +6,6 @@ export const nunito = localFont({
   src: [
     { path: '../../fonts/nunito-latin-400-normal.woff2', weight: '400', style: 'normal' },
     { path: '../../fonts/nunito-latin-700-normal.woff2', weight: '700', style: 'normal' },
-    { path: '../../fonts/nunito-latin-800-normal.woff2', weight: '800', style: 'normal' },
   ],
   variable: '--font-nunito',
   display: 'swap',

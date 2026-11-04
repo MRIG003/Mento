@@ -23,6 +23,9 @@
   --color-warn: #B26A00;
   --color-bad: #C62828;
 
+  /* One fewer font file on first load: extra-bold uses the 700 file (docs/perf.md). */
+  --font-weight-extrabold: 700;
+
   --font-ui: var(--font-nunito), var(--font-deva), ui-sans-serif, system-ui, sans-serif;
   --font-hand: var(--font-caveat), var(--font-nunito), cursive;
   --font-deva: var(--font-noto-deva), var(--font-nunito), ui-sans-serif, sans-serif;

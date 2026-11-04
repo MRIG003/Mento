@@ -3,6 +3,32 @@
 Budgets: SPEC §8. Guard: `npm run size` (first-load JS, gzip, per prerendered route; `noModule` polyfills excluded).
 Lighthouse and DevTools traces (slow 4G + 4× CPU) are recorded in Phase 5.
 
+## Phase 5 measurements (2026-11-04), production build, headless Chromium 1243, mobile emulation (412×823 @1.75)
+
+| Route | Lighthouse (DevTools throttling: 4× CPU, 1.6 Mbps, **562 ms per request**) | In-browser, 4× CPU + 1.6 Mbps + **150 ms** latency, demo data loaded |
+|---|---|---|
+| `/` role chooser | perf 91, LCP 2.9 s, FCP 0.9 s, TBT 250 ms, CLS 0.005 | LCP ≈ 0.52 s |
+| `/t` teacher desk | perf 87, LCP 3.5 s, TBT 230 ms, CLS 0 | LCP ≈ 0.55 s |
+| `/h` student link | perf 84 (simulated: LCP 3.9 s) | LCP ≈ 0.60 s (valid link), CLS 0 |
+| `/t/results` | not run in Lighthouse | LCP ≈ 0.60 s, CLS 0 |
+| `/p` principal | not run in Lighthouse | LCP ≈ 0.29 s, CLS 0 |
+
+Lighthouse accessibility 100 and best-practices 96 on all three runs.
+
+**Verdict: the LCP < 2.5 s target is NOT met under Lighthouse's slow-4G profile (2.9-3.9 s); CLS < 0.1 and TBT are fine. It is met (≈ 0.5 s) under a
+150 ms-latency profile that is closer to real 4G.** The difference is round trips: Lighthouse charges 562 ms per request, and our content waits on
+HTML → main JS → data-layer chunk. Not yet verified on a real low-end phone.
+
+What was tried (measured, not guessed):
+| Change | Effect |
+|---|---|
+| Start loading the data layer at module load, not after hydration | `/h` LCP 4.4 → 3.8 s, TBT 610 → 270 ms. **Kept.** |
+| System font for the "हिं" switch label (it pulled a 54 KB Devanagari font onto English pages), drop Nunito 800 (extra-bold uses 700), `experimental.inlineCss` | FCP 1.2 → 0.9 s; LCP unchanged. **Kept.** |
+| Bundle the data layer into first load (remove the extra round trip) | `/h` 3.9 → 3.1 s but first-load JS +45 KB (192 KB). **Reverted**: poor trade for weak phones and breaks the JS budget. |
+
+Next levers if this must hit 2.5 s under Lighthouse: render the first screen without waiting for the data layer (static shell per route), split catalogues
+by language so English-only links skip Hindi, and a smaller validator on the read path (zod is ~20 KB gz of the deferred chunk).
+
 ## Measurements
 
 | Date | Change | Route | First-load JS (gz) | Budget | Notes |

@@ -11,12 +11,20 @@ import type { Repositories } from '../repositories';
 let singleton: Repositories | null = null;
 let loading: Promise<void> | null = null;
 const waiting = new Set<() => void>();
-function subscribeRepositories(notify: () => void): () => void {
-  waiting.add(notify);
+function startLoading(): Promise<void> {
   loading ??= import('./browser').then(({ createBrowserRepositories }) => {
     singleton = createBrowserRepositories();
     waiting.forEach((n) => n());
   });
+  return loading;
+}
+// Start downloading the data layer as soon as this module runs in the browser, in parallel with React's hydration,
+// instead of waiting for the first subscription (measured with Lighthouse: LCP waits on this chunk).
+if (typeof window !== 'undefined') void startLoading();
+function subscribeRepositories(notify: () => void): () => void {
+  waiting.add(notify);
+  void startLoading();
+  if (singleton) notify();
   return () => { waiting.delete(notify); };
 }
 const browserRepositories = () => singleton;

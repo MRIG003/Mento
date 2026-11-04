@@ -25,7 +25,7 @@ export function LanguageSwitch() {
             onClick={() => { if (!active) setLang(option.lang); }}
             className={`min-h-tap min-w-tap rounded-full px-3 text-base font-bold transition-colors ${
               active ? 'bg-primary text-card' : 'text-ink hover:bg-paper'
-            } ${option.lang === 'hi' ? 'font-deva' : ''}`}
+            } ${option.lang === 'hi' ? 'font-sans' : ''}`}
           >
             {t(option.label)}
           </button>
