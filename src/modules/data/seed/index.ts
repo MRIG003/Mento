@@ -2,11 +2,12 @@
  * Demo seed (Demo data). Loaded with a dynamic import only when a demo starts, so it never ships on first load.
  * Times are relative to the clock so the demo always looks current.
  */
-import { generateToken, seededRandom, type Clock } from '@/modules/domain';
+import { ConceptSchema, SubjectSchema, generateToken, seededRandom, type Clock } from '@/modules/domain';
 import { CollectionsSchema, type Collections } from '../storage/collections';
 import { emptyCollections } from '../storage/database';
 import { HINDI_5_BANK, HINDI_5_CONCEPTS } from './hindi-5';
 import { MATHS_6_BANK, MATHS_6_CONCEPTS } from './bank-maths-6';
+import { SCIENCE_BANK, SCIENCE_CONCEPTS } from './bank-science';
 import { CLASSES, SCHOOL, SUBJECTS, TEACHERS } from './school';
 import { HW_5A_QUESTIONS, HW_6A_QUESTIONS, HW_6B_QUESTIONS, answers6B, evaluate, parseBank, profiles6B, randomAnswers } from './submissions';
 
@@ -20,11 +21,28 @@ function istEvening(now: Date, daysAgo: number): Date {
   return d;
 }
 
+/** The ready-made question bank alone (subjects, concepts, questions): given to every teacher, not just the demo one. */
+export function buildBank() {
+  const questions = [...parseBank([...MATHS_6_BANK, ...HINDI_5_BANK, ...SCIENCE_BANK]).values()];
+  const concept = (subjectId: string, grade: number, c: { id: string; chapter: readonly [string, string]; name: readonly [string, string] }) => ({
+    id: c.id, subjectId, grade, chapter: { en: c.chapter[0], hi: c.chapter[1] }, name: { en: c.name[0], hi: c.name[1] },
+  });
+  return {
+    subjects: SUBJECTS.map((s) => SubjectSchema.parse(s)),
+    concepts: [
+      ...MATHS_6_CONCEPTS.map((c) => concept('maths', 6, c)),
+      ...SCIENCE_CONCEPTS.map((c) => concept('science', c.grade, c)),
+      ...HINDI_5_CONCEPTS.map((c) => concept('hindi', 5, c)),
+    ].map((c) => ConceptSchema.parse(c)),
+    questions,
+  };
+}
+
 export function buildDemoSeed(clock: Clock): Collections {
   const now = clock.now();
   const iso = (d: Date) => d.toISOString();
   const rng = seededRandom(20261103); // demo tokens are deterministic on purpose; real teachers get crypto tokens
-  const bank = parseBank([...MATHS_6_BANK, ...HINDI_5_BANK]);
+  const bank = parseBank([...MATHS_6_BANK, ...HINDI_5_BANK, ...SCIENCE_BANK]);
   // Plain data first, validated by the real schema at the end (no type casts; the seed is checked like any input).
   const base = emptyCollections(iso(now));
   const db = {
@@ -40,6 +58,7 @@ export function buildDemoSeed(clock: Clock): Collections {
   db.subjects = SUBJECTS.map((s) => ({ ...s }));
   db.concepts = [
     ...MATHS_6_CONCEPTS.map((c) => ({ id: c.id, subjectId: 'maths', grade: 6, chapter: { en: c.chapter[0], hi: c.chapter[1] }, name: { en: c.name[0], hi: c.name[1] } })),
+    ...SCIENCE_CONCEPTS.map((c) => ({ id: c.id, subjectId: 'science', grade: c.grade, chapter: { en: c.chapter[0], hi: c.chapter[1] }, name: { en: c.name[0], hi: c.name[1] } })),
     ...HINDI_5_CONCEPTS.map((c) => ({ id: c.id, subjectId: 'hindi', grade: 5, chapter: { en: c.chapter[0], hi: c.chapter[1] }, name: { en: c.name[0], hi: c.name[1] } })),
   ];
   db.questions = [...bank.values()];

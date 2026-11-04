@@ -146,6 +146,7 @@ export const en = {
 
   'subject.maths': 'Maths',
   'subject.hindi': 'Hindi',
+  'subject.science': 'Science',
 
   'desk.title': 'Desk',
   'desk.empty.title': 'Desk is clear.',

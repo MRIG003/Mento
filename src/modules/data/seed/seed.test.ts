@@ -74,6 +74,22 @@ describe('demo seed', () => {
     });
   });
 
+  it('has a Science bank for every class from 3 to 8, two concepts each', () => {
+    const science = db.concepts.filter((c) => c.subjectId === 'science');
+    for (const grade of [3, 4, 5, 6, 7, 8]) {
+      const forGrade = science.filter((c) => c.grade === grade);
+      expect(forGrade.length, `class ${grade}`).toBeGreaterThanOrEqual(2);
+      for (const c of forGrade) expect(db.questions.filter((q) => q.conceptId === c.id).length, c.id).toBeGreaterThanOrEqual(6);
+    }
+    expect(db.subjects.map((s) => s.id)).toContain('science');
+  });
+
+  it('science questions have a correct option that exists, and a different correct letter is not always the first', () => {
+    const sci = db.questions.flatMap((q) => (q.conceptId.startsWith('c_sc') && q.type === 'mcq' ? [q] : []));
+    for (const q of sci) expect(q.options.some((o) => o.id === q.correctOptionId), q.id).toBe(true);
+    expect(new Set(sci.map((q) => q.correctOptionId)).size).toBeGreaterThan(1);
+  });
+
   it('builds the same data for the same clock (stable demo)', () => {
     expect(buildDemoSeed(clock)).toEqual(db);
   });

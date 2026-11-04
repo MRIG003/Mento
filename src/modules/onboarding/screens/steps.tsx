@@ -106,7 +106,7 @@ export function StepClass({ teacher, onDone }: StepProps & { teacher: TeacherSco
       <div className="flex flex-col gap-5">
         <RadioChips legend={t('onb.class.grade')} value={grade} onChange={setGrade} options={[3, 4, 5, 6, 7, 8].map((g) => ({ value: g, label: String(g) }))} />
         <RadioChips legend={t('onb.class.section')} value={section} onChange={setSection} options={['A', 'B', 'C', 'D', 'E'].map((s) => ({ value: s, label: s }))} />
-        <RadioChips legend={t('onb.class.subject')} value={subject} onChange={setSubject} options={[{ value: 'maths', label: t('subject.maths') }, { value: 'hindi', label: t('subject.hindi') }]} />
+        <RadioChips legend={t('onb.class.subject')} value={subject} onChange={setSubject} options={[{ value: 'maths', label: t('subject.maths') }, { value: 'hindi', label: t('subject.hindi') }, { value: 'science', label: t('subject.science') }]} />
         <RadioChips legend={t('onb.class.lang')} hint={t('onb.class.langHint')} value={lang} onChange={setLang} options={[{ value: 'hi', label: 'हिन्दी', lang: 'hi' }, { value: 'en', label: 'English', lang: 'en' }]} />
         <Button onClick={create} busy={busy} disabled={!ready}>{t('onb.class.create')}</Button>
       </div>

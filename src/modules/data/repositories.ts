@@ -89,7 +89,18 @@ export function createLocalRepositories(deps: { driver: StorageDriver; blobs: Bl
       const now = clock.now().toISOString();
       const school: School = { id: newId('sch', rng) as School['id'], name: schoolName.trim().slice(0, 80) || name, code: generateToken(rng).replace(/[^A-Za-z0-9]/g, '').slice(0, 6).toUpperCase().padEnd(6, 'X'), plan: 'free' };
       const teacher: Teacher = { id: newId('t', rng) as Teacher['id'], schoolId: school.id, name: name.trim().slice(0, 60), phoneVerified: true, createdAt: now };
-      const r = save((d) => ({ ...d, schools: [...d.schools, school], teachers: [...d.teachers, teacher], session: { ...d.session, role: 'teacher', teacherId: teacher.id } }));
+      // Every teacher gets the ready-made question bank (lazy import: it never ships on first load).
+      const { buildBank } = await import('./seed');
+      const bank = buildBank();
+      const r = save((d) => ({
+        ...d,
+        schools: [...d.schools, school],
+        teachers: [...d.teachers, teacher],
+        subjects: [...d.subjects, ...bank.subjects.filter((x) => !d.subjects.some((y) => y.id === x.id))],
+        concepts: [...d.concepts, ...bank.concepts.filter((x) => !d.concepts.some((y) => y.id === x.id))],
+        questions: [...d.questions, ...bank.questions.filter((x) => !d.questions.some((y) => y.id === x.id))],
+        session: { ...d.session, role: 'teacher', teacherId: teacher.id },
+      }));
       return r.ok ? ok(teacher) : r;
     },
     async useDemoTeacher() {

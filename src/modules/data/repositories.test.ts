@@ -16,6 +16,21 @@ describe('session', () => {
     expect(JSON.stringify(repos.database.read())).not.toMatch(/phone":\s*"\d/);
   });
 
+  it('a new teacher gets the question bank too, so a Class 7 Science class has questions to pick from', async () => {
+    const repos = make();
+    const t = await repos.session.startTeacher({ name: 'Asha', schoolName: 'Sunrise School' });
+    if (!t.ok) throw new Error(t.error.code);
+    const scope = repos.teacher(t.value.id);
+    const c = await scope.createClass({ grade: 7, section: 'A', subjectId: 'science' as never, defaultLang: 'en' });
+    if (!c.ok) throw new Error(c.error.code);
+    const concepts = await scope.listConcepts('science' as never);
+    const bank = await scope.listBank({ subjectId: 'science' as never, grade: 7 });
+    expect(concepts.ok && concepts.value.filter((x) => x.grade === 7).length).toBeGreaterThanOrEqual(2);
+    expect(bank.ok && bank.value.length).toBeGreaterThanOrEqual(12);
+    const maths = await scope.listBank({ subjectId: 'maths' as never });
+    expect(maths.ok && maths.value.length).toBeGreaterThan(0);
+  });
+
   it('"Try with a demo class" seeds the demo school on first use', async () => {
     const repos = make();
     expect(await repos.demo.isSeeded()).toBe(false);

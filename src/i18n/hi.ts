@@ -145,6 +145,7 @@ export const hi: Catalogue = {
 
   'subject.maths': 'गणित',
   'subject.hindi': 'हिन्दी',
+  'subject.science': 'विज्ञान',
 
   'desk.title': 'डेस्क',
   'desk.empty.title': 'डेस्क खाली है।',

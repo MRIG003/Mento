@@ -11,6 +11,7 @@ export const TEACHERS = [
 export const SUBJECTS = [
   { id: 'maths', name: { en: 'Maths', hi: 'गणित' } },
   { id: 'hindi', name: { en: 'Hindi', hi: 'हिन्दी' } },
+  { id: 'science', name: { en: 'Science', hi: 'विज्ञान' } },
 ] as const;
 
 /** The six who end up stuck on Comparing fractions come first; the rules decide that, the test checks it. */
